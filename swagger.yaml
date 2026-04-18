@@ -265,7 +265,7 @@ paths:
             example:
               firstName: Bruce
               lastName: Wayne
-              email: caracolasstore+11@gmail.com
+              email: caracolasstore+12@gmail.com
               phone: '08031234567'
               tradeArea: Welding
               level: Level 3
@@ -306,6 +306,111 @@ paths:
               name: May 2026 Intake
               startsAt: '2026-05-01'
               endsAt: '2026-06-01'
+  /api/learners/register:
+    post:
+      summary: Learner accepts invite and creates account
+      responses: {}
+      tags:
+        - Learner
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                inviteToken:
+                  type: string
+                firstName:
+                  type: string
+                lastName:
+                  type: string
+                email:
+                  type: string
+                  format: email
+                phone:
+                  type: string
+                  format: utc-millisec
+                dateOfBirth:
+                  type: string
+                  format: date-time
+                address:
+                  type: string
+                passportPhotoUrl:
+                  type: string
+                  format: uri
+                tradeArea:
+                  type: string
+                level:
+                  type: string
+                cohortId:
+                  type: string
+                courseOrProgramme:
+                  type: string
+                password:
+                  type: string
+                confirmPassword:
+                  type: string
+                hasNoNSQQualification:
+                  type: boolean
+                nsqQualifications:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      qualificationName:
+                        type: string
+                      awardingBody:
+                        type: string
+                      yearAwarded:
+                        type: integer
+                      certificateNumber:
+                        type: string
+                signatureImageUrl:
+                  type: string
+                  format: uri
+                signatureWhiteBackgroundConfirmed:
+                  type: boolean
+                reviewConfirmed:
+                  type: boolean
+            example:
+              inviteToken: 25d9115f9b562e5b9e62e054541fd1cd7a0af9b09e264735
+              firstName: Bruce
+              lastName: Wayne
+              email: caracolasstore+11@gmail.com
+              phone: '+2348012345678'
+              dateOfBirth: '1990-05-01T00:00:00.000Z'
+              address: 1 Example Street
+              passportPhotoUrl: https://cdn.example.com/photo.jpg
+              tradeArea: Welding
+              level: Level 3
+              cohortId: <cohort-uuid-from-invite>
+              courseOrProgramme: Optional programme name
+              password: Str0ngP@ss
+              confirmPassword: Str0ngP@ss
+              hasNoNSQQualification: false
+              nsqQualifications:
+                - qualificationName: NSQ Welding
+                  awardingBody: Example Council
+                  yearAwarded: 2020
+                  certificateNumber: ABC-123
+              signatureImageUrl: https://cdn.example.com/signature.png
+              signatureWhiteBackgroundConfirmed: true
+              reviewConfirmed: true
+  /api/learners/invite/prefill:
+    get:
+      summary: Get learner prefilled invite
+      parameters:
+        - name: inviteToken
+          in: query
+          required: false
+          deprecated: false
+          schema: {}
+          example: 25d9115f9b562e5b9e62e054541fd1cd7a0af9b09e264735
+      responses: {}
+      tags:
+        - Learner
+      security:
+        - BearerAuth: []
 components:
   securitySchemes:
     BearerAuth:
