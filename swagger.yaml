@@ -24,8 +24,8 @@ paths:
                 password:
                   type: string
             example:
-              email: ethicethnic4@gmail.com
-              password: Ethno#@weq43
+              email: info@emediabay.com
+              password: Password#123
   /auth/roles:
     get:
       summary: List roles
