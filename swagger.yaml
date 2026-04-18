@@ -224,7 +224,7 @@ paths:
         example: '{{staffUserId}}'
   /api/team/staff/{staffUserId}/activate:
     post:
-      summary: Deactivate staff Copy
+      summary: Activate staff
       responses: {}
       tags:
         - Staff
