@@ -5,6 +5,7 @@ info:
   description: ''
 servers:
   - url: '{{BASE_URL}}'
+  - url: '{{DGOVAL_BASE_URL}}'
 paths:
   /auth/signin:
     post:
@@ -17,15 +18,7 @@ paths:
           application/json:
             schema:
               type: object
-              properties:
-                email:
-                  type: string
-                  format: email
-                password:
-                  type: string
-            example:
-              email: info@emediabay.com
-              password: Password#123
+            example: "{\r\n    // \"email\": \"ethicethnic4@gmail.com\",\r\n    \"email\": \"info@emediabay.com\",\r\n    // \"password\": \"Ethno#@weq43\"\r\n    \"password\": \"Password#123\"\r\n}"
   /auth/roles:
     get:
       summary: List roles
@@ -34,6 +27,89 @@ paths:
         - Auth
       security:
         - BearerAuth: []
+  /auth/forgot-password:
+    post:
+      summary: forgot-password
+      responses: {}
+      tags:
+        - Auth
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  format: email
+            example:
+              email: caracolasstore@gmail.com
+  /auth/reset-password:
+    post:
+      summary: reset-password
+      responses: {}
+      tags:
+        - Auth
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  format: email
+                newPassword:
+                  type: string
+                confirmNewPassword:
+                  type: string
+                resetToken:
+                  type: string
+            example:
+              email: caracolasstore@gmail.com
+              newPassword: John@weq112
+              confirmNewPassword: John@weq112
+              resetToken: >-
+                eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImNhcmFjb2xhc3N0b3JlQGdtYWlsLmNvbSIsInBhc3N3b3JkUmVzZXRUb2tlbklkIjoiMDFLUEZWRDdGUUJXVjVBSE5YQkowRkY3U1YiLCJ0b2tlblR5cGUiOiJwYXNzd29yZF9yZXNldCIsImlhdCI6MTc3NjUwMTMzMSwiZXhwIjoxNzc2NTAxOTMxfQ.fmdDSO5u9APNzz6fP17YRrL_6O8CBisq07oFriIbnq0
+  /auth/verify-reset-password:
+    post:
+      summary: verify-reset-password
+      responses: {}
+      tags:
+        - Auth
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                otp:
+                  type: string
+                  format: color
+                email:
+                  type: string
+                  format: email
+            example:
+              otp: '197248'
+              email: caracolasstore@gmail.com
+  /auth/refresh-token:
+    post:
+      summary: refresh token
+      parameters:
+        - name: Cookie
+          in: header
+          schema:
+            type: string
+          example: >-
+            refreshToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIwMUs5REhKM1pIUllQQk5UUUgzTlE1VFpCSyIsImVtYWlsIjoiY2FyYWNvbGFzc3RvcmVAZ21haWwuY29tIiwiZmlyc3ROYW1lIjoiQ2FyYWNvbGFzIiwibGFzdE5hbWUiOiJzdG9yZSIsIm1lbWJlcnNoaXBzIjpbeyJjb21wYW55SWQiOiIwMUs5REhOUkhZOUNCWEdUQVNYWkg4QjNBViIsInJvbGUiOiJhZG1pbiJ9XSwiY3VycmVudFN0ZXAiOiJjb21wbGV0ZWQiLCJzZWxlY3RlZFBsYW5JZCI6IjAxSzlDNDBKNDhGNllGUVNHSEY5SlpHOUpUIiwidG9rZW5UeXBlIjoicmVmcmVzaCIsImlhdCI6MTc2Mjc3MjEwOSwiZXhwIjoxNzYzMzc2OTA5fQ.HqYNVzIe7RLlhUV2-uwSxJUcYxCqEpGFEot7GwwXQps
+      responses: {}
+      tags:
+        - Auth
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
   /api/team/invite-staff:
     post:
       summary: Invite staff
