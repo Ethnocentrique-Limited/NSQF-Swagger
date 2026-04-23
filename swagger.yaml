@@ -5,7 +5,6 @@ info:
   description: ''
 servers:
   - url: '{{BASE_URL}}'
-  - url: '{{DGOVAL_BASE_URL}}'
 paths:
   /auth/signin:
     post:
@@ -118,7 +117,15 @@ paths:
           application/json:
             schema:
               type: object
-  /api/team/invite-staff:
+  /auth/me:
+    get:
+      summary: me
+      responses: {}
+      tags:
+        - Auth
+      security:
+        - BearerAuth: []
+  /api/{trainingProviderId}/team/invite-staff:
     post:
       summary: Invite staff
       responses: {}
@@ -150,14 +157,21 @@ paths:
                   type: string
                   format: uri
             example:
-              firstName: John
-              lastName: Store
-              email: caracolasstore+1@gmail.com
-              phone: '+2348152957065'
+              firstName: David
+              lastName: James
+              email: caracolasstore+17@gmail.com
+              phone: '+2348152957042'
               tradeArea: Mechanical Installation
-              role: practical_trainer_mcp
+              role: iqam
               loginUrl: https://app.nsqf.com/login
-  /api/team/staff/{staffUserId}/resend-invite:
+    parameters:
+      - name: trainingProviderId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{trainingProviderId}}'
+  /api/{trainingProviderId}/team/staff/{staffUserId}/resend-invite:
     post:
       summary: Resend invite
       responses: {}
@@ -166,13 +180,19 @@ paths:
       security:
         - BearerAuth: []
     parameters:
+      - name: trainingProviderId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{trainingProviderId}}'
       - name: staffUserId
         in: path
         required: true
         schema:
           type: string
         example: '{{staffUserId}}'
-  /api/team/staff/{staffUserId}:
+  /api/{trainingProviderId}/team/staff/{staffUserId}:
     delete:
       summary: Delete staff
       responses: {}
@@ -181,6 +201,12 @@ paths:
       security:
         - BearerAuth: []
     parameters:
+      - name: trainingProviderId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{trainingProviderId}}'
       - name: staffUserId
         in: path
         required: true
@@ -194,7 +220,7 @@ paths:
         - Staff
       security:
         - BearerAuth: []
-  /api/team/staff/{staffUserId}/deactivate:
+  /api/{trainingProviderId}/team/staff/{staffUserId}/deactivate:
     post:
       summary: Deactivate staff
       responses: {}
@@ -207,22 +233,21 @@ paths:
           application/json:
             schema:
               type: object
-              properties:
-                confirmed:
-                  type: boolean
-                replacementStaffUserId:
-                  type: string
-            example:
-              confirmed: true
-              replacementStaffUserId: staff id for replacement to reassign learners
+            example: "{\r\n    \"confirmed\": true\r\n    // \"replacementStaffUserId\": \"staff id for replacement to reassign learners\"\r\n}"
     parameters:
+      - name: trainingProviderId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{trainingProviderId}}'
       - name: staffUserId
         in: path
         required: true
         schema:
           type: string
         example: '{{staffUserId}}'
-  /api/team/staff/{staffUserId}/activate:
+  /api/{trainingProviderId}/team/staff/{staffUserId}/activate:
     post:
       summary: Activate staff
       responses: {}
@@ -241,6 +266,12 @@ paths:
             example:
               confirmed: true
     parameters:
+      - name: trainingProviderId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{trainingProviderId}}'
       - name: staffUserId
         in: path
         required: true
@@ -264,18 +295,15 @@ paths:
                 email:
                   type: string
                   format: email
-                currentPassword:
-                  type: string
                 newPassword:
                   type: string
                 confirmNewPassword:
                   type: string
             example:
-              email: caracolasstore@gmail.com
-              currentPassword: RfpH_f4!h7Ln
+              email: caracolasstore+16@gmail.com
               newPassword: Password@weq112
               confirmNewPassword: Password@weq112
-  /api/team/staff:
+  /api/{trainingProviderId}/team/staff:
     get:
       summary: List staff
       parameters:
@@ -291,25 +319,33 @@ paths:
           example: active
         - name: timeRange
           in: query
+          description: 7d, 30d, all-time
           schema:
             type: string
-          example: 7d
+          example: 30d
         - name: limit
           in: query
           schema:
             type: integer
-          example: '10'
+          example: 100
         - name: page
           in: query
           schema:
             type: integer
-          example: '1'
+          example: 1
       responses: {}
       tags:
         - Staff
       security:
         - BearerAuth: []
-  /api/learners/invite/manual:
+    parameters:
+      - name: trainingProviderId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{trainingProviderId}}'
+  /api/{trainingProviderId}/learners/invite/manual:
     post:
       summary: Manual invite learner
       responses: {}
@@ -357,14 +393,39 @@ paths:
               channels:
                 - email
               inviteLink: https://app.nsqf.com/learner/create-account
-  /api/centre/cohorts:
+    parameters:
+      - name: trainingProviderId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{trainingProviderId}}'
+  /api/{trainingProviderId}/centre/cohorts:
     get:
       summary: List Cohorts
+      parameters:
+        - name: page
+          in: query
+          schema:
+            type: integer
+          example: 1
+        - name: limit
+          in: query
+          schema:
+            type: integer
+          example: 20
       responses: {}
       tags:
         - Learner
       security:
         - BearerAuth: []
+    parameters:
+      - name: trainingProviderId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{trainingProviderId}}'
     post:
       summary: Create cohorts
       responses: {}
@@ -387,7 +448,7 @@ paths:
                   type: string
                   format: date
             example:
-              name: May 2026 Intake
+              name: April 2026 Intake
               startsAt: '2026-05-01'
               endsAt: '2026-06-01'
   /api/learners/register:
@@ -489,13 +550,13 @@ paths:
           required: false
           deprecated: false
           schema: {}
-          example: 25d9115f9b562e5b9e62e054541fd1cd7a0af9b09e264735
+          example: eba62d8b326cf894f6861e17d99d780a7e9d7946a4a82072
       responses: {}
       tags:
         - Learner
       security:
         - BearerAuth: []
-  /api/learners/{learnerId}/verification/approve:
+  /api/{trainingProviderId}/learners/{learnerId}/verification/approve:
     post:
       summary: Approve learner
       responses: {}
@@ -517,13 +578,19 @@ paths:
               confirmed: true
               allowDuplicateApproval: false
     parameters:
+      - name: trainingProviderId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{trainingProviderId}}'
       - name: learnerId
         in: path
         required: true
         schema:
           type: string
         example: '{{learnerId}}'
-  /api/learners/{learnerId}/verification/reject:
+  /api/{trainingProviderId}/learners/{learnerId}/verification/reject:
     post:
       summary: Reject learner
       responses: {}
@@ -542,6 +609,12 @@ paths:
             example:
               reason: Documents were unclear. Please resubmit with a valid ID photo.
     parameters:
+      - name: trainingProviderId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{trainingProviderId}}'
       - name: learnerId
         in: path
         required: true
@@ -556,12 +629,930 @@ paths:
         - Learner
       security:
         - BearerAuth: []
-  /api/learners/invite/bulk:
+  /api/{trainingProviderId}/learners/invite/bulk:
     post:
       summary: Bulk invite learners
       responses: {}
       tags:
         - Learner
+      security:
+        - BearerAuth: []
+    parameters:
+      - name: trainingProviderId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{trainingProviderId}}'
+  /api/{trainingProviderId}/learners:
+    get:
+      summary: Manage learners - List learners
+      parameters:
+        - name: status
+          in: query
+          description: >-
+            active, pending_invitation, pending_verification, rejected,
+            deactivated
+          schema:
+            type: string
+          example: pending_invitation
+        - name: tradeArea
+          in: query
+          schema:
+            type: string
+          example: Electrical
+        - name: level
+          in: query
+          schema:
+            type: integer
+          example: 3
+        - name: cohortId
+          in: query
+          schema:
+            type: string
+          example: ...
+        - name: dateFrom
+          in: query
+          schema:
+            type: string
+          example: '2026-01-01T00:00:00.000Z'
+        - name: dateTo
+          in: query
+          schema:
+            type: string
+          example: '2026-12-31T23:59:59.999Z'
+        - name: page
+          in: query
+          schema:
+            type: integer
+          example: 1
+        - name: limit
+          in: query
+          schema:
+            type: integer
+          example: 20
+      responses: {}
+      tags:
+        - Manage Learner
+      security:
+        - BearerAuth: []
+    parameters:
+      - name: trainingProviderId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{trainingProviderId}}'
+  /api/{trainingProviderId}/learners/{learnerId}:
+    get:
+      summary: Manage learners - Learner details
+      responses: {}
+      tags:
+        - Manage Learner
+      security:
+        - BearerAuth: []
+    parameters:
+      - name: trainingProviderId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{trainingProviderId}}'
+      - name: learnerId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{learnerId}}'
+    delete:
+      summary: Manage Learner - Delete learner
+      responses: {}
+      tags:
+        - Manage Learner
+      security:
+        - BearerAuth: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                confirmed:
+                  type: boolean
+            example:
+              confirmed: true
+  /api/{trainingProviderId}/learners/{learnerId}/digital-folder:
+    get:
+      summary: Manage learners - Learner Digital Folder
+      responses: {}
+      tags:
+        - Manage Learner
+      security:
+        - BearerAuth: []
+    parameters:
+      - name: trainingProviderId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{trainingProviderId}}'
+      - name: learnerId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{learnerId}}'
+  /api/{trainingProviderId}/learners/{learnerId}/digital-folder/export:
+    get:
+      summary: Manage learners - Learner Digital Folder export
+      responses: {}
+      tags:
+        - Manage Learner
+      security:
+        - BearerAuth: []
+    parameters:
+      - name: trainingProviderId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{trainingProviderId}}'
+      - name: learnerId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{learnerId}}'
+  /api/{trainingProviderId}/learners/{learnerId}/resend-invite:
+    post:
+      summary: Manage Learner - Resend invite
+      responses: {}
+      tags:
+        - Manage Learner
+      security:
+        - BearerAuth: []
+    parameters:
+      - name: trainingProviderId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{trainingProviderId}}'
+      - name: learnerId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{learnerId}}'
+  /api/{trainingProviderId}/learners/{learnerId}/deactivate:
+    post:
+      summary: Manage Learner - Deactivate learner
+      responses: {}
+      tags:
+        - Manage Learner
+      security:
+        - BearerAuth: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                confirmed:
+                  type: boolean
+            example:
+              confirmed: true
+    parameters:
+      - name: trainingProviderId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{trainingProviderId}}'
+      - name: learnerId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{learnerId}}'
+  /api/{trainingProviderId}/learners/{learnerId}/activate:
+    post:
+      summary: Manage Learner - Activate learner
+      responses: {}
+      tags:
+        - Manage Learner
+      security:
+        - BearerAuth: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                confirmed:
+                  type: boolean
+            example:
+              confirmed: true
+    parameters:
+      - name: trainingProviderId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{trainingProviderId}}'
+      - name: learnerId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{learnerId}}'
+  /api/{trainingProviderId}/learners/{learnerId}/withdraw-invite:
+    delete:
+      summary: Manage Learner - Withdraw invite
+      responses: {}
+      tags:
+        - Manage Learner
+      security:
+        - BearerAuth: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                confirmed:
+                  type: boolean
+            example:
+              confirmed: true
+    parameters:
+      - name: trainingProviderId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{trainingProviderId}}'
+      - name: learnerId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{learnerId}}'
+  /api/{trainingProviderId}/learners/{learnerId}/digital-folder/{itemId}/sign:
+    post:
+      summary: Manage learner - Sign digital folder
+      responses: {}
+      tags:
+        - Manage Learner
+      security:
+        - BearerAuth: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                confirmed:
+                  type: boolean
+            example:
+              confirmed: true
+    parameters:
+      - name: trainingProviderId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{trainingProviderId}}'
+      - name: learnerId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{learnerId}}'
+      - name: itemId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{itemId}}'
+  /api/{trainingProviderId}/learners/assignment/manual:
+    get:
+      summary: List manual assignment rows
+      parameters:
+        - name: assignmentStatus
+          in: query
+          description: assignmentStatus = assigned | unassigned
+          schema:
+            type: string
+          example: unassigned
+        - name: cohortId
+          in: query
+          schema:
+            type: string
+          example: ...
+        - name: limit
+          in: query
+          schema:
+            type: integer
+          example: 25
+        - name: page
+          in: query
+          schema:
+            type: integer
+          example: 1
+        - name: level
+          in: query
+          schema:
+            type: integer
+          example: 1
+        - name: tradeArea
+          in: query
+          schema:
+            type: string
+          example: Welding
+        - name: search
+          in: query
+          description: name or email
+          schema:
+            type: string
+          example: Mike
+      responses: {}
+      tags:
+        - Learner assignment
+      security:
+        - BearerAuth: []
+    parameters:
+      - name: trainingProviderId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{trainingProviderId}}'
+  /api/{trainingProviderId}/learners/{learnerId}/assignment/manual:
+    put:
+      summary: Manually assign one learner
+      responses: {}
+      tags:
+        - Learner assignment
+      security:
+        - BearerAuth: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                practicalTrainerUserId:
+                  type: string
+                theoryTrainerUserId:
+                  type: string
+                qaaUserId:
+                  type: string
+            example:
+              practicalTrainerUserId: 01KPH614CRDZ9GJKNV8N2CGADE
+              theoryTrainerUserId: 01KPTPXXRWZF9G5FHYJ048EJ5H
+              qaaUserId: 01KPTPHR41Q1ND9K08PWQVR5MX
+    parameters:
+      - name: trainingProviderId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{trainingProviderId}}'
+      - name: learnerId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{learnerId}}'
+  /api/{trainingProviderId}/learners/assignment/manual/bulk:
+    post:
+      summary: Manually assign bulk
+      responses: {}
+      tags:
+        - Learner assignment
+      security:
+        - BearerAuth: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                learnerIds:
+                  type: array
+                  items:
+                    type: string
+                practicalTrainerUserId:
+                  type: string
+                theoryTrainerUserId:
+                  type: string
+                qaaUserId:
+                  type: string
+            example:
+              learnerIds:
+                - 01KPF5MB0NP5F019DFM2SPPDYK
+                - 01...
+              practicalTrainerUserId: 01KPH614CRDZ9GJKNV8N2CGADE
+              theoryTrainerUserId: 01KPTPXXRWZF9G5FHYJ048EJ5H
+              qaaUserId: 01KPTPHR41Q1ND9K08PWQVR5MX
+    parameters:
+      - name: trainingProviderId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{trainingProviderId}}'
+  /api/{trainingProviderId}/learners/assignment/automation/rules:
+    get:
+      summary: List rules
+      parameters:
+        - name: page
+          in: query
+          schema:
+            type: integer
+          example: 1
+        - name: limit
+          in: query
+          schema:
+            type: integer
+          example: 20
+      responses: {}
+      tags:
+        - Learner assignment
+      security:
+        - BearerAuth: []
+    parameters:
+      - name: trainingProviderId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{trainingProviderId}}'
+    post:
+      summary: Create rules
+      responses: {}
+      tags:
+        - Learner assignment
+      security:
+        - BearerAuth: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                ruleName:
+                  type: string
+                tradeArea:
+                  type: string
+                level:
+                  type: string
+                  format: utc-millisec
+                cohortId:
+                  type: string
+                practicalTrainerUserId:
+                  type: string
+                theoryTrainerUserId:
+                  type: string
+                qaaUserId:
+                  type: string
+            example:
+              ruleName: L4 Electrical Batch B
+              tradeArea: Mechanical
+              level: '2'
+              cohortId: 01KPF42CRW845NP7561MNS2KDQ
+              practicalTrainerUserId: 01KPH614CRDZ9GJKNV8N2CGADE
+              theoryTrainerUserId: 01KPTPXXRWZF9G5FHYJ048EJ5H
+              qaaUserId: 01KPTPHR41Q1ND9K08PWQVR5MX
+  /api/{trainingProviderId}/learners/assignment/automation/run:
+    post:
+      summary: Run automation
+      responses: {}
+      tags:
+        - Learner assignment
+      security:
+        - BearerAuth: []
+    parameters:
+      - name: trainingProviderId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{trainingProviderId}}'
+  /api/{trainingProviderId}/learners/assignment/automation/rules/{ruleId}/enable:
+    post:
+      summary: Enable rule
+      responses: {}
+      tags:
+        - Learner assignment
+      security:
+        - BearerAuth: []
+    parameters:
+      - name: trainingProviderId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{trainingProviderId}}'
+      - name: ruleId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{ruleId}}'
+  /api/{trainingProviderId}/learners/assignment/automation/rules/{ruleId}/disable:
+    post:
+      summary: Disable rule
+      responses: {}
+      tags:
+        - Learner assignment
+      security:
+        - BearerAuth: []
+    parameters:
+      - name: trainingProviderId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{trainingProviderId}}'
+      - name: ruleId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{ruleId}}'
+  /api/{trainingProviderId}/learners/assignment/automation/rules/{ruleId}:
+    delete:
+      summary: Delete rule
+      responses: {}
+      tags:
+        - Learner assignment
+      security:
+        - BearerAuth: []
+    parameters:
+      - name: trainingProviderId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{trainingProviderId}}'
+      - name: ruleId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{ruleId}}'
+  /api/{trainingProviderId}/centre/training-provider:
+    get:
+      summary: Organization profile details
+      responses: {}
+      tags:
+        - Centre management
+      security:
+        - BearerAuth: []
+    parameters:
+      - name: trainingProviderId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{trainingProviderId}}'
+    put:
+      summary: Organization profile update details
+      responses: {}
+      tags:
+        - Centre management
+      security:
+        - BearerAuth: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                trainingProviderName:
+                  type: string
+                trainingProviderAddress:
+                  type: string
+                state:
+                  type: string
+                lga:
+                  type: string
+                website:
+                  type: string
+                  format: uri
+                description:
+                  type: string
+                trainingProviderNumber:
+                  type: string
+                category:
+                  type: string
+                industry:
+                  type: string
+                logoUrl:
+                  type: string
+                  format: uri
+                supportEmail:
+                  type: string
+                  format: email
+                supportPhone:
+                  type: string
+                  format: utc-millisec
+                primaryDirector:
+                  type: object
+                  properties:
+                    firstName:
+                      type: string
+                    lastName:
+                      type: string
+                    personalEmail:
+                      type: string
+                      format: email
+                    workEmail:
+                      type: string
+                      format: email
+                    phoneNumber:
+                      type: string
+                      format: utc-millisec
+            example:
+              trainingProviderName: Ethnocentrique
+              trainingProviderAddress: 12 Broad Street, Ikeja
+              state: Lagos
+              lga: Ikeja
+              website: https://abcskills.ng
+              description: Technical and vocational training provider
+              trainingProviderNumber: TP-NSQF-001
+              category: Private Training Provider
+              industry: Construction
+              logoUrl: https://example.com/logo.png
+              supportEmail: support@abcskills.ng
+              supportPhone: '+2348012345678'
+              primaryDirector:
+                firstName: Chidi
+                lastName: Bede
+                personalEmail: chidimarshalbede@gmail.com
+                workEmail: chidi@ethnocentrique.ng
+                phoneNumber: '+2348011110001'
+  /api/{trainingProviderId}/centre/training-centres:
+    get:
+      summary: Training Centres - List centres
+      parameters:
+        - name: page
+          in: query
+          schema:
+            type: integer
+          example: 1
+        - name: limit
+          in: query
+          schema:
+            type: integer
+          example: 20
+        - name: search
+          in: query
+          schema:
+            type: string
+          example: Gbagada
+      responses: {}
+      tags:
+        - Centre management
+      security:
+        - BearerAuth: []
+    parameters:
+      - name: trainingProviderId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{trainingProviderId}}'
+    post:
+      summary: Training Centres - Add training centre
+      responses: {}
+      tags:
+        - Centre management
+      security:
+        - BearerAuth: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                state:
+                  type: string
+                lga:
+                  type: string
+                address:
+                  type: string
+                contactFirstName:
+                  type: string
+                contactLastName:
+                  type: string
+                contactEmail:
+                  type: string
+                  format: email
+                contactPhone:
+                  type: string
+                  format: utc-millisec
+            example:
+              name: VI Training Hub
+              state: Lagos
+              lga: VI
+              address: 24 Herbert Macaulay Way, VI
+              contactFirstName: Chidi
+              contactLastName: Store
+              contactEmail: caracolasstore+21@gmail.com
+              contactPhone: '+2348011112222'
+  /api/{trainingProviderId}/centre/training-centres/{trainingCentreId}:
+    get:
+      summary: Training Centres - get training centre details
+      responses: {}
+      tags:
+        - Centre management
+      security:
+        - BearerAuth: []
+    parameters:
+      - name: trainingProviderId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{trainingProviderId}}'
+      - name: trainingCentreId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{trainingCentreId}}'
+    put:
+      summary: Training Centres - update training centre
+      responses: {}
+      tags:
+        - Centre management
+      security:
+        - BearerAuth: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                state:
+                  type: string
+                lga:
+                  type: string
+                address:
+                  type: string
+                contactFirstName:
+                  type: string
+                contactLastName:
+                  type: string
+                contactEmail:
+                  type: string
+                  format: email
+                contactPhone:
+                  type: string
+                  format: utc-millisec
+            example:
+              name: Yaba Training Hub - Main
+              state: Lagos
+              lga: Yaba
+              address: 30 Herbert Macaulay Way, Yaba
+              contactFirstName: Chidi
+              contactLastName: Okeke
+              contactEmail: chidi.okeke@abcskills.ng
+              contactPhone: '+2348011112222'
+    delete:
+      summary: Training Centres - Delete training centre
+      responses: {}
+      tags:
+        - Centre management
+      security:
+        - BearerAuth: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                confirmed:
+                  type: boolean
+            example:
+              confirmed: true
+  /api/{trainingProviderId}/centre/training-centres/{trainingCentreId}/deactivate:
+    post:
+      summary: Training Centres - Deactivate training centre
+      responses: {}
+      tags:
+        - Centre management
+      security:
+        - BearerAuth: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                confirmed:
+                  type: boolean
+            example:
+              confirmed: true
+    parameters:
+      - name: trainingProviderId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{trainingProviderId}}'
+      - name: trainingCentreId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{trainingCentreId}}'
+  /api/{trainingProviderId}/centre/training-centres/{trainingCentreId}/activate:
+    post:
+      summary: Training Centres - Activate training centre
+      responses: {}
+      tags:
+        - Centre management
+      security:
+        - BearerAuth: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                confirmed:
+                  type: boolean
+            example:
+              confirmed: true
+    parameters:
+      - name: trainingProviderId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{trainingProviderId}}'
+      - name: trainingCentreId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{trainingCentreId}}'
+  /api/{trainingProviderId}/centre/trade-areas/catalog:
+    get:
+      summary: Trade area - Catalog (available options grouped by awarding body)
+      responses: {}
+      tags:
+        - Centre management
+      security:
+        - BearerAuth: []
+    parameters:
+      - name: trainingProviderId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{trainingProviderId}}'
+  /api/{trainingProviderId}/centre/trade-areas/selected:
+    put:
+      summary: Trade area - save selected trade areas
+      responses: {}
+      tags:
+        - Centre management
+      security:
+        - BearerAuth: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                tradeAreaIds:
+                  type: array
+                  items:
+                    type: string
+            example:
+              tradeAreaIds:
+                - ta_cg_hospitality
+                - ta_nbte_plumbing
+    parameters:
+      - name: trainingProviderId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{trainingProviderId}}'
+    get:
+      summary: Trade area - current selected trade area
+      responses: {}
+      tags:
+        - Centre management
       security:
         - BearerAuth: []
 components:
