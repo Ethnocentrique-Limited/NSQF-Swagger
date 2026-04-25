@@ -5,6 +5,7 @@ info:
   description: ''
 servers:
   - url: '{{BASE_URL}}'
+  - url: '{{DGOVAL_BASE_URL}}'
 paths:
   /auth/signin:
     post:
@@ -497,6 +498,26 @@ paths:
                   type: string
                 hasNoNSQQualification:
                   type: boolean
+                otherNames:
+                  type: string
+                placeOfBirth:
+                  type: string
+                nationality:
+                  type: string
+                stateOfOrigin:
+                  type: string
+                currentPlaceOfWork:
+                  type: string
+                workplacePhoneNumber:
+                  type: string
+                  format: utc-millisec
+                workplaceEmail:
+                  type: string
+                  format: email
+                workplaceAddress:
+                  type: string
+                professionalOccupationArea:
+                  type: string
                 nsqQualifications:
                   type: array
                   items:
@@ -533,6 +554,15 @@ paths:
               password: Str0ngP@ss
               confirmPassword: Str0ngP@ss
               hasNoNSQQualification: false
+              otherNames: Dayo
+              placeOfBirth: Lagos
+              nationality: Nigerian
+              stateOfOrigin: Adamawa
+              currentPlaceOfWork: MTN
+              workplacePhoneNumber: '22234445455'
+              workplaceEmail: dah@mtn.com
+              workplaceAddress: Erwee
+              professionalOccupationArea: comms
               nsqQualifications:
                 - qualificationName: NSQ Welding
                   awardingBody: Example Council
@@ -691,6 +721,11 @@ paths:
           schema:
             type: integer
           example: 20
+        - name: search
+          in: query
+          schema:
+            type: string
+          example: Bruce
       responses: {}
       tags:
         - Manage Learner
