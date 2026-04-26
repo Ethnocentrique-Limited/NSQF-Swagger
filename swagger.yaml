@@ -71,14 +71,10 @@ paths:
                   type: string
                 confirmNewPassword:
                   type: string
-                resetToken:
-                  type: string
             example:
               email: caracolasstore@gmail.com
               newPassword: John@weq112
               confirmNewPassword: John@weq112
-              resetToken: >-
-                eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImNhcmFjb2xhc3N0b3JlQGdtYWlsLmNvbSIsInBhc3N3b3JkUmVzZXRUb2tlbklkIjoiMDFLUEZWRDdGUUJXVjVBSE5YQkowRkY3U1YiLCJ0b2tlblR5cGUiOiJwYXNzd29yZF9yZXNldCIsImlhdCI6MTc3NjUwMTMzMSwiZXhwIjoxNzc2NTAxOTMxfQ.fmdDSO5u9APNzz6fP17YRrL_6O8CBisq07oFriIbnq0
   /auth/verify-reset-password:
     post:
       summary: verify-reset-password
@@ -98,7 +94,7 @@ paths:
                   type: string
                   format: email
             example:
-              otp: '197248'
+              otp: '989308'
               email: caracolasstore@gmail.com
   /auth/refresh-token:
     post:
@@ -334,6 +330,12 @@ paths:
           schema:
             type: integer
           example: 1
+        - name: search
+          in: query
+          required: false
+          deprecated: false
+          schema: {}
+          example: Rand
       responses: {}
       tags:
         - Staff
@@ -386,7 +388,7 @@ paths:
             example:
               firstName: Bruce
               lastName: Wayne
-              email: caracolasstore+12@gmail.com
+              email: caracolasstore+122@gmail.com
               phone: '08031234567'
               tradeArea: Welding
               level: Level 3
@@ -539,16 +541,16 @@ paths:
                 reviewConfirmed:
                   type: boolean
             example:
-              inviteToken: 25d9115f9b562e5b9e62e054541fd1cd7a0af9b09e264735
+              inviteToken: 9b9bece4bcbba4dcbf3ad96de63e961460a2d0f5b41f0c9a
               firstName: Bruce
               lastName: Wayne
-              email: caracolasstore+12@gmail.com
+              email: caracolasstore+36@gmail.com
               phone: '+2348012345678'
               dateOfBirth: '1990-05-01T00:00:00.000Z'
               address: 1 Example Street
               passportPhotoUrl: https://cdn.example.com/photo.jpg
               tradeArea: Welding
-              level: Level 3
+              level: Level 1
               cohortId: 01KPF42CRW845NP7561MNS2KDQ
               courseOrProgramme: Optional programme name
               password: Str0ngP@ss
