@@ -1604,8 +1604,7 @@ paths:
       summary: Centre documents
       responses: {}
       tags:
-        - Digital folder
-        - Staff view
+        - Digital folder - Staff view
       security:
         - BearerAuth: []
     parameters:
@@ -1626,8 +1625,7 @@ paths:
       summary: CDF - Course delivery file
       responses: {}
       tags:
-        - Digital folder
-        - Staff view
+        - Digital folder - Staff view
       security:
         - BearerAuth: []
     parameters:
@@ -1648,8 +1646,7 @@ paths:
       summary: IQAM reports
       responses: {}
       tags:
-        - Digital folder
-        - Staff view
+        - Digital folder - Staff view
       security:
         - BearerAuth: []
     parameters:
@@ -1670,8 +1667,7 @@ paths:
       summary: NOS List
       responses: {}
       tags:
-        - Digital folder
-        - Staff view
+        - Digital folder - Staff view
       security:
         - BearerAuth: []
     parameters:
@@ -1692,8 +1688,7 @@ paths:
       summary: NOS unit
       responses: {}
       tags:
-        - Digital folder
-        - Staff view
+        - Digital folder - Staff view
       security:
         - BearerAuth: []
     parameters:
@@ -1720,8 +1715,7 @@ paths:
       summary: NOS PC
       responses: {}
       tags:
-        - Digital folder
-        - Staff view
+        - Digital folder - Staff view
       security:
         - BearerAuth: []
     parameters:
@@ -1748,8 +1742,7 @@ paths:
       summary: Digital folder overview
       responses: {}
       tags:
-        - Digital folder
-        - Staff view
+        - Digital folder - Staff view
       security:
         - BearerAuth: []
     parameters:
@@ -1770,8 +1763,7 @@ paths:
       summary: Digital folder overview
       responses: {}
       tags:
-        - Digital folder
-        - Learner view
+        - Digital folder - Learner view
       security:
         - BearerAuth: []
     parameters:
@@ -1786,8 +1778,7 @@ paths:
       summary: Digital folder centre document
       responses: {}
       tags:
-        - Digital folder
-        - Learner view
+        - Digital folder - Learner view
       security:
         - BearerAuth: []
     parameters:
@@ -1802,8 +1793,7 @@ paths:
       summary: Digital folder CDF (course delivery file / learning plan review)
       responses: {}
       tags:
-        - Digital folder
-        - Learner view
+        - Digital folder - Learner view
       security:
         - BearerAuth: []
     parameters:
@@ -1818,8 +1808,7 @@ paths:
       summary: NOS tracking — list
       responses: {}
       tags:
-        - Digital folder
-        - Learner view
+        - Digital folder - Learner view
       security:
         - BearerAuth: []
     parameters:
@@ -1834,8 +1823,7 @@ paths:
       summary: IQAM reports (placeholder / stub payload)
       responses: {}
       tags:
-        - Digital folder
-        - Learner view
+        - Digital folder - Learner view
       security:
         - BearerAuth: []
     parameters:
@@ -1850,8 +1838,7 @@ paths:
       summary: NOS tracking — one unit
       responses: {}
       tags:
-        - Digital folder
-        - Learner view
+        - Digital folder - Learner view
       security:
         - BearerAuth: []
     parameters:
@@ -1872,8 +1859,7 @@ paths:
       summary: NOS tracking — one performance criterion
       responses: {}
       tags:
-        - Digital folder
-        - Learner view
+        - Digital folder - Learner view
       security:
         - BearerAuth: []
     parameters:
@@ -1900,8 +1886,7 @@ paths:
       summary: Acknowledge digital folder document
       responses: {}
       tags:
-        - Digital folder
-        - Learner view
+        - Digital folder - Learner view
       security:
         - BearerAuth: []
     parameters:
@@ -1922,8 +1907,7 @@ paths:
       summary: Sign digital folder document
       responses: {}
       tags:
-        - Digital folder
-        - Learner view
+        - Digital folder - Learner view
       security:
         - BearerAuth: []
     parameters:
@@ -1944,8 +1928,7 @@ paths:
       summary: Complete induction checklist
       responses: {}
       tags:
-        - Digital folder
-        - Learner view
+        - Digital folder - Learner view
       security:
         - BearerAuth: []
       requestBody:
@@ -2020,8 +2003,7 @@ paths:
       summary: No design yet (Probably backoffice) - Save induction checklist template
       responses: {}
       tags:
-        - Digital folder
-        - Learner view
+        - Digital folder - Learner view
       security:
         - BearerAuth: []
       requestBody:
@@ -2118,8 +2100,7 @@ paths:
       summary: Learner - List units (numbers, titles, PC counts, progress, unit status)
       responses: {}
       tags:
-        - Assessment
-        - Request assessment and Manage Requests
+        - Assessment - Request assessment and Manage Requests
       security:
         - BearerAuth: []
     parameters:
@@ -2134,8 +2115,7 @@ paths:
       summary: Learner - Training centres for scheduling
       responses: {}
       tags:
-        - Assessment
-        - Request assessment and Manage Requests
+        - Assessment - Request assessment and Manage Requests
       security:
         - BearerAuth: []
     parameters:
@@ -2150,8 +2130,7 @@ paths:
       summary: Learner - PCs for selected unit + status + evidence methods
       responses: {}
       tags:
-        - Assessment
-        - Request assessment and Manage Requests
+        - Assessment - Request assessment and Manage Requests
       security:
         - BearerAuth: []
     parameters:
@@ -2172,8 +2151,7 @@ paths:
       summary: Submit assessment request
       responses: {}
       tags:
-        - Assessment
-        - Request assessment and Manage Requests
+        - Assessment - Request assessment and Manage Requests
       requestBody:
         content:
           application/json:
@@ -2215,8 +2193,7 @@ paths:
       summary: List my requests
       responses: {}
       tags:
-        - Assessment
-        - Request assessment and Manage Requests
+        - Assessment - Request assessment and Manage Requests
       security:
         - BearerAuth: []
   /api/{trainingProviderId}/learners/me/assessment-requests/{assessmentRequestId}:
@@ -2224,8 +2201,7 @@ paths:
       summary: Update pending assessment request
       responses: {}
       tags:
-        - Assessment
-        - Request assessment and Manage Requests
+        - Assessment - Request assessment and Manage Requests
       requestBody:
         content:
           application/json:
@@ -2263,8 +2239,7 @@ paths:
       summary: Request detail (status, schedule, unit, PCs, outcomes)
       responses: {}
       tags:
-        - Assessment
-        - Request assessment and Manage Requests
+        - Assessment - Request assessment and Manage Requests
       security:
         - BearerAuth: []
   /api/{trainingProviderId}/learners/me/assessment-requests/{assessmentRequestId}/cancel:
@@ -2272,8 +2247,7 @@ paths:
       summary: Cancel assessment request
       responses: {}
       tags:
-        - Assessment
-        - Request assessment and Manage Requests
+        - Assessment - Request assessment and Manage Requests
       requestBody:
         content:
           application/json:
@@ -2305,8 +2279,7 @@ paths:
       summary: Propose reschedule
       responses: {}
       tags:
-        - Assessment
-        - Request assessment and Manage Requests
+        - Assessment - Request assessment and Manage Requests
       requestBody:
         content:
           application/json:
@@ -2345,8 +2318,7 @@ paths:
       summary: Respond to QAA schedule proposal
       responses: {}
       tags:
-        - Assessment
-        - Request assessment and Manage Requests
+        - Assessment - Request assessment and Manage Requests
       requestBody:
         content:
           application/json:
@@ -2378,8 +2350,7 @@ paths:
       summary: NOS qualification context - List standards
       responses: {}
       tags:
-        - Assessment
-        - Request assessment and Manage Requests
+        - Assessment - Request assessment and Manage Requests
       security:
         - BearerAuth: []
     parameters:
@@ -2394,8 +2365,7 @@ paths:
       summary: NOS qualification context - My standards
       responses: {}
       tags:
-        - Assessment
-        - Request assessment and Manage Requests
+        - Assessment - Request assessment and Manage Requests
       security:
         - BearerAuth: []
     parameters:
@@ -2410,8 +2380,7 @@ paths:
       summary: NOS qualification context - Standard details
       responses: {}
       tags:
-        - Assessment
-        - Request assessment and Manage Requests
+        - Assessment - Request assessment and Manage Requests
       security:
         - BearerAuth: []
     parameters:
@@ -2432,8 +2401,7 @@ paths:
       summary: Assessments due
       responses: {}
       tags:
-        - Assessment
-        - Start scheduled assessment
+        - Assessment - Start scheduled assessment
       security:
         - BearerAuth: []
     parameters:
@@ -2448,8 +2416,7 @@ paths:
       summary: Start Assessment Info screen
       responses: {}
       tags:
-        - Assessment
-        - Start scheduled assessment
+        - Assessment - Start scheduled assessment
       security:
         - BearerAuth: []
     parameters:
@@ -2470,8 +2437,7 @@ paths:
       summary: Session questions/PC sequence
       responses: {}
       tags:
-        - Assessment
-        - Start scheduled assessment
+        - Assessment - Start scheduled assessment
       security:
         - BearerAuth: []
     parameters:
@@ -2492,8 +2458,7 @@ paths:
       summary: Start assessment session
       responses: {}
       tags:
-        - Assessment
-        - Start scheduled assessment
+        - Assessment - Start scheduled assessment
       security:
         - BearerAuth: []
     parameters:
@@ -2514,8 +2479,7 @@ paths:
       summary: Submit evidence for PC
       responses: {}
       tags:
-        - Assessment
-        - Start scheduled assessment
+        - Assessment - Start scheduled assessment
       security:
         - BearerAuth: []
       requestBody:
@@ -2558,8 +2522,7 @@ paths:
       summary: Submit assessment session for review
       responses: {}
       tags:
-        - Assessment
-        - Start scheduled assessment
+        - Assessment - Start scheduled assessment
       security:
         - BearerAuth: []
       requestBody:
@@ -2590,8 +2553,7 @@ paths:
       summary: Unit report list
       responses: {}
       tags:
-        - Assessment
-        - Assessment report (Unit level)
+        - Assessment - Assessment report (Unit level)
       security:
         - BearerAuth: []
     parameters:
@@ -2606,8 +2568,7 @@ paths:
       summary: Unit detail
       responses: {}
       tags:
-        - Assessment
-        - Assessment report (Unit level)
+        - Assessment - Assessment report (Unit level)
       security:
         - BearerAuth: []
     parameters:
