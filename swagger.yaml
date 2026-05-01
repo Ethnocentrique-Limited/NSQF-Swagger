@@ -5,7 +5,6 @@ info:
   description: ''
 servers:
   - url: '{{BASE_URL}}'
-  - url: '{{DGOVAL_BASE_URL}}'
 paths:
   /auth/signin:
     post:
@@ -1592,6 +1591,1038 @@ paths:
         - Centre management
       security:
         - BearerAuth: []
+  /api/uploads/image:
+    post:
+      summary: Upload image
+      responses: {}
+      tags:
+        - Generic
+      security:
+        - BearerAuth: []
+  /api/{trainingProviderId}/learners/{learnerId}/digital-folder/centre-documents:
+    get:
+      summary: Centre documents
+      responses: {}
+      tags:
+        - Digital folder
+        - Staff view
+      security:
+        - BearerAuth: []
+    parameters:
+      - name: trainingProviderId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{trainingProviderId}}'
+      - name: learnerId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{learnerId}}'
+  /api/{trainingProviderId}/learners/{learnerId}/digital-folder/cdf:
+    get:
+      summary: CDF - Course delivery file
+      responses: {}
+      tags:
+        - Digital folder
+        - Staff view
+      security:
+        - BearerAuth: []
+    parameters:
+      - name: trainingProviderId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{trainingProviderId}}'
+      - name: learnerId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{learnerId}}'
+  /api/{trainingProviderId}/learners/{learnerId}/digital-folder/iqam-reports:
+    get:
+      summary: IQAM reports
+      responses: {}
+      tags:
+        - Digital folder
+        - Staff view
+      security:
+        - BearerAuth: []
+    parameters:
+      - name: trainingProviderId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{trainingProviderId}}'
+      - name: learnerId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{learnerId}}'
+  /api/{trainingProviderId}/learners/{learnerId}/digital-folder/nos-tracking:
+    get:
+      summary: NOS List
+      responses: {}
+      tags:
+        - Digital folder
+        - Staff view
+      security:
+        - BearerAuth: []
+    parameters:
+      - name: trainingProviderId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{trainingProviderId}}'
+      - name: learnerId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{learnerId}}'
+  /api/{trainingProviderId}/learners/{learnerId}/digital-folder/nos-tracking/units/{unitId}:
+    get:
+      summary: NOS unit
+      responses: {}
+      tags:
+        - Digital folder
+        - Staff view
+      security:
+        - BearerAuth: []
+    parameters:
+      - name: trainingProviderId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{trainingProviderId}}'
+      - name: learnerId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{learnerId}}'
+      - name: unitId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{unitId}}'
+  /api/{trainingProviderId}/learners/{learnerId}/digital-folder/nos-tracking/units/{unitId}/pcs/{mergeKey}:
+    get:
+      summary: NOS PC
+      responses: {}
+      tags:
+        - Digital folder
+        - Staff view
+      security:
+        - BearerAuth: []
+    parameters:
+      - name: trainingProviderId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{trainingProviderId}}'
+      - name: learnerId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{learnerId}}'
+      - name: unitId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{unitId}}'
+  /api/{trainingProviderId}/learners/{learnerId}/digital-folder/overview:
+    get:
+      summary: Digital folder overview
+      responses: {}
+      tags:
+        - Digital folder
+        - Staff view
+      security:
+        - BearerAuth: []
+    parameters:
+      - name: trainingProviderId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{trainingProviderId}}'
+      - name: learnerId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{learnerId}}'
+  /api/{trainingProviderId}/learners/me/digital-folder:
+    get:
+      summary: Digital folder overview
+      responses: {}
+      tags:
+        - Digital folder
+        - Learner view
+      security:
+        - BearerAuth: []
+    parameters:
+      - name: trainingProviderId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{trainingProviderId}}'
+  /api/{trainingProviderId}/learners/me/digital-folder/centre-documents:
+    get:
+      summary: Digital folder centre document
+      responses: {}
+      tags:
+        - Digital folder
+        - Learner view
+      security:
+        - BearerAuth: []
+    parameters:
+      - name: trainingProviderId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{trainingProviderId}}'
+  /api/{trainingProviderId}/learners/me/digital-folder/cdf:
+    get:
+      summary: Digital folder CDF (course delivery file / learning plan review)
+      responses: {}
+      tags:
+        - Digital folder
+        - Learner view
+      security:
+        - BearerAuth: []
+    parameters:
+      - name: trainingProviderId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{trainingProviderId}}'
+  /api/{trainingProviderId}/learners/me/digital-folder/nos-tracking:
+    get:
+      summary: NOS tracking — list
+      responses: {}
+      tags:
+        - Digital folder
+        - Learner view
+      security:
+        - BearerAuth: []
+    parameters:
+      - name: trainingProviderId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{trainingProviderId}}'
+  /api/{trainingProviderId}/learners/me/digital-folder/iqam-reports:
+    get:
+      summary: IQAM reports (placeholder / stub payload)
+      responses: {}
+      tags:
+        - Digital folder
+        - Learner view
+      security:
+        - BearerAuth: []
+    parameters:
+      - name: trainingProviderId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{trainingProviderId}}'
+  /api/{trainingProviderId}/learners/me/digital-folder/nos-tracking/units/{unitId}:
+    get:
+      summary: NOS tracking — one unit
+      responses: {}
+      tags:
+        - Digital folder
+        - Learner view
+      security:
+        - BearerAuth: []
+    parameters:
+      - name: trainingProviderId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{trainingProviderId}}'
+      - name: unitId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{unitId}}'
+  /api/{trainingProviderId}/learners/me/digital-folder/nos-tracking/units/{unitId}/pcs/{mergeKey}:
+    get:
+      summary: NOS tracking — one performance criterion
+      responses: {}
+      tags:
+        - Digital folder
+        - Learner view
+      security:
+        - BearerAuth: []
+    parameters:
+      - name: trainingProviderId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{trainingProviderId}}'
+      - name: unitId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{unitId}}'
+      - name: mergeKey
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{mergeKey}}'
+  /api/{trainingProviderId}/learners/me/onboarding-checklist/items/{itemKey}/acknowledge:
+    post:
+      summary: Acknowledge digital folder document
+      responses: {}
+      tags:
+        - Digital folder
+        - Learner view
+      security:
+        - BearerAuth: []
+    parameters:
+      - name: trainingProviderId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{trainingProviderId}}'
+      - name: itemKey
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{itemKey}}'
+  /api/{trainingProviderId}/learners/me/onboarding-checklist/items/{itemKey}/sign:
+    post:
+      summary: Sign digital folder document
+      responses: {}
+      tags:
+        - Digital folder
+        - Learner view
+      security:
+        - BearerAuth: []
+    parameters:
+      - name: trainingProviderId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{trainingProviderId}}'
+      - name: itemKey
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{itemKey}}'
+  /api/{trainingProviderId}/learners/me/onboarding-checklist/items/induction_checklist:
+    patch:
+      summary: Complete induction checklist
+      responses: {}
+      tags:
+        - Digital folder
+        - Learner view
+      security:
+        - BearerAuth: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                induction:
+                  type: object
+                  properties:
+                    checklist:
+                      type: object
+                      properties:
+                        receive_explanation_on_nsqf_nos_centre_awarding_body:
+                          type: boolean
+                        receive_explanation_on_assessment_procedures_methods:
+                          type: boolean
+                        explain_procedures_regarding_assessment_review_feedback:
+                          type: boolean
+                        receive_learning_materials_information:
+                          type: boolean
+                        provide_methods_of_contact:
+                          type: boolean
+                        outline_basic_occupational_health_safety:
+                          type: boolean
+                        explain_evacuation_procedures:
+                          type: boolean
+                        advice_location_of_first_aid_supplies:
+                          type: boolean
+                        outline_other_relevant_information:
+                          type: boolean
+                        advise_exit_route_and_toilet:
+                          type: boolean
+                        support_team_contact_details_explained:
+                          type: boolean
+                        ground_rules_established_explained:
+                          type: boolean
+                        initial_assessment_carried_out:
+                          type: boolean
+                        information_centre_practical_work_supplied_discussed:
+                          type: boolean
+                        learners_received_privacy_grievances_appeal_info:
+                          type: boolean
+            example:
+              induction:
+                checklist:
+                  receive_explanation_on_nsqf_nos_centre_awarding_body: true
+                  receive_explanation_on_assessment_procedures_methods: true
+                  explain_procedures_regarding_assessment_review_feedback: true
+                  receive_learning_materials_information: true
+                  provide_methods_of_contact: true
+                  outline_basic_occupational_health_safety: true
+                  explain_evacuation_procedures: true
+                  advice_location_of_first_aid_supplies: true
+                  outline_other_relevant_information: true
+                  advise_exit_route_and_toilet: true
+                  support_team_contact_details_explained: true
+                  ground_rules_established_explained: true
+                  initial_assessment_carried_out: true
+                  information_centre_practical_work_supplied_discussed: true
+                  learners_received_privacy_grievances_appeal_info: true
+    parameters:
+      - name: trainingProviderId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{trainingProviderId}}'
+  /api/{trainingProviderId}/learners/staff/onboarding-checklist/induction-template:
+    put:
+      summary: No design yet (Probably backoffice) - Save induction checklist template
+      responses: {}
+      tags:
+        - Digital folder
+        - Learner view
+      security:
+        - BearerAuth: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                items:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      key:
+                        type: string
+                      label:
+                        type: string
+                      sortOrder:
+                        type: integer
+            example:
+              items:
+                - key: receive_explanation_on_nsqf_nos_centre_awarding_body
+                  label: >-
+                    Receive explanation on the NSQF/NOS, the centre and awarding
+                    body.
+                  sortOrder: 0
+                - key: receive_explanation_on_assessment_procedures_methods
+                  label: Receive explanation on assessment procedures and methods.
+                  sortOrder: 1
+                - key: explain_procedures_regarding_assessment_review_feedback
+                  label: >-
+                    Explain the procedures regarding assessment, review, and
+                    feedback.
+                  sortOrder: 2
+                - key: receive_learning_materials_information
+                  label: >-
+                    Receive learning materials or information on how to obtain
+                    learning materials.
+                  sortOrder: 3
+                - key: provide_methods_of_contact
+                  label: >-
+                    Provide learners with methods of contact, e.g phone number,
+                    email.
+                  sortOrder: 4
+                - key: outline_basic_occupational_health_safety
+                  label: >-
+                    Outline basic occupational health and safety procedures and
+                    location of information.
+                  sortOrder: 5
+                - key: explain_evacuation_procedures
+                  label: >-
+                    Explain evacuation procedures relevant to the location of
+                    the assessment.
+                  sortOrder: 6
+                - key: advice_location_of_first_aid_supplies
+                  label: Advice location of first aid supplies.
+                  sortOrder: 7
+                - key: outline_other_relevant_information
+                  label: >-
+                    Outline any other relevant information such as any
+                    restrictions, opening and Closing time (duration of
+                    assessment).
+                  sortOrder: 8
+                - key: advise_exit_route_and_toilet
+                  label: Advise the location of the exit route and toilet.
+                  sortOrder: 9
+                - key: support_team_contact_details_explained
+                  label: Support team and contact details explained.
+                  sortOrder: 10
+                - key: ground_rules_established_explained
+                  label: Ground Rules established and explained.
+                  sortOrder: 11
+                - key: initial_assessment_carried_out
+                  label: Initial assessment carried out.
+                  sortOrder: 12
+                - key: information_centre_practical_work_supplied_discussed
+                  label: Information Centre for practical work supplied & discussed.
+                  sortOrder: 13
+                - key: learners_received_privacy_grievances_appeal_info
+                  label: >-
+                    Learners have received information sheets detailing Privacy,
+                    grievances, Appeal procedure etc (issued at time of
+                    enrollment).
+                  sortOrder: 14
+    parameters:
+      - name: trainingProviderId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{trainingProviderId}}'
+  /api/{trainingProviderId}/learners/me/assessment-requests/new/units:
+    get:
+      summary: Learner - List units (numbers, titles, PC counts, progress, unit status)
+      responses: {}
+      tags:
+        - Assessment
+        - Request assessment and Manage Requests
+      security:
+        - BearerAuth: []
+    parameters:
+      - name: trainingProviderId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{trainingProviderId}}'
+  /api/{trainingProviderId}/learners/me/training-centres-for-scheduling:
+    get:
+      summary: Learner - Training centres for scheduling
+      responses: {}
+      tags:
+        - Assessment
+        - Request assessment and Manage Requests
+      security:
+        - BearerAuth: []
+    parameters:
+      - name: trainingProviderId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{trainingProviderId}}'
+  /api/{trainingProviderId}/learners/me/assessment-requests/new/units/{unitId}/performance-criteria:
+    get:
+      summary: Learner - PCs for selected unit + status + evidence methods
+      responses: {}
+      tags:
+        - Assessment
+        - Request assessment and Manage Requests
+      security:
+        - BearerAuth: []
+    parameters:
+      - name: trainingProviderId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{trainingProviderId}}'
+      - name: unitId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{unitId}}'
+  /api/{trainingProviderId}/learners/me/assessment-requests:
+    post:
+      summary: Submit assessment request
+      responses: {}
+      tags:
+        - Assessment
+        - Request assessment and Manage Requests
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                unitId:
+                  type: string
+                performanceCriterionIds:
+                  type: array
+                  items:
+                    type: string
+                scheduledStartAt:
+                  type: string
+                  format: date-time
+                trainingCentreId:
+                  type: string
+                trainingCentreName:
+                  type: string
+                learnerNotes:
+                  type: string
+            example:
+              unitId: 01KXXXXXXXXXXXXUNIT
+              performanceCriterionIds:
+                - 01KXXXXXXXXXXXXPC01
+                - 01KXXXXXXXXXXXXPC02
+              scheduledStartAt: '2026-05-01T09:00:00.000Z'
+              trainingCentreId: 01KXXXXXXXXXXXXCENTRE
+              trainingCentreName: Main Training Centre
+              learnerNotes: Prefer morning session.
+    parameters:
+      - name: trainingProviderId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{trainingProviderId}}'
+    get:
+      summary: List my requests
+      responses: {}
+      tags:
+        - Assessment
+        - Request assessment and Manage Requests
+      security:
+        - BearerAuth: []
+  /api/{trainingProviderId}/learners/me/assessment-requests/{assessmentRequestId}:
+    patch:
+      summary: Update pending assessment request
+      responses: {}
+      tags:
+        - Assessment
+        - Request assessment and Manage Requests
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                scheduledStartAt:
+                  type: string
+                  format: date-time
+                trainingCentreId:
+                  type: string
+                trainingCentreName:
+                  type: string
+                learnerNotes:
+                  type: string
+            example:
+              scheduledStartAt: '2026-05-03T10:30:00.000Z'
+              trainingCentreId: 01KXXXXXXXXXXXXCENTRE
+              trainingCentreName: Main Training Centre
+              learnerNotes: Updated availability.
+    parameters:
+      - name: trainingProviderId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{trainingProviderId}}'
+      - name: assessmentRequestId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{assessmentRequestId}}'
+    get:
+      summary: Request detail (status, schedule, unit, PCs, outcomes)
+      responses: {}
+      tags:
+        - Assessment
+        - Request assessment and Manage Requests
+      security:
+        - BearerAuth: []
+  /api/{trainingProviderId}/learners/me/assessment-requests/{assessmentRequestId}/cancel:
+    post:
+      summary: Cancel assessment request
+      responses: {}
+      tags:
+        - Assessment
+        - Request assessment and Manage Requests
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                reason:
+                  type: string
+                details:
+                  type: string
+            example:
+              reason: Unable to attend on proposed date due to work shift.
+              details: Please allow me to reschedule next week.
+    parameters:
+      - name: trainingProviderId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{trainingProviderId}}'
+      - name: assessmentRequestId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{assessmentRequestId}}'
+  /api/{trainingProviderId}/learners/me/assessment-requests/{assessmentRequestId}/reschedule-proposal:
+    post:
+      summary: Propose reschedule
+      responses: {}
+      tags:
+        - Assessment
+        - Request assessment and Manage Requests
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                proposedStartAt:
+                  type: string
+                  format: date-time
+                learnerNotes:
+                  type: string
+                trainingCentreId:
+                  type: string
+                trainingCentreName:
+                  type: string
+            example:
+              proposedStartAt: '2026-05-06T11:00:00.000Z'
+              learnerNotes: Available after 11 AM.
+              trainingCentreId: 01KXXXXXXXXXXXXCENTRE
+              trainingCentreName: Main Training Centre
+    parameters:
+      - name: trainingProviderId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{trainingProviderId}}'
+      - name: assessmentRequestId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{assessmentRequestId}}'
+  /api/{trainingProviderId}/learners/me/assessment-requests/{assessmentRequestId}/respond-to-qaa-schedule-proposal:
+    post:
+      summary: Respond to QAA schedule proposal
+      responses: {}
+      tags:
+        - Assessment
+        - Request assessment and Manage Requests
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                action:
+                  type: string
+                learnerNotes:
+                  type: string
+            example:
+              action: accept
+              learnerNotes: Confirmed.
+    parameters:
+      - name: trainingProviderId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{trainingProviderId}}'
+      - name: assessmentRequestId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{assessmentRequestId}}'
+  /api/{trainingProviderId}/learners/me/nos/standards:
+    get:
+      summary: NOS qualification context - List standards
+      responses: {}
+      tags:
+        - Assessment
+        - Request assessment and Manage Requests
+      security:
+        - BearerAuth: []
+    parameters:
+      - name: trainingProviderId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{trainingProviderId}}'
+  /api/{trainingProviderId}/learners/me/nos/standards/my:
+    get:
+      summary: NOS qualification context - My standards
+      responses: {}
+      tags:
+        - Assessment
+        - Request assessment and Manage Requests
+      security:
+        - BearerAuth: []
+    parameters:
+      - name: trainingProviderId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{trainingProviderId}}'
+  /api/{trainingProviderId}/learners/me/nos/standards/{standardId}:
+    get:
+      summary: NOS qualification context - Standard details
+      responses: {}
+      tags:
+        - Assessment
+        - Request assessment and Manage Requests
+      security:
+        - BearerAuth: []
+    parameters:
+      - name: trainingProviderId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{trainingProviderId}}'
+      - name: standardId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{standardId}}'
+  /api/{trainingProviderId}/learners/assessments/due:
+    get:
+      summary: Assessments due
+      responses: {}
+      tags:
+        - Assessment
+        - Start scheduled assessment
+      security:
+        - BearerAuth: []
+    parameters:
+      - name: trainingProviderId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{trainingProviderId}}'
+  /api/{trainingProviderId}/learners/assessments/{assessmentRequestId}/start-info:
+    get:
+      summary: Start Assessment Info screen
+      responses: {}
+      tags:
+        - Assessment
+        - Start scheduled assessment
+      security:
+        - BearerAuth: []
+    parameters:
+      - name: trainingProviderId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{trainingProviderId}}'
+      - name: assessmentRequestId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{assessmentRequestId}}'
+  /api/{trainingProviderId}/learners/assessment-sessions/{sessionId}/questions:
+    get:
+      summary: Session questions/PC sequence
+      responses: {}
+      tags:
+        - Assessment
+        - Start scheduled assessment
+      security:
+        - BearerAuth: []
+    parameters:
+      - name: trainingProviderId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{trainingProviderId}}'
+      - name: sessionId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{sessionId}}'
+  /api/{trainingProviderId}/learners/assessments/{assessmentRequestId}/start:
+    post:
+      summary: Start assessment session
+      responses: {}
+      tags:
+        - Assessment
+        - Start scheduled assessment
+      security:
+        - BearerAuth: []
+    parameters:
+      - name: trainingProviderId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{trainingProviderId}}'
+      - name: assessmentRequestId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{assessmentRequestId}}'
+  /api/{trainingProviderId}/learners/assessment-sessions/{sessionId}/pcs/{assessmentPcId}/evidence:
+    put:
+      summary: Submit evidence for PC
+      responses: {}
+      tags:
+        - Assessment
+        - Start scheduled assessment
+      security:
+        - BearerAuth: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                method:
+                  type: string
+                storageKey:
+                  type: string
+                notes:
+                  type: string
+            example:
+              method: video
+              storageKey: learner-evidence/01K.../pc-01/video.mp4
+              notes: Demonstration recording for this criterion.
+    parameters:
+      - name: trainingProviderId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{trainingProviderId}}'
+      - name: sessionId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{sessionId}}'
+      - name: assessmentPcId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{assessmentPcId}}'
+  /api/{trainingProviderId}/learners/me/assessment-sessions/{sessionId}/submit-for-review:
+    post:
+      summary: Submit assessment session for review
+      responses: {}
+      tags:
+        - Assessment
+        - Start scheduled assessment
+      security:
+        - BearerAuth: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                learnerComment:
+                  type: string
+            example:
+              learnerComment: All required evidence has been uploaded.
+    parameters:
+      - name: trainingProviderId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{trainingProviderId}}'
+      - name: sessionId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{sessionId}}'
+  /api/{trainingProviderId}/learners/me/assessment-reports/units:
+    get:
+      summary: Unit report list
+      responses: {}
+      tags:
+        - Assessment
+        - Assessment report (Unit level)
+      security:
+        - BearerAuth: []
+    parameters:
+      - name: trainingProviderId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{trainingProviderId}}'
+  /api/{trainingProviderId}/learners/me/assessment-reports/units/{unitId}:
+    get:
+      summary: Unit detail
+      responses: {}
+      tags:
+        - Assessment
+        - Assessment report (Unit level)
+      security:
+        - BearerAuth: []
+    parameters:
+      - name: trainingProviderId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{trainingProviderId}}'
+      - name: unitId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{unitId}}'
 components:
   securitySchemes:
     BearerAuth:
