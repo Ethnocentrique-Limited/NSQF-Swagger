@@ -1585,6 +1585,7 @@ paths:
                 - ta_nbte_welding
                 - ta_nbte_electrical
                 - 01KQM0AWFYGAE71MNMDYNX4677
+                - 01KQQHS0RKMTT1NP7KE5VTZSGB
     parameters:
       - name: trainingProviderId
         in: path
@@ -1599,6 +1600,28 @@ paths:
         - Centre management
       security:
         - BearerAuth: []
+  /api/{trainingProviderId}/centre/trade-areas/levels:
+    get:
+      summary: Get trade area levels
+      parameters:
+        - name: tradeAreaCatalogId
+          in: query
+          required: false
+          deprecated: false
+          schema: {}
+          example: 01KQM0AWF45SCKW2XQ0QFE821J
+      responses: {}
+      tags:
+        - Centre management
+      security:
+        - BearerAuth: []
+    parameters:
+      - name: trainingProviderId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{trainingProviderId}}'
   /api/uploads/image:
     post:
       summary: Upload image
