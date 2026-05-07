@@ -5,6 +5,7 @@ info:
   description: ''
 servers:
   - url: '{{BASE_URL}}'
+  - url: '{{DGOVAL_BASE_URL}}'
 paths:
   /auth/signin:
     post:
@@ -150,7 +151,7 @@ paths:
               email: caracolasstore+17@gmail.com
               phone: '+2348152957042'
               tradeArea: Mechanical Installation
-              role: iqam
+              role: learner
               loginUrl: https://app.nsqf.com/login
     parameters:
       - name: trainingProviderId
@@ -2237,7 +2238,7 @@ paths:
               performanceCriterionIds:
                 - 01KQQHV5K6QPNAY2P4Z4HGP4GZ
                 - 01KQQHV5KBY5P1DP1QF7Z8FN2G
-              scheduledStartAt: '2026-05-03T21:30:00.000Z'
+              scheduledStartAt: '2026-05-05T21:30:00.000Z'
               trainingCentreId: 01KQKVRK12H4EFEZD9YWRR375Y
               trainingCentreName: Ikorodu Center 4
               learnerNotes: Prefer morning session.
@@ -2263,7 +2264,8 @@ paths:
         - name: limit
           in: query
           schema:
-            type: string
+            type: integer
+          example: 20
       responses: {}
       tags:
         - Assessment - Request assessment and Manage Requests
@@ -2812,6 +2814,572 @@ paths:
         schema:
           type: string
         example: '{{unitId}}'
+  /api/{trainingProviderId}/learners/me/dashboard:
+    get:
+      summary: Learner dashboard
+      responses: {}
+      tags:
+        - Learner dashboard and Notifications
+      security:
+        - BearerAuth: []
+    parameters:
+      - name: trainingProviderId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{trainingProviderId}}'
+  /api/{trainingProviderId}/learners/me/notifications:
+    get:
+      summary: Learner notifications
+      responses: {}
+      tags:
+        - Learner dashboard and Notifications
+      security:
+        - BearerAuth: []
+    parameters:
+      - name: trainingProviderId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{trainingProviderId}}'
+  /api/{trainingProviderId}/learners/me/notifications/{notifcationId}/read:
+    patch:
+      summary: Read Learner notifications
+      responses: {}
+      tags:
+        - Learner dashboard and Notifications
+      security:
+        - BearerAuth: []
+    parameters:
+      - name: trainingProviderId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{trainingProviderId}}'
+      - name: notifcationId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{notifcationId}}'
+  /api/{trainingProviderId}/learners/me/notifications/read-all:
+    patch:
+      summary: Mark all notifications as read
+      responses: {}
+      tags:
+        - Learner dashboard and Notifications
+      security:
+        - BearerAuth: []
+    parameters:
+      - name: trainingProviderId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{trainingProviderId}}'
+  /api/{trainingProviderId}/learners/me/profile:
+    get:
+      summary: Get profile
+      responses: {}
+      tags:
+        - Learner profile
+      security:
+        - BearerAuth: []
+    parameters:
+      - name: trainingProviderId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{trainingProviderId}}'
+  /api/{trainingProviderId}/learners/me/profile/inviter:
+    get:
+      summary: Get inviter details
+      responses: {}
+      tags:
+        - Learner profile
+      security:
+        - BearerAuth: []
+    parameters:
+      - name: trainingProviderId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{trainingProviderId}}'
+  /api/{trainingProviderId}/learners/me/profile/password:
+    post:
+      summary: Change password
+      responses: {}
+      tags:
+        - Learner profile
+      security:
+        - BearerAuth: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                currentPassword:
+                  type: string
+                newPassword:
+                  type: string
+                confirmNewPassword:
+                  type: string
+            example:
+              currentPassword: Str0ngP@ss
+              newPassword: Password#123
+              confirmNewPassword: Password#123
+    parameters:
+      - name: trainingProviderId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{trainingProviderId}}'
+  /api/{trainingProviderId}/learners/me/profile/notification-preferences:
+    patch:
+      summary: Save learner notification preferences
+      responses: {}
+      tags:
+        - Learner profile
+      security:
+        - BearerAuth: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                assessmentEnabled:
+                  type: boolean
+                documentsEnabled:
+                  type: boolean
+                appealsEnabled:
+                  type: boolean
+                types:
+                  type: object
+                  properties:
+                    LEARNER_ASSESSMENT_REQUEST_SUBMITTED:
+                      type: boolean
+                    LEARNER_ASSESSMENT_REQUEST_ACCEPTED:
+                      type: boolean
+                    LEARNER_ASSESSMENT_REQUEST_DECLINED:
+                      type: boolean
+                    LEARNER_ASSESSMENT_SCHEDULED:
+                      type: boolean
+                    LEARNER_ASSESSMENT_DUE_TODAY:
+                      type: boolean
+                    LEARNER_ASSESSMENT_SUBMITTED:
+                      type: boolean
+                    LEARNER_ASSESSMENT_REVIEWED:
+                      type: boolean
+                    LEARNER_RESCHEDULE_REQUEST_SENT:
+                      type: boolean
+                    LEARNER_RESCHEDULE_PROPOSED:
+                      type: boolean
+                    LEARNER_RESCHEDULE_ACCEPTED:
+                      type: boolean
+                    LEARNER_RESCHEDULE_DECLINED:
+                      type: boolean
+                    LEARNER_REQUEST_CANCELLED:
+                      type: boolean
+                    LEARNER_REPORT_READY:
+                      type: boolean
+                    LEARNER_REPORT_UPDATED:
+                      type: boolean
+                    LEARNER_DOCUMENT_COUNTERSIGNED:
+                      type: boolean
+                    LEARNER_SUPPORT_ANALYSIS_REVIEWED:
+                      type: boolean
+                    LEARNER_LEARNING_PLAN_UPDATED:
+                      type: boolean
+                    LEARNER_CENTRE_SIGNATURE_ADDED:
+                      type: boolean
+                    LEARNER_DOCUMENT_SAVED_DIGITAL_FOLDER:
+                      type: boolean
+                    LEARNER_APPEAL_SUBMITTED:
+                      type: boolean
+                    LEARNER_APPEAL_JUDGMENT_RECEIVED:
+                      type: boolean
+                    LEARNER_APPEAL_RESPONSE_NEEDED:
+                      type: boolean
+                    LEARNER_APPEAL_ESCALATED:
+                      type: boolean
+                    LEARNER_APPEAL_UPHELD:
+                      type: boolean
+                    LEARNER_APPEAL_NOT_UPHELD:
+                      type: boolean
+                    LEARNER_APPEAL_FINAL_DECISION:
+                      type: boolean
+                    LEARNER_APPEAL_CLOSED:
+                      type: boolean
+            example:
+              assessmentEnabled: true
+              documentsEnabled: true
+              appealsEnabled: true
+              types:
+                LEARNER_ASSESSMENT_REQUEST_SUBMITTED: true
+                LEARNER_ASSESSMENT_REQUEST_ACCEPTED: true
+                LEARNER_ASSESSMENT_REQUEST_DECLINED: true
+                LEARNER_ASSESSMENT_SCHEDULED: true
+                LEARNER_ASSESSMENT_DUE_TODAY: true
+                LEARNER_ASSESSMENT_SUBMITTED: true
+                LEARNER_ASSESSMENT_REVIEWED: true
+                LEARNER_RESCHEDULE_REQUEST_SENT: true
+                LEARNER_RESCHEDULE_PROPOSED: true
+                LEARNER_RESCHEDULE_ACCEPTED: true
+                LEARNER_RESCHEDULE_DECLINED: true
+                LEARNER_REQUEST_CANCELLED: true
+                LEARNER_REPORT_READY: true
+                LEARNER_REPORT_UPDATED: true
+                LEARNER_DOCUMENT_COUNTERSIGNED: true
+                LEARNER_SUPPORT_ANALYSIS_REVIEWED: true
+                LEARNER_LEARNING_PLAN_UPDATED: true
+                LEARNER_CENTRE_SIGNATURE_ADDED: true
+                LEARNER_DOCUMENT_SAVED_DIGITAL_FOLDER: true
+                LEARNER_APPEAL_SUBMITTED: true
+                LEARNER_APPEAL_JUDGMENT_RECEIVED: true
+                LEARNER_APPEAL_RESPONSE_NEEDED: true
+                LEARNER_APPEAL_ESCALATED: true
+                LEARNER_APPEAL_UPHELD: true
+                LEARNER_APPEAL_NOT_UPHELD: true
+                LEARNER_APPEAL_FINAL_DECISION: true
+                LEARNER_APPEAL_CLOSED: true
+    parameters:
+      - name: trainingProviderId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{trainingProviderId}}'
+  /api/{trainingProviderId}/learners/me/appeals:
+    get:
+      summary: Learner view - List learner appeals
+      responses: {}
+      tags:
+        - Appeal assessment decision
+      security:
+        - BearerAuth: []
+    parameters:
+      - name: trainingProviderId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{trainingProviderId}}'
+    post:
+      summary: Learner view - Create appeals (starts at stage 1)
+      responses: {}
+      tags:
+        - Appeal assessment decision
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                mergeKey:
+                  type: string
+                  format: uri
+                summary:
+                  type: string
+            example:
+              mergeKey: unitId:::pcCodeOrAssessmentPcId
+              summary: Learner appeal summary...
+  /api/{trainingProviderId}/learners/me/appeals/{appealId}:
+    get:
+      summary: Learner view - Get appeal details
+      responses: {}
+      tags:
+        - Appeal assessment decision
+      security:
+        - BearerAuth: []
+    parameters:
+      - name: trainingProviderId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{trainingProviderId}}'
+      - name: appealId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{appealId}}'
+  /api/{trainingProviderId}/learners/staff/appeals/pending-review:
+    get:
+      summary: Reviewer queue - Pending appeal for current role
+      responses: {}
+      tags:
+        - Appeal assessment decision
+      security:
+        - BearerAuth: []
+    parameters:
+      - name: trainingProviderId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{trainingProviderId}}'
+  /api/{trainingProviderId}/learners/staff/appeals/{appealId}:
+    get:
+      summary: Reviewer queue - Appeal details
+      responses: {}
+      tags:
+        - Appeal assessment decision
+    parameters:
+      - name: trainingProviderId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{trainingProviderId}}'
+      - name: appealId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{appealId}}'
+  /api/{trainingProviderId}/learners/me/appeals/process-acknowledgment:
+    post:
+      summary: Acknowledge pre-procedural appeal process (required before create).
+      responses: {}
+      tags:
+        - Appeal assessment decision
+      security:
+        - BearerAuth: []
+    parameters:
+      - name: trainingProviderId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{trainingProviderId}}'
+  /api/{trainingProviderId}/learners/me/appeals/eligible-targets:
+    get:
+      summary: List eligible appeals units and pcs
+      responses: {}
+      tags:
+        - Appeal assessment decision
+      security:
+        - BearerAuth: []
+    parameters:
+      - name: trainingProviderId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{trainingProviderId}}'
+  /api/{trainingProviderId}/learners/me/appeals/{appealId}/respond-to-judgment:
+    post:
+      summary: Learner responds after stage judgement
+      responses: {}
+      tags:
+        - Appeal assessment decision
+      security:
+        - BearerAuth: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+            example: "{\r\n    \"action\": \"accept_judgment\"\r\n    // \"action\": \"appeal_judgment\"\r\n}"
+    parameters:
+      - name: trainingProviderId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{trainingProviderId}}'
+      - name: appealId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{appealId}}'
+  /api/{trainingProviderId}/learners/staff/appeals/{appealId}/submit-judgment:
+    post:
+      summary: Reviewer - Submit stage judgement
+      responses: {}
+      tags:
+        - Appeal assessment decision
+      security:
+        - BearerAuth: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+            example: "    {\r\n    //   \"judgment\": \"not_sufficient,\r\n      \"judgment\": \"sufficient\",\r\n      \"comment\": \"Evidence meets requirements...\"\r\n    }"
+    parameters:
+      - name: trainingProviderId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{trainingProviderId}}'
+  /api/{trainingProviderId}/learners/staff/assessment-reviews:
+    get:
+      summary: List review queue and metrics
+      parameters:
+        - name: search
+          in: query
+          description: learner name, learner id, assesment id
+          schema:
+            type: string
+          example: Echefula
+        - name: cohortId
+          in: query
+          schema:
+            type: string
+          example: 01KPF42CRW845NP7561MNS2KDQ
+        - name: unitId
+          in: query
+          schema:
+            type: string
+          example: 01KQQHV5JX8Q7G1CSGFF1SBCDE
+        - name: status
+          in: query
+          description: pending_review, under_review, completed
+          schema:
+            type: string
+          example: pending_review
+        - name: submittedFrom
+          in: query
+          schema:
+            type: string
+          example: '2026-05-05'
+        - name: limit
+          in: query
+          schema:
+            type: integer
+          example: 20
+        - name: page
+          in: query
+          schema:
+            type: integer
+          example: 1
+      responses: {}
+      tags:
+        - Assessment review
+      security:
+        - BearerAuth: []
+    parameters:
+      - name: trainingProviderId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{trainingProviderId}}'
+  /api/{trainingProviderId}/learners/staff/assessment-reviews/{assessmentRequestId}:
+    get:
+      summary: Get review details
+      responses: {}
+      tags:
+        - Assessment review
+      security:
+        - BearerAuth: []
+    parameters:
+      - name: trainingProviderId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{trainingProviderId}}'
+      - name: assessmentRequestId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{assessmentRequestId}}'
+  /api/{trainingProviderId}/learners/staff/assessment-reviews/{assessmentRequestId}/claim:
+    post:
+      summary: Claim review
+      responses: {}
+      tags:
+        - Assessment review
+      security:
+        - BearerAuth: []
+    parameters:
+      - name: trainingProviderId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{trainingProviderId}}'
+      - name: assessmentRequestId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{assessmentRequestId}}'
+  /api/learners/staff/assessment-reviews/{assessmentRequestId}/pcs/{assessmentPcId}/evidence-methods/{evidenceMethod}:
+    patch:
+      summary: Submit evidence method judgement
+      responses: {}
+      tags:
+        - Assessment review
+      security:
+        - BearerAuth: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                judgment:
+                  type: string
+                note:
+                  type: string
+            example:
+              judgment: sufficient
+              note: Satisfied with evidence
+    parameters:
+      - name: assessmentRequestId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{assessmentRequestId}}'
+      - name: assessmentPcId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{assessmentPcId}}'
+      - name: evidenceMethod
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{evidenceMethod}}'
+  /api/{trainingProviderId}/learners/staff/assessment-reviews/{assessmentRequestId}/submit:
+    post:
+      summary: Submit overall assessment review
+      responses: {}
+      tags:
+        - Assessment review
+      security:
+        - BearerAuth: []
+    parameters:
+      - name: trainingProviderId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{trainingProviderId}}'
+      - name: assessmentRequestId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{assessmentRequestId}}'
 components:
   securitySchemes:
     BearerAuth:
