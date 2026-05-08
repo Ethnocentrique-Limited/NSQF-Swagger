@@ -6,6 +6,7 @@ info:
 servers:
   - url: '{{BASE_URL}}'
   - url: '{{DGOVAL_BASE_URL}}'
+  - url: https://nsqf-staging-nsqfbucketbucket-wrfrkfdv.s3.eu-west-1.amazonaws.com
 paths:
   /auth/signin:
     post:
@@ -1657,6 +1658,117 @@ paths:
         schema:
           type: string
         example: '{{awardingBodyId}}'
+  /api/{trainingProviderId}/uploads/media/presign:
+    post:
+      summary: Upload media - Audio and Video
+      responses: {}
+      tags:
+        - Generic
+      security:
+        - BearerAuth: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                fileName:
+                  type: string
+                contentType:
+                  type: string
+                kind:
+                  type: string
+            example:
+              fileName: oral-answer-1.m4a
+              contentType: video/mp4
+              kind: video
+    parameters:
+      - name: trainingProviderId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{trainingProviderId}}'
+  /uploads/assessment-evidence/video/2026/05/13036833-4b95-4801-9c79-7d241da8555d-oral-answer-1.m4a:
+    put:
+      summary: Upload using returned uploadurl from above presign endpoint
+      parameters:
+        - name: X-Amz-Algorithm
+          in: query
+          required: false
+          deprecated: false
+          schema: {}
+          example: AWS4-HMAC-SHA256
+        - name: X-Amz-Content-Sha256
+          in: query
+          required: false
+          deprecated: false
+          schema: {}
+          example: UNSIGNED-PAYLOAD
+        - name: X-Amz-Credential
+          in: query
+          required: false
+          deprecated: false
+          schema: {}
+          example: ASIARVPXSOJRO2Y2I3NN%2F20260508%2Feu-west-1%2Fs3%2Faws4_request
+        - name: X-Amz-Date
+          in: query
+          required: false
+          deprecated: false
+          schema: {}
+          example: 20260508T193807Z
+        - name: X-Amz-Expires
+          in: query
+          required: false
+          deprecated: false
+          schema: {}
+          example: '900'
+        - name: X-Amz-Security-Token
+          in: query
+          required: false
+          deprecated: false
+          schema: {}
+          example: >-
+            IQoJb3JpZ2luX2VjEAwaCWV1LXdlc3QtMSJHMEUCIDJmJhsY597SQ3ZWw2h3K82MyLWppdsn67QG07J9704JAiEA5JGUxAt61BdvKHyoDucmpR6ET%2BIHkr693H%2FJVuDGHQ4q5wQI1f%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FARAAGgwxMTQ4NzI3MDk3MzAiDKUrOZ9JNn2ackrrdCq7BOixzKWkJIGd7NT5WSWA6EaFT3mW67x9mXDIzJyyfGSDr4gopxQDI9ClrSMTmgwpmRTditZ%2Ba%2FZFECJ4buaG9It4ouZWJMJc6W%2FWzotM6nGyjjlkcG1UquODK6BkFgcDqsUneNvdv4e4YmjS6%2FWvPpYTPuijaE4ok7qoj%2F0SXosusDNsfbQUfZVG28jWH6EvJta2oIAiukzE5xe%2BuP3YFQye0gAz4TcJOgE%2FrwfxH81DVa2Jjcmv0on47cmOphs1ICY1zBRpkhmj49W81DiVz%2B4WZ0vINmJep8hNHpdNWnbnhlCcS0aoPEwR52uILYQue9wYROOMi5BAQtaYjXfOuMWDSW7rGHVAo9Th3av8QnRIjGm0iDSJegc4vQUoMVtRbRBz%2BoSZP3yZqey4K%2Bu0UiWADt3H6wHCaDqDOxn84zQ4jZEyYZjUhvo3AK2DyatGtPxHOsjxFrDjt8WhSiu9En7nx0Rf%2F2M6cfyfxKct0B0KWKUz8v2J0HQrVt%2FGTkY1qYBgwrtZPDpRMGiCVCEIOAsyJbLDuXDfia316ch5uvBJWv7jqLOCJBJ6Yyr5RcoTxNqSuxXtbZjJywr9TN%2B5PuiS4P1lorl6IRedKC7ooGbtRF%2F0fdPRH7zhGRczIDWvCrTnNIfRjvoqx%2Bqfurfnaq9bF7OBkwJIXV0UJMBQmeTrgXXrTMkTZK7wJ%2B6eZQmC5q43xMG%2BB9fDkDILH9mD15kJ6HafYYnDYJVsR1r9iTDAyztA4V1rxTJ0JfUwn%2Ff4zwY6owFKgMSS%2B%2FHMuFdxg7P61D9JDXkGJ%2Fn2mYkItaodmOl%2FuSkwncEJy32vYAYh2x3rnf6zvEySKvb3OxT0gggvcL3XVFQpgWwV%2Bs%2BA7nj%2BNWD4dYN56HaZJEjfsa184Ii%2BA3NH%2BIDMzl1pJtZ8TSg9bbQjj1k75GEOf2y961jVN%2BiMlEwm55NDH%2FoZjPa1NlX4SFKgeQn2qGCkWN7ZQnIuMtkwlDcB
+        - name: X-Amz-Signature
+          in: query
+          required: false
+          deprecated: false
+          schema: {}
+          example: ecddc2e96a008655351b2c3d784b2f1d3752c66981fc0ad5d4a48a0672d7fe51
+        - name: X-Amz-SignedHeaders
+          in: query
+          required: false
+          deprecated: false
+          schema: {}
+          example: host
+        - name: x-amz-acl
+          in: query
+          required: false
+          deprecated: false
+          schema: {}
+          example: private
+        - name: x-amz-checksum-crc32
+          in: query
+          required: false
+          deprecated: false
+          schema: {}
+          example: AAAAAA%3D%3D
+        - name: x-amz-sdk-checksum-algorithm
+          in: query
+          required: false
+          deprecated: false
+          schema: {}
+          example: CRC32
+        - name: x-id
+          in: query
+          required: false
+          deprecated: false
+          schema: {}
+          example: PutObject
+      responses: {}
+      tags:
+        - Generic
   /api/{trainingProviderId}/learners/{learnerId}/digital-folder/centre-documents:
     get:
       summary: Centre documents
