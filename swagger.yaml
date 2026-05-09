@@ -2568,6 +2568,16 @@ paths:
   /api/{trainingProviderId}/learners/staff/assessment-schedule/{assessmentRequestId}/reject:
     post:
       summary: QAA reject assessment request
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                reason:
+                  type: string
+            example:
+              reason: "not available"
       responses: {}
       tags:
         - Assessment - Request assessment and Manage Requests
