@@ -19,7 +19,7 @@ paths:
           application/json:
             schema:
               type: object
-            example: "{\r\n    \"email\": \"info@emediabay.com\",\r\n    \"password\": \"Password#123\"\r\n    // \"email\": \"ethicethnic4@gmail.com\",\r\n    // \"password\": \"Ethno#@weq43\"\r\n}"
+            example: "{\r\n    // \"email\": \"info@emediabay.com\",\r\n    // \"password\": \"Password#123\"\r\n    \"email\": \"ethicethnic4@gmail.com\",\r\n    \"password\": \"Ethno#@weq43\"\r\n}"
   /auth/roles:
     get:
       summary: List roles
@@ -2568,16 +2568,6 @@ paths:
   /api/{trainingProviderId}/learners/staff/assessment-schedule/{assessmentRequestId}/reject:
     post:
       summary: QAA reject assessment request
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                reason:
-                  type: string
-            example:
-              reason: "not available"
       responses: {}
       tags:
         - Assessment - Request assessment and Manage Requests
@@ -3502,6 +3492,381 @@ paths:
         schema:
           type: string
         example: '{{assessmentRequestId}}'
+  /api/{trainingProviderId}/learners/me/onboarding-checklist:
+    get:
+      summary: List Onboarding checklist
+      responses: {}
+      tags:
+        - Learner onboarding checklist
+      security:
+        - BearerAuth: []
+    parameters:
+      - name: trainingProviderId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{trainingProviderId}}'
+  /api/{trainingProviderId}/learners/me/onboarding-checklist/items/{itemKey}/content:
+    get:
+      summary: Get Onboarding checklist content
+      responses: {}
+      tags:
+        - Learner onboarding checklist
+      security:
+        - BearerAuth: []
+    parameters:
+      - name: trainingProviderId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{trainingProviderId}}'
+      - name: itemKey
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{itemKey}}'
+  /api/{trainingProviderId}/learners/me/onboarding-checklist/items/cv_education_credentials:
+    patch:
+      summary: Learning onboarding checklist - Create cv
+      responses: {}
+      tags:
+        - Learner onboarding checklist
+      security:
+        - BearerAuth: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                cv:
+                  type: object
+                  properties:
+                    biodata:
+                      type: object
+                      properties:
+                        firstName:
+                          type: string
+                        lastName:
+                          type: string
+                        phone:
+                          type: string
+                          format: utc-millisec
+                        email:
+                          type: string
+                          format: email
+                        passportPhotoUrl:
+                          type: string
+                          format: uri
+                    workHistory:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          jobTitle:
+                            type: string
+                          employer:
+                            type: string
+                          cityTownState:
+                            type: string
+                          startDate:
+                            type: string
+                          endDate:
+                            nullable: true
+                          description:
+                            type: string
+                    education:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          institutionName:
+                            type: string
+                          cityCountry:
+                            type: string
+                          qualification:
+                            type: string
+                          fieldOfStudy:
+                            type: string
+                          stateOrRegion:
+                            nullable: true
+                          startDate:
+                            type: string
+                          endDate:
+                            type: string
+                          isCurrent:
+                            type: boolean
+                    technicalSkills:
+                      type: string
+                    softSkills:
+                      type: string
+                    professionalSummary:
+                      type: string
+            example:
+              cv:
+                biodata:
+                  firstName: Eche
+                  lastName: Ndukwe
+                  phone: '09038174098'
+                  email: caracolasstore+164@gmail.com
+                  passportPhotoUrl: https://cdn.example.com/learners/nathan-profile.jpg
+                workHistory:
+                  - jobTitle: Fashion designer
+                    employer: Oil Rich Clothing
+                    cityTownState: Lagos, Nigeria
+                    startDate: 2025-01
+                    endDate: null
+                    description: |-
+                      - Designed seasonal collections.
+                      - Led fittings and quality checks.
+                  - jobTitle: Fashion designer
+                    employer: Oil Rich Clothing
+                    cityTownState: Lagos, Nigeria
+                    startDate: 2025-01
+                    endDate: null
+                    description: |-
+                      - Designed seasonal collections.
+                      - Led fittings and quality checks.
+                education:
+                  - institutionName: University of Lagos
+                    cityCountry: Lagos, Nigeria
+                    qualification: Bachelor of Science
+                    fieldOfStudy: Economics
+                    stateOrRegion: null
+                    startDate: 2017-01
+                    endDate: 2019-07
+                    isCurrent: false
+                technicalSkills: >-
+                  <p>Garment construction, pattern drafting, industrial sewing
+                  machines.</p>
+                softSkills: <p>Communication, teamwork, time management.</p>
+                professionalSummary: >-
+                  I am a garment-making professional with practical experience
+                  in design and production. I am completing this programme to
+                  formalise my skills and progress in the NSQF pathway.
+    parameters:
+      - name: trainingProviderId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{trainingProviderId}}'
+  /api/{trainingProviderId}/learners/me/onboarding-checklist/items/learning_support_analysis:
+    patch:
+      summary: Learning onboarding checklist - Learning support analysis
+      responses: {}
+      tags:
+        - Learner onboarding checklist
+      security:
+        - BearerAuth: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                learningSupport:
+                  type: object
+                  properties:
+                    qualificationsHeld:
+                      type: string
+                    learningNeedKeys:
+                      type: array
+                      items:
+                        type: string
+                    learningNeedsOther:
+                      nullable: true
+                    strengths:
+                      type: string
+                    weaknesses:
+                      type: string
+            example:
+              learningSupport:
+                qualificationsHeld: |-
+                  1. Garment Making L2
+                  2. 
+                  3. 
+                  4. 
+                  5. 
+                learningNeedKeys:
+                  - physical_impairment
+                  - sensory_impairment
+                  - learning_difficulty
+                  - language_barrier
+                learningNeedsOther: null
+                strengths: >-
+                  As a learner facing a language barrier, I benefit from visual
+                  aids and hands-on activities. I persist and find creative ways
+                  to communicate and solve problems.
+                weaknesses: >-
+                  I sometimes struggle to express complex ideas in discussion,
+                  which can slow my participation in group work.
+    parameters:
+      - name: trainingProviderId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{trainingProviderId}}'
+  /api/{trainingProviderId}/learners/me/onboarding-checklist/items/course_learning_plan_initial_assessment:
+    patch:
+      summary: Learning onboarding checklist - Course learning plan initial assessment
+      responses: {}
+      tags:
+        - Learner onboarding checklist
+      security:
+        - BearerAuth: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                coursePlan:
+                  type: object
+                  properties:
+                    unitStartDate:
+                      type: string
+                      format: date
+                    expectedCompletionDate:
+                      type: string
+                      format: date
+                    awardingBody:
+                      type: string
+                    unitPlans:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          unitCodeOrTitle:
+                            type: string
+                          portfolioAssessmentDate:
+                            type: string
+                            format: date
+                          agreedCompletionDate:
+                            type: string
+                            format: date
+            example:
+              coursePlan:
+                unitStartDate: '2026-06-01'
+                expectedCompletionDate: '2027-05-31'
+                awardingBody: City & Guilds
+                unitPlans:
+                  - unitCodeOrTitle: Unit 101 — Health and safety in the workplace
+                    portfolioAssessmentDate: '2026-12-15'
+                    agreedCompletionDate: '2026-11-30'
+                  - unitCodeOrTitle: Unit 201 — Pattern development
+                    portfolioAssessmentDate: '2027-03-01'
+                    agreedCompletionDate: '2027-02-15'
+    parameters:
+      - name: trainingProviderId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{trainingProviderId}}'
+  /api/{trainingProviderId}/learners/{learnerId}/onboarding-checklist/items/learning_support_analysis/sign-qa:
+    post:
+      summary: Learning onboarding checklist - QAA sign learning support analysis
+      responses: {}
+      tags:
+        - Learner onboarding checklist
+      security:
+        - BearerAuth: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                agreedActions:
+                  type: string
+                concernsOrAdjustments:
+                  type: string
+            example:
+              agreedActions: Weekly tutorial; enlarged handouts; buddy for oral discussions.
+              concernsOrAdjustments: Monitor written evidence submissions.
+    parameters:
+      - name: trainingProviderId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{trainingProviderId}}'
+      - name: learnerId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{learnerId}}'
+  /api/{trainingProviderId}/learners/{learnerId}/onboarding-checklist/items/course_learning_plan_initial_assessment/sign-qa:
+    post:
+      summary: >-
+        Learning onboarding checklist - QAA sign Couse learning plan initial
+        assessment
+      responses: {}
+      tags:
+        - Learner onboarding checklist
+      security:
+        - BearerAuth: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                agreedActions:
+                  type: string
+                concernsOrAdjustments:
+                  type: string
+            example:
+              agreedActions: >-
+                Dates accepted; learner to submit portfolio evidence two weeks
+                before each portfolio date.
+              concernsOrAdjustments: Second unit portfolio date moved +2 weeks — reflected in plan.
+    parameters:
+      - name: trainingProviderId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{trainingProviderId}}'
+      - name: learnerId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{learnerId}}'
+  /api/{trainingProviderId}/learners/staff/me/signature:
+    patch:
+      summary: Save signature url
+      responses: {}
+      tags:
+        - QAA signature upload and QAA assessment schedule
+      security:
+        - BearerAuth: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                signatureImageUrl:
+                  type: string
+                  format: uri
+            example:
+              signatureImageUrl: >-
+                https://res.cloudinary.com/ds1tipobc/image/upload/v1778610024/nsqf/WhatsApp%20Image%202026-05-05%20at%205-89a3f4cb-bfe4-48e0-bd18-caa82cb7bf3b.jpg
+    parameters:
+      - name: trainingProviderId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{trainingProviderId}}'
 components:
   securitySchemes:
     BearerAuth:
