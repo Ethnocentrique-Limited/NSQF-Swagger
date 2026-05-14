@@ -3781,6 +3781,76 @@ paths:
         schema:
           type: string
         example: '{{trainingProviderId}}'
+  /api/{trainingProviderId}/learners/me/onboarding-checklist/items/course_learning_plan_review_completion:
+    patch:
+      summary: Learning onboarding checklist - Course learning plan initial assessment
+      responses: {}
+      tags:
+        - Learner onboarding checklist
+      security:
+        - BearerAuth: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                coursePlan:
+                  type: object
+                  properties:
+                    courseStartDate:
+                      type: string
+                      format: date
+                    expectedCompletionDate:
+                      type: string
+                      format: date
+                    awardingBody:
+                      type: string
+                    plannedPortfolioAssessmentSigningOffDate:
+                      type: string
+                      format: date
+                    unitPlans:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          unitCodeOrTitle:
+                            type: string
+                          startDate:
+                            type: string
+                            format: date
+                          reviewDate:
+                            type: string
+                            format: date
+                          agreedCompletionDate:
+                            type: string
+                            format: date
+                          concernIfTargetNotMet:
+                            nullable: true
+            example:
+              coursePlan:
+                courseStartDate: '2026-06-01'
+                expectedCompletionDate: '2027-05-31'
+                awardingBody: City & Guilds
+                plannedPortfolioAssessmentSigningOffDate: '2027-04-30'
+                unitPlans:
+                  - unitCodeOrTitle: Unit 101 — Health and safety in the workplace
+                    startDate: '2026-06-01'
+                    reviewDate: '2026-08-01'
+                    agreedCompletionDate: '2026-11-30'
+                    concernIfTargetNotMet: null
+                  - unitCodeOrTitle: Unit 201 — Pattern development
+                    startDate: '2026-09-01'
+                    reviewDate: '2026-12-01'
+                    agreedCompletionDate: '2027-02-15'
+                    concernIfTargetNotMet: null
+    parameters:
+      - name: trainingProviderId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{trainingProviderId}}'
   /api/{trainingProviderId}/learners/{learnerId}/onboarding-checklist/items/learning_support_analysis/sign-qa:
     post:
       summary: Learning onboarding checklist - QAA sign learning support analysis
