@@ -5,6 +5,8 @@ info:
   description: ''
 servers:
   - url: '{{BASE_URL}}'
+  - url: '{{DGOVAL_BASE_URL}}'
+  - url: https://nsqf-staging-nsqfbucketbucket-wrfrkfdv.s3.eu-west-1.amazonaws.com
 paths:
   /auth/signin:
     post:
@@ -3726,7 +3728,7 @@ paths:
                 coursePlan:
                   type: object
                   properties:
-                    unitStartDate:
+                    courseStartDate:
                       type: string
                       format: date
                     expectedCompletionDate:
@@ -3734,6 +3736,9 @@ paths:
                       format: date
                     awardingBody:
                       type: string
+                    plannedPortfolioAssessmentSigningOffDate:
+                      type: string
+                      format: date
                     unitPlans:
                       type: array
                       items:
@@ -3741,24 +3746,34 @@ paths:
                         properties:
                           unitCodeOrTitle:
                             type: string
-                          portfolioAssessmentDate:
+                          startDate:
+                            type: string
+                            format: date
+                          reviewDate:
                             type: string
                             format: date
                           agreedCompletionDate:
                             type: string
                             format: date
+                          concernIfTargetNotMet:
+                            nullable: true
             example:
               coursePlan:
-                unitStartDate: '2026-06-01'
+                courseStartDate: '2026-06-01'
                 expectedCompletionDate: '2027-05-31'
                 awardingBody: City & Guilds
+                plannedPortfolioAssessmentSigningOffDate: '2027-04-30'
                 unitPlans:
                   - unitCodeOrTitle: Unit 101 — Health and safety in the workplace
-                    portfolioAssessmentDate: '2026-12-15'
+                    startDate: '2026-06-01'
+                    reviewDate: '2026-08-01'
                     agreedCompletionDate: '2026-11-30'
+                    concernIfTargetNotMet: null
                   - unitCodeOrTitle: Unit 201 — Pattern development
-                    portfolioAssessmentDate: '2027-03-01'
+                    startDate: '2026-09-01'
+                    reviewDate: '2026-12-01'
                     agreedCompletionDate: '2027-02-15'
+                    concernIfTargetNotMet: null
     parameters:
       - name: trainingProviderId
         in: path
