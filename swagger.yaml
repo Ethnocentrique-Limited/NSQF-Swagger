@@ -2700,6 +2700,27 @@ paths:
         schema:
           type: string
         example: '{{assessmentRequestId}}'
+  /api/{trainingProviderId}/learners/{learnerId}/units:
+    get:
+      summary: QAA list unit for learner
+      responses: {}
+      tags:
+        - Assessment - Request assessment and Manage Requests
+      security:
+        - BearerAuth: []
+    parameters:
+      - name: trainingProviderId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{trainingProviderId}}'
+      - name: learnerId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{learnerId}}'
   /api/{trainingProviderId}/learners/assessments/due:
     get:
       summary: Assessments due
@@ -3007,6 +3028,22 @@ paths:
         schema:
           type: string
         example: '{{trainingProviderId}}'
+    patch:
+      summary: Update profile image
+      responses: {}
+      tags:
+        - Learner profile
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                passportPhotoUrl:
+                  type: string
+                  format: uri
+            example:
+              passportPhotoUrl: https://cdn
   /api/{trainingProviderId}/learners/me/profile/inviter:
     get:
       summary: Get inviter details
@@ -3783,7 +3820,9 @@ paths:
         example: '{{trainingProviderId}}'
   /api/{trainingProviderId}/learners/me/onboarding-checklist/items/course_learning_plan_review_completion:
     patch:
-      summary: Learning onboarding checklist - Course learning plan initial assessment
+      summary: >-
+        Learning onboarding checklist - Course learning plan review and
+        complettion
       responses: {}
       tags:
         - Learner onboarding checklist
@@ -3807,6 +3846,9 @@ paths:
                     awardingBody:
                       type: string
                     plannedPortfolioAssessmentSigningOffDate:
+                      type: string
+                      format: date
+                    actualPortfolioAssessmentAndSignOffDate:
                       type: string
                       format: date
                     unitPlans:
@@ -3833,6 +3875,7 @@ paths:
                 expectedCompletionDate: '2027-05-31'
                 awardingBody: City & Guilds
                 plannedPortfolioAssessmentSigningOffDate: '2027-04-30'
+                actualPortfolioAssessmentAndSignOffDate: '2026-06-01'
                 unitPlans:
                   - unitCodeOrTitle: Unit 101 — Health and safety in the workplace
                     startDate: '2026-06-01'
@@ -3956,6 +3999,282 @@ paths:
       responses: {}
       tags:
         - QAA dashboard
+      security:
+        - BearerAuth: []
+    parameters:
+      - name: trainingProviderId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{trainingProviderId}}'
+  /api/{trainingProviderId}/learners/staff/qaa/profile:
+    get:
+      summary: get profile
+      responses: {}
+      tags:
+        - QAA Profile
+      security:
+        - BearerAuth: []
+    parameters:
+      - name: trainingProviderId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{trainingProviderId}}'
+    patch:
+      summary: Update editable fields
+      responses: {}
+      tags:
+        - QAA Profile
+      security:
+        - BearerAuth: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                phone:
+                  type: string
+                  format: utc-millisec
+            example:
+              phone: '+2348099887766'
+  /api/{trainingProviderId}/learners/staff/qaa/network:
+    get:
+      summary: My network tab
+      responses: {}
+      tags:
+        - QAA Profile
+      security:
+        - BearerAuth: []
+    parameters:
+      - name: trainingProviderId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{trainingProviderId}}'
+  /api/{trainingProviderId}/learners/staff/qaa/notification-preferences:
+    get:
+      summary: Notifications tab
+      responses: {}
+      tags:
+        - QAA Profile
+      security:
+        - BearerAuth: []
+    parameters:
+      - name: trainingProviderId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{trainingProviderId}}'
+    patch:
+      summary: Update notifications preference
+      responses: {}
+      tags:
+        - QAA Profile
+      security:
+        - BearerAuth: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                assessmentsEnabled:
+                  type: boolean
+                documentsEnabled:
+                  type: boolean
+                types:
+                  type: object
+                  properties:
+                    QAA_STAFF_ASSESSMENT_REQUEST_NEW:
+                      type: boolean
+                    QAA_STAFF_ASSESSMENT_SCHEDULED:
+                      type: boolean
+                    QAA_STAFF_ASSESSMENT_RESCHEDULE_ACTION:
+                      type: boolean
+                    QAA_STAFF_ASSESSMENT_REVIEW_PENDING:
+                      type: boolean
+                    QAA_STAFF_ASSESSMENT_REVIEW_REWORK:
+                      type: boolean
+                    QAA_STAFF_DOCUMENT_ACTION_REQUIRED:
+                      type: boolean
+                    QAA_STAFF_DOCUMENT_AUTO_SIGNED:
+                      type: boolean
+                    QAA_STAFF_DOCUMENT_CENTRE_SUMMARY:
+                      type: boolean
+            example:
+              assessmentsEnabled: true
+              documentsEnabled: true
+              types:
+                QAA_STAFF_ASSESSMENT_REQUEST_NEW: true
+                QAA_STAFF_ASSESSMENT_SCHEDULED: true
+                QAA_STAFF_ASSESSMENT_RESCHEDULE_ACTION: true
+                QAA_STAFF_ASSESSMENT_REVIEW_PENDING: true
+                QAA_STAFF_ASSESSMENT_REVIEW_REWORK: true
+                QAA_STAFF_DOCUMENT_ACTION_REQUIRED: true
+                QAA_STAFF_DOCUMENT_AUTO_SIGNED: true
+                QAA_STAFF_DOCUMENT_CENTRE_SUMMARY: true
+  /api/{trainingProviderId}/learners/staff/qaa/me/password:
+    post:
+      summary: Security tab - Change password
+      responses: {}
+      tags:
+        - QAA Profile
+      security:
+        - BearerAuth: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                currentPassword:
+                  type: string
+                newPassword:
+                  type: string
+                confirmNewPassword:
+                  type: string
+            example:
+              currentPassword: OldP@ssw0rd!
+              newPassword: N3wStr0ng!Pass
+              confirmNewPassword: N3wStr0ng!Pass
+    parameters:
+      - name: trainingProviderId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{trainingProviderId}}'
+  /api/{trainingProviderId}/learners/staff/qaa/assessment-reports/units:
+    get:
+      summary: List unit assessment reports
+      parameters:
+        - name: search
+          in: query
+          required: false
+          deprecated: false
+          schema: {}
+          example: ada
+        - name: reportStatus
+          in: query
+          required: false
+          deprecated: false
+          schema: {}
+          example: pending_review
+        - name: levels
+          in: query
+          schema:
+            type: string
+          example: 2,3
+        - name: batches
+          in: query
+          schema:
+            type: string
+          example: A,B
+        - name: unitIds
+          in: query
+          schema:
+            type: string
+          example: u-001,u-002
+        - name: limit
+          in: query
+          schema:
+            type: integer
+          example: 25
+        - name: page
+          in: query
+          schema:
+            type: integer
+          example: 1
+      responses: {}
+      tags:
+        - QAA Assessment report
+      security:
+        - BearerAuth: []
+    parameters:
+      - name: trainingProviderId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{trainingProviderId}}'
+  /api/{trainingProviderId}/learners/staff/qaa/assessment-reports/learner/{learnerId}/units/{unitId}:
+    get:
+      summary: Get unit report details
+      responses: {}
+      tags:
+        - QAA Assessment report
+      security:
+        - BearerAuth: []
+    parameters:
+      - name: trainingProviderId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{trainingProviderId}}'
+      - name: learnerId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{learnerId}}'
+      - name: unitId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{unitId}}'
+  /api/{trainingProviderId}/learners/staff/qaa/assessment-reports/learner/{learnerId}/units/{unitId}/feedback:
+    post:
+      summary: Submit QAA feedback
+      responses: {}
+      tags:
+        - QAA Assessment report
+      security:
+        - BearerAuth: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                comment:
+                  type: string
+            example:
+              comment: Strong understanding of hazards. PCs 1.1–1.3 are complete.
+    parameters:
+      - name: trainingProviderId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{trainingProviderId}}'
+      - name: learnerId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{learnerId}}'
+      - name: unitId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{unitId}}'
+  /api/{trainingProviderId}/learners/staff/qaa/assigned-learners:
+    get:
+      summary: >-
+        List learners assigned to QAA (search, level, batchLetter, limit,
+        offset). Export: GET .../digital-folder/export (Manage Learner folder)
+      responses: {}
+      tags:
+        - QAA Assigned learners
       security:
         - BearerAuth: []
     parameters:
