@@ -4283,9 +4283,20 @@ paths:
         schema:
           type: string
         example: '{{trainingProviderId}}'
-  /api/{trainingProviderId}/learners/staff/qaa/centre-documents:
+  /api/{trainingProviderId}/learners/staff/qaa/centre-document-management:
     get:
       summary: Centre documents list (metrics + tabs)
+      parameters:
+        - name: page
+          in: query
+          schema:
+            type: integer
+          example: 1
+        - name: limit
+          in: query
+          schema:
+            type: integer
+          example: 25
       responses: {}
       tags:
         - QAA Centre documents management
