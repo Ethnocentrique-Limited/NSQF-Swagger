@@ -4327,7 +4327,7 @@ paths:
           deprecated: false
           schema: {}
           example: '2026-05-20'
-        - name: submittedRanges
+        - name: submittedRange
           in: query
           schema:
             type: string
