@@ -4309,12 +4309,6 @@ paths:
           schema:
             type: string
           example: ground_rules_acknowledgement
-        - name: documentType
-          in: query
-          description: auto_signed, requires_action. signed
-          schema:
-            type: string
-          example: auto_signed
       responses: {}
       tags:
         - QAA Centre documents management
