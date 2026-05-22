@@ -5,6 +5,7 @@ info:
   description: ''
 servers:
   - url: '{{BASE_URL}}'
+  - url: '{{DGOVAL_BASE_URL}}'
   - url: https://nsqf-staging-nsqfbucketbucket-wrfrkfdv.s3.eu-west-1.amazonaws.com
 paths:
   /auth/signin:
@@ -4291,12 +4292,23 @@ paths:
           in: query
           schema:
             type: integer
-          example: 1
+          example: 2
         - name: limit
           in: query
           schema:
             type: integer
-          example: 25
+          example: 5
+        - name: tab
+          in: query
+          description: all, requires_action, autoSigned
+          schema:
+            type: string
+          example: requires_action
+        - name: documentType
+          in: query
+          schema:
+            type: string
+          example: ground_rules_acknowledgement
       responses: {}
       tags:
         - QAA Centre documents management
