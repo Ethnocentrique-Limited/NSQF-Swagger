@@ -4292,7 +4292,7 @@ paths:
           in: query
           schema:
             type: integer
-          example: 2
+          example: 1
         - name: limit
           in: query
           schema:
@@ -4300,15 +4300,21 @@ paths:
           example: 5
         - name: tab
           in: query
-          description: all, requires_action, autoSigned
+          description: all, requires_action, auto_signed
           schema:
             type: string
-          example: requires_action
-        - name: documentType
+          example: auto_signed
+        - name: document
           in: query
           schema:
             type: string
           example: ground_rules_acknowledgement
+        - name: documentType
+          in: query
+          description: auto_signed, requires_action. signed
+          schema:
+            type: string
+          example: auto_signed
       responses: {}
       tags:
         - QAA Centre documents management
