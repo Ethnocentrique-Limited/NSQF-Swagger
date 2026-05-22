@@ -4309,6 +4309,29 @@ paths:
           schema:
             type: string
           example: ground_rules_acknowledgement
+        - name: documentType
+          in: query
+          description: auto_signed, requires_action. signed
+          schema:
+            type: string
+          example: auto_signed
+        - name: submittedFrom
+          in: query
+          required: false
+          deprecated: false
+          schema: {}
+          example: '2026-01-01'
+        - name: submittedTo
+          in: query
+          required: false
+          deprecated: false
+          schema: {}
+          example: '2026-05-20'
+        - name: submittedRanges
+          in: query
+          schema:
+            type: string
+          example: last_90_days
       responses: {}
       tags:
         - QAA Centre documents management
