@@ -19,7 +19,7 @@ paths:
           application/json:
             schema:
               type: object
-            example: "{\r\n    // \"email\": \"info@emediabay.com\",\r\n    // \"password\": \"Password#123\"\r\n    \"email\": \"ethicethnic4@gmail.com\",\r\n    \"password\": \"Ethno#@weq43\"\r\n}"
+            example: "{\r\n    \"email\": \"info@emediabay.com\",\r\n    \"password\": \"Password#123\"\r\n    // \"email\": \"ethicethnic4@gmail.com\",\r\n    // \"password\": \"Ethno#@weq43\"\r\n}"
   /auth/roles:
     get:
       summary: List roles
@@ -290,7 +290,7 @@ paths:
                 confirmNewPassword:
                   type: string
             example:
-              email: caracolasstore+16@gmail.com
+              email: caracolasstore+27@gmail.com
               newPassword: Password@weq112
               confirmNewPassword: Password@weq112
   /api/{trainingProviderId}/team/staff:
@@ -329,6 +329,21 @@ paths:
           deprecated: false
           schema: {}
           example: Rand
+      responses: {}
+      tags:
+        - Staff
+      security:
+        - BearerAuth: []
+    parameters:
+      - name: trainingProviderId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{trainingProviderId}}'
+  /api/{trainingProviderId}/centre/dashboard:
+    get:
+      summary: Centre manager dashboard
       responses: {}
       tags:
         - Staff
@@ -4327,7 +4342,7 @@ paths:
           deprecated: false
           schema: {}
           example: '2026-05-20'
-        - name: submittedRange
+        - name: submittedRanges
           in: query
           schema:
             type: string
@@ -4398,6 +4413,443 @@ paths:
         schema:
           type: string
         example: '{{itemKey}}'
+  /api/{trainingProviderId}/team/staff/{staffUserId}/inviter:
+    get:
+      summary: Who invited staff
+      responses: {}
+      tags:
+        - IQAM
+      security:
+        - BearerAuth: []
+    parameters:
+      - name: trainingProviderId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{trainingProviderId}}'
+      - name: staffUserId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{staffUserId}}'
+  /api/{trainingProviderId}/learners/staff/iqam/dashboard:
+    get:
+      summary: IQAM Dashboard
+      responses: {}
+      tags:
+        - IQAM
+      security:
+        - BearerAuth: []
+    parameters:
+      - name: trainingProviderId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{trainingProviderId}}'
+  /api/{trainingProviderId}/learners/staff/iqam/assessment-reports/units:
+    get:
+      summary: IQAM assessment reports - Fetch units
+      parameters:
+        - name: page
+          in: query
+          schema:
+            type: integer
+          example: 1
+        - name: limit
+          in: query
+          schema:
+            type: integer
+          example: 3
+        - name: level
+          in: query
+          schema:
+            type: string
+          example: Level 3
+        - name: search
+          in: query
+          description: 'search: learner name / ULN / ID'
+          schema:
+            type: string
+          example: Echefula
+        - name: units
+          in: query
+          schema:
+            type: string
+          example: 01KQQHV5JX8Q7G1CSGFF1SBCDE
+        - name: reportStatus
+          in: query
+          description: |-
+            reportStatus: all | pending_feedback | completed
+            "completed" is mapped to backend "ready"
+          schema:
+            type: string
+          example: pending_feedback
+        - name: qaaUserIds
+          in: query
+          schema:
+            type: integer
+          example: 123442
+        - name: qaaSearch
+          in: query
+          schema:
+            type: string
+          example: name or email
+      responses: {}
+      tags:
+        - IQAM
+      security:
+        - BearerAuth: []
+    parameters:
+      - name: trainingProviderId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{trainingProviderId}}'
+  /api/{trainingProviderId}/learners/staff/iqam/assessment-reports/learner/{learnerId}/units/{unitId}:
+    get:
+      summary: IQAM assessment reports - Fetch units details
+      responses: {}
+      tags:
+        - IQAM
+      security:
+        - BearerAuth: []
+    parameters:
+      - name: trainingProviderId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{trainingProviderId}}'
+      - name: learnerId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{learnerId}}'
+      - name: unitId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{unitId}}'
+  /api/{trainingProviderId}/learners/staff/iqam/assessment-reports/learner/{learnerId}/units/{unitId}/feedback:
+    get:
+      summary: Save feedback
+      responses: {}
+      tags:
+        - IQAM
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                comment:
+                  type: string
+            example:
+              comment: Feedback text here
+    parameters:
+      - name: trainingProviderId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{trainingProviderId}}'
+      - name: learnerId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{learnerId}}'
+      - name: unitId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{unitId}}'
+  /api/{trainingProviderId}/learners/staff/iqam/assigned-qaas:
+    get:
+      summary: IQAM - Assigned qaas
+      responses: {}
+      tags:
+        - IQAM
+      security:
+        - BearerAuth: []
+    parameters:
+      - name: trainingProviderId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{trainingProviderId}}'
+  /api/{trainingProviderId}/learners/staff/iqam/assigned-qaas/{qaaUserId}:
+    get:
+      summary: IQAM - Assigned QAA profile
+      responses: {}
+      tags:
+        - IQAM
+      security:
+        - BearerAuth: []
+    parameters:
+      - name: trainingProviderId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{trainingProviderId}}'
+      - name: qaaUserId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{qaaUserId}}'
+  /api/{trainingProviderId}/learners/staff/iqam/assigned-qaas/{qaaUserId}/assigned-learners:
+    get:
+      summary: IQAM - Assigned qaa assigned learners
+      parameters:
+        - name: page
+          in: query
+          schema:
+            type: integer
+          example: 2
+        - name: limit
+          in: query
+          schema:
+            type: integer
+          example: 10
+      responses: {}
+      tags:
+        - IQAM
+      security:
+        - BearerAuth: []
+    parameters:
+      - name: trainingProviderId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{trainingProviderId}}'
+      - name: qaaUserId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{qaaUserId}}'
+  /api/{trainingProviderId}/learners/staff/iqam/profile:
+    get:
+      summary: IQAM - Profile
+      responses: {}
+      tags:
+        - IQAM
+      security:
+        - BearerAuth: []
+    parameters:
+      - name: trainingProviderId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{trainingProviderId}}'
+    patch:
+      summary: IQAM - Update profile
+      responses: {}
+      tags:
+        - IQAM
+      security:
+        - BearerAuth: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                phone:
+                  type: string
+                  format: utc-millisec
+            example:
+              phone: '08190998222'
+  /api/{trainingProviderId}/learners/staff/iqam/network:
+    get:
+      summary: IQAM - My network tab
+      responses: {}
+      tags:
+        - IQAM
+      security:
+        - BearerAuth: []
+    parameters:
+      - name: trainingProviderId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{trainingProviderId}}'
+  /api/{trainingProviderId}/learners/staff/iqam/notification-preferences:
+    get:
+      summary: IQAM - Notifications
+      responses: {}
+      tags:
+        - IQAM
+      security:
+        - BearerAuth: []
+    parameters:
+      - name: trainingProviderId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{trainingProviderId}}'
+    patch:
+      summary: Save notification preferences
+      responses: {}
+      tags:
+        - IQAM
+      security:
+        - BearerAuth: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                assessmentsEnabled:
+                  type: boolean
+                documentsEnabled:
+                  type: boolean
+                types:
+                  type: object
+                  properties:
+                    IQAM_STAFF_ASSESSMENT_REQUEST_NEW:
+                      type: boolean
+                    IQAM_STAFF_ASSESSMENT_SCHEDULED:
+                      type: boolean
+                    IQAM_STAFF_ASSESSMENT_RESCHEDULE_ACTION:
+                      type: boolean
+                    IQAM_STAFF_ASSESSMENT_REVIEW_PENDING:
+                      type: boolean
+                    IQAM_STAFF_ASSESSMENT_REVIEW_REWORK:
+                      type: boolean
+                    IQAM_STAFF_DOCUMENT_ACTION_REQUIRED:
+                      type: boolean
+                    IQAM_STAFF_DOCUMENT_AUTO_SIGNED:
+                      type: boolean
+                    IQAM_STAFF_DOCUMENT_CENTRE_SUMMARY:
+                      type: boolean
+            example:
+              assessmentsEnabled: true
+              documentsEnabled: true
+              types:
+                IQAM_STAFF_ASSESSMENT_REQUEST_NEW: true
+                IQAM_STAFF_ASSESSMENT_SCHEDULED: true
+                IQAM_STAFF_ASSESSMENT_RESCHEDULE_ACTION: true
+                IQAM_STAFF_ASSESSMENT_REVIEW_PENDING: true
+                IQAM_STAFF_ASSESSMENT_REVIEW_REWORK: true
+                IQAM_STAFF_DOCUMENT_ACTION_REQUIRED: true
+                IQAM_STAFF_DOCUMENT_AUTO_SIGNED: false
+                IQAM_STAFF_DOCUMENT_CENTRE_SUMMARY: true
+  /api/{trainingProviderId}/learners/staff/iqam/me/password:
+    post:
+      summary: IQAM - change password
+      responses: {}
+      tags:
+        - IQAM
+      security:
+        - BearerAuth: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                currentPassword:
+                  type: string
+                newPassword:
+                  type: string
+                confirmNewPassword:
+                  type: string
+            example:
+              currentPassword: your-current-password
+              newPassword: your-new-password
+              confirmNewPassword: your-new-password
+    parameters:
+      - name: trainingProviderId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{trainingProviderId}}'
+  /api/{trainingProviderId}/learners/staff/iqam/nos/standards:
+    get:
+      summary: IQAM - All standards
+      responses: {}
+      tags:
+        - IQAM
+      security:
+        - BearerAuth: []
+    parameters:
+      - name: trainingProviderId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{trainingProviderId}}'
+  /api/{trainingProviderId}/learners/staff/iqam/nos/standards/{standardId}:
+    get:
+      summary: IQAM - standard detail
+      responses: {}
+      tags:
+        - IQAM
+      security:
+        - BearerAuth: []
+    parameters:
+      - name: trainingProviderId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{trainingProviderId}}'
+      - name: standardId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{standardId}}'
+  /api/{trainingProviderId}/learners/staff/iqam/nos/standards/{standardId}/units/{unitId}/performance-criteria/{performanceCriterionId}:
+    get:
+      summary: IQAM - Standard pc detail
+      responses: {}
+      tags:
+        - IQAM
+      security:
+        - BearerAuth: []
+    parameters:
+      - name: trainingProviderId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{trainingProviderId}}'
+      - name: standardId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{standardId}}'
+      - name: unitId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{unitId}}'
+      - name: performanceCriterionId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{performanceCriterionId}}'
 components:
   securitySchemes:
     BearerAuth:
