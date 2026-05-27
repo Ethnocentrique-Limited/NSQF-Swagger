@@ -5,8 +5,6 @@ info:
   description: ''
 servers:
   - url: '{{BASE_URL}}'
-  - url: '{{DGOVAL_BASE_URL}}'
-  - url: https://nsqf-staging-nsqfbucketbucket-wrfrkfdv.s3.eu-west-1.amazonaws.com
 paths:
   /auth/signin:
     post:
@@ -4165,6 +4163,57 @@ paths:
         schema:
           type: string
         example: '{{trainingProviderId}}'
+  /api/{trainingProviderId}/learners/staff/qaa/notifications:
+    get:
+      summary: QAA - Get Notifications
+      responses: {}
+      tags:
+        - QAA Profile
+      security:
+        - BearerAuth: []
+    parameters:
+      - name: trainingProviderId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{trainingProviderId}}'
+  /api/{trainingProviderId}/learners/staff/qaa/notifications/{notificationId}/read:
+    patch:
+      summary: QAA - Read notifications
+      responses: {}
+      tags:
+        - QAA Profile
+      security:
+        - BearerAuth: []
+    parameters:
+      - name: trainingProviderId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{trainingProviderId}}'
+      - name: notificationId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{notificationId}}'
+  /api/{trainingProviderId}/learners/staff/qaa/notifications/read-all:
+    patch:
+      summary: Mark all as read
+      responses: {}
+      tags:
+        - QAA Profile
+      security:
+        - BearerAuth: []
+    parameters:
+      - name: trainingProviderId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{trainingProviderId}}'
   /api/{trainingProviderId}/learners/staff/qaa/assessment-reports/units:
     get:
       summary: List unit assessment reports
@@ -4715,10 +4764,6 @@ paths:
             schema:
               type: object
               properties:
-                assessmentsEnabled:
-                  type: boolean
-                documentsEnabled:
-                  type: boolean
                 types:
                   type: object
                   properties:
@@ -4739,17 +4784,15 @@ paths:
                     IQAM_STAFF_DOCUMENT_CENTRE_SUMMARY:
                       type: boolean
             example:
-              assessmentsEnabled: true
-              documentsEnabled: true
               types:
-                IQAM_STAFF_ASSESSMENT_REQUEST_NEW: true
-                IQAM_STAFF_ASSESSMENT_SCHEDULED: true
-                IQAM_STAFF_ASSESSMENT_RESCHEDULE_ACTION: true
-                IQAM_STAFF_ASSESSMENT_REVIEW_PENDING: true
-                IQAM_STAFF_ASSESSMENT_REVIEW_REWORK: true
-                IQAM_STAFF_DOCUMENT_ACTION_REQUIRED: true
+                IQAM_STAFF_ASSESSMENT_REQUEST_NEW: false
+                IQAM_STAFF_ASSESSMENT_SCHEDULED: false
+                IQAM_STAFF_ASSESSMENT_RESCHEDULE_ACTION: false
+                IQAM_STAFF_ASSESSMENT_REVIEW_PENDING: false
+                IQAM_STAFF_ASSESSMENT_REVIEW_REWORK: false
+                IQAM_STAFF_DOCUMENT_ACTION_REQUIRED: false
                 IQAM_STAFF_DOCUMENT_AUTO_SIGNED: false
-                IQAM_STAFF_DOCUMENT_CENTRE_SUMMARY: true
+                IQAM_STAFF_DOCUMENT_CENTRE_SUMMARY: false
   /api/{trainingProviderId}/learners/staff/iqam/me/password:
     post:
       summary: IQAM - change password
@@ -4850,6 +4893,55 @@ paths:
         schema:
           type: string
         example: '{{performanceCriterionId}}'
+  /api/{trainingProviderId}/learners/staff/iqam/notifications:
+    get:
+      summary: IQAM - Notifications
+      responses: {}
+      tags:
+        - IQAM
+      security:
+        - BearerAuth: []
+    parameters:
+      - name: trainingProviderId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{trainingProviderId}}'
+  /api/{trainingProviderId}/learners/staff/iqam/notifications/{notifcationId}/read:
+    patch:
+      summary: IQAM - Read notifications
+      responses: {}
+      tags:
+        - IQAM
+    parameters:
+      - name: trainingProviderId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{trainingProviderId}}'
+      - name: notifcationId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{notifcationId}}'
+  /api/{trainingProviderId}/learners/staff/iqam/notifications/read-all:
+    patch:
+      summary: IQAM - Read all notifications
+      responses: {}
+      tags:
+        - IQAM
+      security:
+        - BearerAuth: []
+    parameters:
+      - name: trainingProviderId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{trainingProviderId}}'
 components:
   securitySchemes:
     BearerAuth:
