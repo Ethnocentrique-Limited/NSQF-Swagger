@@ -5,6 +5,7 @@ info:
   description: ''
 servers:
   - url: '{{BASE_URL}}'
+  - url: https://nsqf-staging-nsqfbucketbucket-wrfrkfdv.s3.eu-west-1.amazonaws.com
 paths:
   /auth/signin:
     post:
@@ -4942,6 +4943,33 @@ paths:
         schema:
           type: string
         example: '{{trainingProviderId}}'
+  /api/{trainingProviderId}/learners/staff/iqam/nos/standards/{standardId}/units/{unitId}:
+    get:
+      summary: IQAM - Standard unit detail
+      responses: {}
+      tags:
+        - IQAM
+      security:
+        - BearerAuth: []
+    parameters:
+      - name: trainingProviderId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{trainingProviderId}}'
+      - name: standardId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{standardId}}'
+      - name: unitId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{unitId}}'
 components:
   securitySchemes:
     BearerAuth:
