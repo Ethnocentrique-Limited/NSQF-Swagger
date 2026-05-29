@@ -5,6 +5,7 @@ info:
   description: ''
 servers:
   - url: '{{BASE_URL}}'
+  - url: '{{DGOVAL_BASE_URL}}'
   - url: https://nsqf-staging-nsqfbucketbucket-wrfrkfdv.s3.eu-west-1.amazonaws.com
 paths:
   /auth/signin:
@@ -1783,6 +1784,12 @@ paths:
       responses: {}
       tags:
         - Generic
+  /api/learners/registration/nsq-awarding-bodies:
+    get:
+      summary: List awarding bodies no auth
+      responses: {}
+      tags:
+        - Generic
   /api/{trainingProviderId}/learners/{learnerId}/digital-folder/centre-documents:
     get:
       summary: Centre documents
@@ -2735,6 +2742,58 @@ paths:
         schema:
           type: string
         example: '{{learnerId}}'
+  /api/{trainingProviderId}/learners/staff/assessment-schedule/{assessmentRequestId}/accept-learner-reschedule:
+    post:
+      summary: QAA - Accept rescheduled proposal
+      responses: {}
+      tags:
+        - Assessment - Request assessment and Manage Requests
+      security:
+        - BearerAuth: []
+    parameters:
+      - name: trainingProviderId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{trainingProviderId}}'
+      - name: assessmentRequestId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{assessmentRequestId}}'
+  /api/{trainingProviderId}/learners/staff/assessment-schedule/{assessmentRequestId}/reject-learner-reschedule:
+    post:
+      summary: QAA - Reject rescheduled proposal
+      responses: {}
+      tags:
+        - Assessment - Request assessment and Manage Requests
+      security:
+        - BearerAuth: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                reason:
+                  type: string
+            example:
+              reason: ...
+    parameters:
+      - name: trainingProviderId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{trainingProviderId}}'
+      - name: assessmentRequestId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{assessmentRequestId}}'
   /api/{trainingProviderId}/learners/assessments/due:
     get:
       summary: Assessments due
