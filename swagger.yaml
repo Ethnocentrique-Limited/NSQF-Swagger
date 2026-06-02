@@ -37,15 +37,6 @@ paths:
         - Learner
       security:
         - BearerAuth: []
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-            example:
-              name: "April 2026 Intake"
-              startsAt: 2026-05-01
-              endsAt: 2026-06-01
       responses: {}
 
   /api/{trainingProviderId}/centre/dashboard:
@@ -110,14 +101,6 @@ paths:
         - Centre management
       security:
         - BearerAuth: []
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-            example:
-              tradeAreaIds:
-                - 01KQQHS0RKMTT1NP7KE5VTZSGB
       responses: {}
     get:
       summary: "Trade area - current selected trade area"
@@ -148,20 +131,6 @@ paths:
         - Centre management
       security:
         - BearerAuth: []
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-            example:
-              name: "VI Training Hub"
-              state: Lagos
-              lga: VI
-              address: "24 Herbert Macaulay Way, VI"
-              contactFirstName: Chidi
-              contactLastName: Store
-              contactEmail: "caracolasstore+21@gmail.com"
-              contactPhone: "+2348011112222"
       responses: {}
 
   /api/{trainingProviderId}/centre/training-centres/{trainingCentreId}:
@@ -191,20 +160,6 @@ paths:
         - Centre management
       security:
         - BearerAuth: []
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-            example:
-              name: "Yaba Training Hub - Main"
-              state: Lagos
-              lga: Yaba
-              address: "30 Herbert Macaulay Way, Yaba"
-              contactFirstName: Chidi
-              contactLastName: Okeke
-              contactEmail: "chidi.okeke@abcskills.ng"
-              contactPhone: "+2348011112222"
       responses: {}
     delete:
       summary: "Training Centres - Delete training centre"
@@ -234,13 +189,6 @@ paths:
         - Centre management
       security:
         - BearerAuth: []
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-            example:
-              confirmed: true
       responses: {}
 
   /api/{trainingProviderId}/centre/training-centres/{trainingCentreId}/deactivate:
@@ -263,13 +211,6 @@ paths:
         - Centre management
       security:
         - BearerAuth: []
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-            example:
-              confirmed: true
       responses: {}
 
   /api/{trainingProviderId}/centre/training-provider:
@@ -293,19 +234,6 @@ paths:
         - Centre management
       security:
         - BearerAuth: []
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-            example:
-              trainingProviderName: Ethnocentrique
-              trainingProviderAddress: "12 Broad Street, Ikeja"
-              state: Lagos
-              lga: Ikeja
-              website: "https://abcskills.ng"
-              supportEmail: "support@abcskills.ng"
-              supportPhone: "+2348012345678"
       responses: {}
 
   /api/{trainingProviderId}/learners:
@@ -373,13 +301,6 @@ paths:
         - Manage Learner
       security:
         - BearerAuth: []
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-            example:
-              confirmed: true
       responses: {}
 
   /api/{trainingProviderId}/learners/{learnerId}/assignment/manual:
@@ -402,15 +323,6 @@ paths:
         - Learner assignment
       security:
         - BearerAuth: []
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-            example:
-              practicalTrainerUserId: 01KPH614CRDZ9GJKNV8N2CGADE
-              theoryTrainerUserId: 01KPTPXXRWZF9G5FHYJ048EJ5H
-              qaaUserId: 01KPTPHR41Q1ND9K08PWQVR5MX
       responses: {}
 
   /api/{trainingProviderId}/learners/{learnerId}/deactivate:
@@ -433,13 +345,6 @@ paths:
         - Manage Learner
       security:
         - BearerAuth: []
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-            example:
-              confirmed: true
       responses: {}
 
   /api/{trainingProviderId}/learners/{learnerId}/digital-folder:
@@ -490,13 +395,6 @@ paths:
         - Manage Learner
       security:
         - BearerAuth: []
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-            example:
-              confirmed: true
       responses: {}
 
   /api/{trainingProviderId}/learners/{learnerId}/digital-folder/cdf:
@@ -586,9 +484,16 @@ paths:
           type: string
         example: '{{learnerId}}'
     get:
-      summary: "Manage learners - Learner Digital Folder export"
+      summary: "Download learner digital folder ZIP (presigned S3 URL)"
       tags:
-        - Manage Learner
+        - Digital folder - Staff view
+      security:
+        - BearerAuth: []
+      responses: {}
+    post:
+      summary: "Generate learner digital folder ZIP export"
+      tags:
+        - Digital folder - Staff view
       security:
         - BearerAuth: []
       responses: {}
@@ -721,6 +626,34 @@ paths:
         - BearerAuth: []
       responses: {}
 
+  /api/{trainingProviderId}/learners/{learnerId}/onboarding-checklist/items/{itemKey}/content:
+    parameters:
+      - name: trainingProviderId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{trainingProviderId}}'
+      - name: learnerId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{learnerId}}'
+      - name: itemKey
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{itemKey}}'
+    get:
+      summary: "Onboarding checklist item content (staff read-only, e.g. induction_checklist)"
+      tags:
+        - Digital folder - Staff view
+      security:
+        - BearerAuth: []
+      responses: {}
+
   /api/{trainingProviderId}/learners/{learnerId}/onboarding-checklist/items/{itemKey}/sign-qa:
     parameters:
       - name: trainingProviderId
@@ -747,14 +680,6 @@ paths:
         - Learner onboarding checklist
       security:
         - BearerAuth: []
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-            example:
-              agreedActions: "Weekly tutorial; enlarged handouts; buddy for oral discussions."
-              concernsOrAdjustments: "Monitor written evidence submissions."
       responses: {}
 
   /api/{trainingProviderId}/learners/{learnerId}/onboarding-checklist/items/course_learning_plan_initial_assessment/sign-qa:
@@ -777,14 +702,28 @@ paths:
         - Learner onboarding checklist
       security:
         - BearerAuth: []
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-            example:
-              agreedActions: "Dates accepted; learner to submit portfolio evidence two weeks before each portfolio date."
-              concernsOrAdjustments: "Second unit portfolio date moved +2 weeks — reflected in plan."
+      responses: {}
+
+  /api/{trainingProviderId}/learners/{learnerId}/onboarding-checklist/items/cv_education_credentials/download-pdf:
+    parameters:
+      - name: trainingProviderId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{trainingProviderId}}'
+      - name: learnerId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{learnerId}}'
+    get:
+      summary: "Download learner CV as PDF (staff)"
+      tags:
+        - Digital folder - Staff view
+      security:
+        - BearerAuth: []
       responses: {}
 
   /api/{trainingProviderId}/learners/{learnerId}/resend-invite:
@@ -807,13 +746,6 @@ paths:
         - Manage Learner
       security:
         - BearerAuth: []
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-            example:
-
       responses: {}
 
   /api/{trainingProviderId}/learners/{learnerId}/units:
@@ -858,14 +790,6 @@ paths:
         - Learner
       security:
         - BearerAuth: []
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-            example:
-              confirmed: true
-              allowDuplicateApproval: false
       responses: {}
 
   /api/{trainingProviderId}/learners/{learnerId}/verification/reject:
@@ -888,13 +812,6 @@ paths:
         - Learner
       security:
         - BearerAuth: []
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-            example:
-              reason: "Documents were unclear. Please resubmit with a valid ID photo."
       responses: {}
 
   /api/{trainingProviderId}/learners/{learnerId}/withdraw-invite:
@@ -945,24 +862,6 @@ paths:
         - Assessment - Start scheduled assessment
       security:
         - BearerAuth: []
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-            example:
-              personalStatement: "I explain how I created a repeatable pattern tile and checked registration and repeat accuracy."
-              oralQaAnswers:
-                -
-                  questionId: 01KQQQM7JPEERFBRTSTA2V8D05
-                  audioUrl: "https://example.com/my-oral-answer.m4a"
-                  transcript: "Verbatim or draft transcript of what I said in the recording."
-              workProductImages:
-                - "https://cdn.example.com/pattern-tile-proof-1.png"
-              workbookResponse: "Answers or narrative for the workbook tasks for this PC."
-              method: video
-              storageKey: "https://your-cdn.example.com/learner-evidence/01K.../pc-01/video.mp4"
-              notes: "Demonstration recording for this criterion."
       responses: {}
 
   /api/{trainingProviderId}/learners/assessment-sessions/{sessionId}/questions:
@@ -1007,13 +906,6 @@ paths:
         - Assessment - Start scheduled assessment
       security:
         - BearerAuth: []
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-            example:
-
       responses: {}
 
   /api/{trainingProviderId}/learners/assessments/{assessmentRequestId}/start-info:
@@ -1075,19 +967,6 @@ paths:
         - Learner assignment
       security:
         - BearerAuth: []
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-            example:
-              ruleName: "L4 Electrical Batch B"
-              tradeArea: Mechanical
-              level: "2"
-              cohortId: 01KPF42CRW845NP7561MNS2KDQ
-              practicalTrainerUserId: 01KPH614CRDZ9GJKNV8N2CGADE
-              theoryTrainerUserId: 01KPTPXXRWZF9G5FHYJ048EJ5H
-              qaaUserId: 01KPTPHR41Q1ND9K08PWQVR5MX
       responses: {}
 
   /api/{trainingProviderId}/learners/assignment/automation/rules/{ruleId}:
@@ -1132,13 +1011,6 @@ paths:
         - Learner assignment
       security:
         - BearerAuth: []
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-            example:
-
       responses: {}
 
   /api/{trainingProviderId}/learners/assignment/automation/rules/{ruleId}/enable:
@@ -1161,13 +1033,6 @@ paths:
         - Learner assignment
       security:
         - BearerAuth: []
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-            example:
-
       responses: {}
 
   /api/{trainingProviderId}/learners/assignment/automation/run:
@@ -1184,13 +1049,6 @@ paths:
         - Learner assignment
       security:
         - BearerAuth: []
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-            example:
-
       responses: {}
 
   /api/{trainingProviderId}/learners/assignment/manual:
@@ -1223,17 +1081,6 @@ paths:
         - Learner assignment
       security:
         - BearerAuth: []
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-            example:
-              learnerIds:
-                - 01KPF5MB0NP5F019DFM2SPPDYK
-              practicalTrainerUserId: 01KPH614CRDZ9GJKNV8N2CGADE
-              theoryTrainerUserId: 01KPTPXXRWZF9G5FHYJ048EJ5H
-              qaaUserId: 01KPTPHR41Q1ND9K08PWQVR5MX
       responses: {}
 
   /api/{trainingProviderId}/learners/invite/bulk:
@@ -1250,13 +1097,6 @@ paths:
         - Learner
       security:
         - BearerAuth: []
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-            example:
-
       responses: {}
 
   /api/{trainingProviderId}/learners/invite/manual:
@@ -1273,23 +1113,6 @@ paths:
         - Learner
       security:
         - BearerAuth: []
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-            example:
-              firstName: Jane
-              lastName: Wayne
-              email: "caracolasstore+112@gmail.com"
-              phone: "08031234117"
-              tradeArea: Welding
-              tradeAreaCatalogId: 01KQQHS0RKMTT1NP7KE5VTZSGB
-              level: "Level 3"
-              cohortId: 01KPF42CRW845NP7561MNS2KDQ
-              channels:
-                - email
-              inviteLink: "https://app.nsqf.com/learner/create-account"
       responses: {}
 
   /api/{trainingProviderId}/learners/me/appeals:
@@ -1313,14 +1136,6 @@ paths:
         - Appeal assessment decision
       security:
         - BearerAuth: []
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-            example:
-              mergeKey: "unitId:::pcCodeOrAssessmentPcId"
-              summary: "Learner appeal summary..."
       responses: {}
 
   /api/{trainingProviderId}/learners/me/appeals/{appealId}:
@@ -1365,13 +1180,6 @@ paths:
         - Appeal assessment decision
       security:
         - BearerAuth: []
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-            example:
-              action: accept_judgment
       responses: {}
 
   /api/{trainingProviderId}/learners/me/appeals/eligible-targets:
@@ -1404,13 +1212,6 @@ paths:
         - Appeal assessment decision
       security:
         - BearerAuth: []
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-            example:
-
       responses: {}
 
   /api/{trainingProviderId}/learners/me/assessment-reports/units:
@@ -1465,20 +1266,6 @@ paths:
         - Assessment - Request assessment and Manage Requests
       security:
         - BearerAuth: []
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-            example:
-              unitId: 01KQQHV5JX8Q7G1CSGFF1SBCDE
-              performanceCriterionIds:
-                - 01KQQHV5K6QPNAY2P4Z4HGP4GZ
-                - 01KQQHV5KBY5P1DP1QF7Z8FN2G
-              scheduledStartAt: "2026-05-05T21:30:00.000Z"
-              trainingCentreId: 01KQKVRK12H4EFEZD9YWRR375Y
-              trainingCentreName: "Ikorodu Center 4"
-              learnerNotes: "Prefer morning session."
       responses: {}
     get:
       summary: "List my requests"
@@ -1508,16 +1295,6 @@ paths:
         - Assessment - Request assessment and Manage Requests
       security:
         - BearerAuth: []
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-            example:
-              scheduledStartAt: 2026-05-06
-              trainingCentreId: 01KQKVRK12H4EFEZD9YWRR375Y
-              trainingCentreName: "Ikorodu Center 4"
-              learnerNotes: "Updated availability."
       responses: {}
     get:
       summary: "Request detail"
@@ -1547,13 +1324,6 @@ paths:
         - Assessment - Request assessment and Manage Requests
       security:
         - BearerAuth: []
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-            example:
-              reason: "Unable to attend on proposed date due to work shift."
       responses: {}
 
   /api/{trainingProviderId}/learners/me/assessment-requests/{assessmentRequestId}/reschedule-proposal:
@@ -1576,15 +1346,6 @@ paths:
         - Assessment - Request assessment and Manage Requests
       security:
         - BearerAuth: []
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-            example:
-              proposedStartAt: "2026-05-15T09:00:00.000Z"
-              trainingCentreName: "Main Training Centre"
-              notes: "Optional note to QAA"
       responses: {}
 
   /api/{trainingProviderId}/learners/me/assessment-requests/{assessmentRequestId}/respond-to-qaa-schedule-proposal:
@@ -1607,13 +1368,6 @@ paths:
         - Assessment - Request assessment and Manage Requests
       security:
         - BearerAuth: []
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-            example:
-              decision: accepted
       responses: {}
 
   /api/{trainingProviderId}/learners/me/assessment-requests/new/units:
@@ -1674,13 +1428,6 @@ paths:
         - Assessment - Start scheduled assessment
       security:
         - BearerAuth: []
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-            example:
-              learnerComment: "All required evidence has been uploaded."
       responses: {}
 
   /api/{trainingProviderId}/learners/me/dashboard:
@@ -1919,13 +1666,6 @@ paths:
         - Learner dashboard and Notifications
       security:
         - BearerAuth: []
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-            example:
-
       responses: {}
 
   /api/{trainingProviderId}/learners/me/notifications/read-all:
@@ -1942,13 +1682,6 @@ paths:
         - Learner dashboard and Notifications
       security:
         - BearerAuth: []
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-            example:
-
       responses: {}
 
   /api/{trainingProviderId}/learners/me/onboarding-checklist:
@@ -1987,13 +1720,6 @@ paths:
         - Digital folder - Learner view
       security:
         - BearerAuth: []
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-            example:
-
       responses: {}
 
   /api/{trainingProviderId}/learners/me/onboarding-checklist/items/{itemKey}/content:
@@ -2038,13 +1764,6 @@ paths:
         - Digital folder - Learner view
       security:
         - BearerAuth: []
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-            example:
-
       responses: {}
 
   /api/{trainingProviderId}/learners/me/onboarding-checklist/items/course_learning_plan_initial_assessment:
@@ -2061,23 +1780,6 @@ paths:
         - Learner onboarding checklist
       security:
         - BearerAuth: []
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-            example:
-              coursePlan:
-                courseStartDate: 2026-06-01
-                expectedCompletionDate: 2027-05-31
-                awardingBody: "City & Guilds"
-                plannedPortfolioAssessmentSigningOffDate: 2027-04-30
-                unitPlans:
-                  -
-                    unitCodeOrTitle: "Unit 101 — Health and safety in the workplace"
-                    startDate: 2026-06-01
-                    reviewDate: 2026-08-01
-                    agreedCompletionDate: 2026-11-30
       responses: {}
 
   /api/{trainingProviderId}/learners/me/onboarding-checklist/items/course_learning_plan_review_completion:
@@ -2094,17 +1796,6 @@ paths:
         - Learner onboarding checklist
       security:
         - BearerAuth: []
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-            example:
-              coursePlan:
-                courseStartDate: 2026-06-01
-                expectedCompletionDate: 2027-05-31
-                awardingBody: "City & Guilds"
-                actualPortfolioAssessmentAndSignOffDate: 2026-06-01
       responses: {}
 
   /api/{trainingProviderId}/learners/me/onboarding-checklist/items/cv_education_credentials:
@@ -2121,20 +1812,22 @@ paths:
         - Learner onboarding checklist
       security:
         - BearerAuth: []
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-            example:
-              cv:
-                biodata:
-                  firstName: Eche
-                  lastName: Ndukwe
-                  phone: "09038174098"
-                  email: "learner@example.com"
-                  passportPhotoUrl: "https://cdn.example.com/learners/profile.jpg"
-                professionalSummary: "Garment-making professional completing NSQF pathway."
+      responses: {}
+
+  /api/{trainingProviderId}/learners/me/onboarding-checklist/items/cv_education_credentials/download-pdf:
+    parameters:
+      - name: trainingProviderId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{trainingProviderId}}'
+    get:
+      summary: "Download my CV as PDF"
+      tags:
+        - Learner onboarding checklist
+      security:
+        - BearerAuth: []
       responses: {}
 
   /api/{trainingProviderId}/learners/me/onboarding-checklist/items/induction_checklist:
@@ -2151,17 +1844,6 @@ paths:
         - Digital folder - Learner view
       security:
         - BearerAuth: []
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-            example:
-              induction:
-                checklist:
-                  receive_explanation_on_nsqf_nos_centre_awarding_body: true
-                  receive_explanation_on_assessment_procedures_methods: true
-                  learners_received_privacy_grievances_appeal_info: true
       responses: {}
 
   /api/{trainingProviderId}/learners/me/onboarding-checklist/items/learning_support_analysis:
@@ -2178,18 +1860,6 @@ paths:
         - Learner onboarding checklist
       security:
         - BearerAuth: []
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-            example:
-              learningSupport:
-                qualificationsHeld: "1. Garment Making L2"
-                learningNeedKeys:
-                  - language_barrier
-                strengths: "Visual aids and hands-on activities help me learn."
-                weaknesses: "Written expression in group discussions can be slow."
       responses: {}
 
   /api/{trainingProviderId}/learners/me/profile:
@@ -2213,13 +1883,6 @@ paths:
         - Learner profile
       security:
         - BearerAuth: []
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-            example:
-              passportPhotoUrl: "https://cdn.example.com/learner-photo.jpg"
       responses: {}
 
   /api/{trainingProviderId}/learners/me/profile/inviter:
@@ -2252,18 +1915,6 @@ paths:
         - Learner profile
       security:
         - BearerAuth: []
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-            example:
-              assessmentEnabled: true
-              documentsEnabled: true
-              appealsEnabled: true
-              types:
-                LEARNER_ASSESSMENT_REQUEST_SUBMITTED: true
-                LEARNER_REPORT_READY: true
       responses: {}
 
   /api/{trainingProviderId}/learners/me/profile/password:
@@ -2280,15 +1931,6 @@ paths:
         - Learner profile
       security:
         - BearerAuth: []
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-            example:
-              currentPassword: "Str0ngP@ss"
-              newPassword: "Password#123"
-              confirmNewPassword: "Password#123"
       responses: {}
 
   /api/{trainingProviderId}/learners/me/training-centres-for-scheduling:
@@ -2349,14 +1991,6 @@ paths:
         - Appeal assessment decision
       security:
         - BearerAuth: []
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-            example:
-              judgment: sufficient
-              comment: "Evidence meets requirements..."
       responses: {}
 
   /api/{trainingProviderId}/learners/staff/appeals/pending-review:
@@ -2433,13 +2067,6 @@ paths:
         - Assessment review
       security:
         - BearerAuth: []
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-            example:
-
       responses: {}
 
   /api/{trainingProviderId}/learners/staff/assessment-reviews/{assessmentRequestId}/submit:
@@ -2462,13 +2089,6 @@ paths:
         - Assessment review
       security:
         - BearerAuth: []
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-            example:
-
       responses: {}
 
   /api/{trainingProviderId}/learners/staff/assessment-schedule:
@@ -2529,13 +2149,6 @@ paths:
         - Assessment - Request assessment and Manage Requests
       security:
         - BearerAuth: []
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-            example:
-
       responses: {}
 
   /api/{trainingProviderId}/learners/staff/assessment-schedule/{assessmentRequestId}/accept-learner-reschedule:
@@ -2558,13 +2171,6 @@ paths:
         - Staff /me — signature and schedule
       security:
         - BearerAuth: []
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-            example:
-
       responses: {}
 
   /api/{trainingProviderId}/learners/staff/assessment-schedule/{assessmentRequestId}/propose-reschedule:
@@ -2587,15 +2193,6 @@ paths:
         - Assessment - Request assessment and Manage Requests
       security:
         - BearerAuth: []
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-            example:
-              proposedStartAt: "2026-05-15T09:00:00.000Z"
-              trainingCentreName: "Main Training Centre"
-              notes: "Optional; max 4000 chars when trimmed"
       responses: {}
 
   /api/{trainingProviderId}/learners/staff/assessment-schedule/{assessmentRequestId}/reject:
@@ -2618,13 +2215,6 @@ paths:
         - Assessment - Request assessment and Manage Requests
       security:
         - BearerAuth: []
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-            example:
-              reason: "Unit not ready for assessment."
       responses: {}
 
   /api/{trainingProviderId}/learners/staff/assessment-schedule/{assessmentRequestId}/reject-learner-reschedule:
@@ -2647,13 +2237,6 @@ paths:
         - Staff /me — signature and schedule
       security:
         - BearerAuth: []
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-            example:
-              reason: "Proposed date unavailable."
       responses: {}
 
   /api/{trainingProviderId}/learners/staff/me/assessment-reports/filter-options:
@@ -2726,13 +2309,6 @@ paths:
         - Staff /me — shared (QAA, IQAM, MCP, TT)
       security:
         - BearerAuth: []
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-            example:
-              comment: "Strong understanding of hazards. PCs 1.1–1.3 are complete."
       responses: {}
 
   /api/{trainingProviderId}/learners/staff/me/assessment-reports/units:
@@ -2907,14 +2483,6 @@ paths:
         - Staff /me — QAA only
       security:
         - BearerAuth: []
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-            example:
-              agreedActions: "Weekly tutorial; enlarged handouts."
-              concernsOrAdjustments: "Monitor written submissions."
       responses: {}
 
   /api/{trainingProviderId}/learners/staff/me/network:
@@ -3054,18 +2622,6 @@ paths:
         - Staff /me — shared (QAA, IQAM, MCP, TT)
       security:
         - BearerAuth: []
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-            example:
-              assessmentsEnabled: true
-              documentsEnabled: true
-              testimoniesEnabled: true
-              types:
-                QAA_STAFF_ASSESSMENT_REQUEST_NEW: true
-                TRAINER_STAFF_TESTIMONY_REQUIRED: true
       responses: {}
 
   /api/{trainingProviderId}/learners/staff/me/notifications:
@@ -3104,13 +2660,6 @@ paths:
         - Staff /me — shared (QAA, IQAM, MCP, TT)
       security:
         - BearerAuth: []
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-            example:
-
       responses: {}
 
   /api/{trainingProviderId}/learners/staff/me/notifications/read-all:
@@ -3127,13 +2676,6 @@ paths:
         - Staff /me — shared (QAA, IQAM, MCP, TT)
       security:
         - BearerAuth: []
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-            example:
-
       responses: {}
 
   /api/{trainingProviderId}/learners/staff/me/password:
@@ -3150,15 +2692,6 @@ paths:
         - Staff /me — shared (QAA, IQAM, MCP, TT)
       security:
         - BearerAuth: []
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-            example:
-              currentPassword: "OldP@ssw0rd!"
-              newPassword: N3wStr0ng!Pass
-              confirmNewPassword: N3wStr0ng!Pass
       responses: {}
 
   /api/{trainingProviderId}/learners/staff/me/profile:
@@ -3182,14 +2715,6 @@ paths:
         - Staff /me — shared (QAA, IQAM, MCP, TT)
       security:
         - BearerAuth: []
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-            example:
-              phone: "+2348099887766"
-              profilePictureUrl: "https://cdn.example.com/staff-avatar.jpg"
       responses: {}
 
   /api/{trainingProviderId}/learners/staff/me/signature:
@@ -3206,13 +2731,6 @@ paths:
         - Staff /me — signature and schedule
       security:
         - BearerAuth: []
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-            example:
-              signatureImageUrl: "https://res.cloudinary.com/example/image/upload/v1778610024/nsqf/signature.jpg"
       responses: {}
 
   /api/{trainingProviderId}/learners/staff/me/testimonies:
@@ -3279,13 +2797,6 @@ paths:
         - Staff /me — MCP and TT (trainers)
       security:
         - BearerAuth: []
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-            example:
-              testimonyText: "I confirm the learner demonstrated competent practical skills during workplace observation."
       responses: {}
 
   /api/{trainingProviderId}/learners/staff/me/testimony-schedule:
@@ -3340,17 +2851,6 @@ paths:
         - Digital folder - Learner view
       security:
         - BearerAuth: []
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-            example:
-              items:
-                -
-                  key: receive_explanation_on_nsqf_nos_centre_awarding_body
-                  label: "Receive explanation on the NSQF/NOS, the centre and awarding body."
-                  sortOrder: 0
       responses: {}
 
   /api/{trainingProviderId}/team/invite-staff:
@@ -3367,19 +2867,6 @@ paths:
         - Staff
       security:
         - BearerAuth: []
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-            example:
-              firstName: David
-              lastName: James
-              email: "caracolasstore+17@gmail.com"
-              phone: "+2348152957042"
-              tradeArea: "Mechanical Installation"
-              role: qaa
-              loginUrl: "https://app.nsqf.com/login"
       responses: {}
 
   /api/{trainingProviderId}/team/staff:
@@ -3447,13 +2934,6 @@ paths:
         - Staff
       security:
         - BearerAuth: []
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-            example:
-              confirmed: true
       responses: {}
 
   /api/{trainingProviderId}/team/staff/{staffUserId}/deactivate:
@@ -3476,13 +2956,6 @@ paths:
         - Staff
       security:
         - BearerAuth: []
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-            example:
-              confirmed: true
       responses: {}
 
   /api/{trainingProviderId}/team/staff/{staffUserId}/inviter:
@@ -3527,13 +3000,6 @@ paths:
         - Staff
       security:
         - BearerAuth: []
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-            example:
-
       responses: {}
 
   /api/{trainingProviderId}/uploads/media/presign:
@@ -3550,15 +3016,6 @@ paths:
         - Generic
       security:
         - BearerAuth: []
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-            example:
-              fileName: oral-answer-1.m4a
-              contentType: video/mp4
-              kind: video
       responses: {}
 
   /api/backoffice/awarding-bodies:
@@ -3607,32 +3064,6 @@ paths:
       summary: "Learner accepts invite and creates account"
       tags:
         - Learner
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-            example:
-              inviteToken: e4ff64a704f65d2f7c08611e251214bddfcda3ea331941a0
-              firstName: Jane
-              lastName: Wayne
-              email: "caracolasstore+112@gmail.com"
-              phone: "08031234117"
-              tradeAreaCatalogId: 01KQQHS0RKMTT1NP7KE5VTZSGB
-              tradeArea: 01KQQHS0RKMTT1NP7KE5VTZSGB
-              tradeAreaName: Welding
-              level: "Level 3"
-              cohortId: 01KPF42CRW845NP7561MNS2KDQ
-              cohortName: "May 2026 Intake"
-              dateOfBirth: "1990-05-01T00:00:00.000Z"
-              address: "1 Example Street"
-              passportPhotoUrl: "https://cdn.example.com/photo.jpg"
-              password: "Str0ngP@ss"
-              confirmPassword: "Str0ngP@ss"
-              hasNoNSQQualification: false
-              signatureImageUrl: "https://cdn.example.com/signature.png"
-              signatureWhiteBackgroundConfirmed: true
-              reviewConfirmed: true
       responses: {}
 
   /api/learners/staff/assessment-reviews/{assessmentRequestId}/pcs/{assessmentPcId}/evidence-methods/{evidenceMethod}:
@@ -3661,14 +3092,6 @@ paths:
         - Assessment review
       security:
         - BearerAuth: []
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-            example:
-              judgment: sufficient
-              note: "Satisfied with evidence"
       responses: {}
 
   /api/uploads/image:
@@ -3678,13 +3101,6 @@ paths:
         - Generic
       security:
         - BearerAuth: []
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-            example:
-
       responses: {}
 
   /api/uploads/signature:
@@ -3694,13 +3110,6 @@ paths:
         - Generic
       security:
         - BearerAuth: []
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-            example:
-
       responses: {}
 
   /auth/forgot-password:
@@ -3710,13 +3119,6 @@ paths:
         - Auth
       security:
         - BearerAuth: []
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-            example:
-              email: "caracolasstore@gmail.com"
       responses: {}
 
   /auth/invite/set-password:
@@ -3726,15 +3128,6 @@ paths:
         - Staff
       security:
         - BearerAuth: []
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-            example:
-              email: "caracolasstore+27@gmail.com"
-              newPassword: "Password@weq112"
-              confirmNewPassword: "Password@weq112"
       responses: {}
 
   /auth/me:
@@ -3753,13 +3146,6 @@ paths:
         - Auth
       security:
         - BearerAuth: []
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-            example:
-
       responses: {}
 
   /auth/reset-password:
@@ -3769,15 +3155,6 @@ paths:
         - Auth
       security:
         - BearerAuth: []
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-            example:
-              email: "caracolasstore@gmail.com"
-              newPassword: "John@weq112"
-              confirmNewPassword: "John@weq112"
       responses: {}
 
   /auth/roles:
@@ -3794,14 +3171,6 @@ paths:
       summary: "Login"
       tags:
         - Auth
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-            example:
-              email: "info@emediabay.com"
-              password: "Password#123"
       responses: {}
 
   /auth/verify-reset-password:
@@ -3811,13 +3180,5 @@ paths:
         - Auth
       security:
         - BearerAuth: []
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-            example:
-              otp: "989308"
-              email: "caracolasstore@gmail.com"
       responses: {}
 
