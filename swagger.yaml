@@ -3022,7 +3022,126 @@ paths:
     get:
       summary: "List awarding bodies"
       tags:
-        - Generic
+        - Backoffice
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: page
+          in: query
+          required: false
+          description: "Page (1-based)"
+          schema:
+            type: integer
+            default: 1
+        - name: limit
+          in: query
+          required: false
+          description: "Page size (max 100)"
+          schema:
+            type: integer
+            default: 25
+        - name: search
+          in: query
+          required: false
+          description: "Search filter"
+          schema:
+            type: string
+        - name: status
+          in: query
+          required: false
+          description: "Awarding body status"
+          schema:
+            type: string
+            enum: [active, deactivated]
+      responses: {}
+    post:
+      summary: "Create awarding body (+ initial admin)"
+      tags:
+        - Backoffice
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+            example:
+              {
+                "name": "Skills Nigeria Limited",
+                "acronym": "SNL",
+                "logoUrl": null,
+                "initialAdmin": {
+                  "firstName": "Ada",
+                  "lastName": "Okafor",
+                  "email": "ada@example.com",
+                  "role": "admin"
+                }
+              }
+      responses: {}
+
+  /api/backoffice/awarding-bodies/{awardingBodyId}:
+    parameters:
+      - name: awardingBodyId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{awardingBodyId}}'
+    get:
+      summary: "Awarding body detail"
+      tags:
+        - Backoffice
+      security:
+        - BearerAuth: []
+      responses: {}
+    patch:
+      summary: "Update awarding body"
+      tags:
+        - Backoffice
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+            example:
+              {
+                "name": "Skills Nigeria Limited",
+                "acronym": "SNL"
+              }
+      responses: {}
+
+  /api/backoffice/awarding-bodies/{awardingBodyId}/deactivate:
+    parameters:
+      - name: awardingBodyId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{awardingBodyId}}'
+    post:
+      summary: "Deactivate awarding body"
+      tags:
+        - Backoffice
+      security:
+        - BearerAuth: []
+      responses: {}
+
+  /api/backoffice/awarding-bodies/{awardingBodyId}/reactivate:
+    parameters:
+      - name: awardingBodyId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{awardingBodyId}}'
+    post:
+      summary: "Reactivate awarding body"
+      tags:
+        - Backoffice
       security:
         - BearerAuth: []
       responses: {}
@@ -3036,9 +3155,1080 @@ paths:
           type: string
         example: '{{awardingBodyId}}'
     get:
-      summary: "List awarding body trade areas"
+      summary: "List trade areas"
       tags:
-        - Generic
+        - Backoffice
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: page
+          in: query
+          required: false
+          description: "Page (1-based)"
+          schema:
+            type: integer
+            default: 1
+        - name: limit
+          in: query
+          required: false
+          description: "Page size (max 100)"
+          schema:
+            type: integer
+            default: 25
+        - name: search
+          in: query
+          required: false
+          description: "Search filter"
+          schema:
+            type: string
+        - name: status
+          in: query
+          required: false
+          description: "Trade area status"
+          schema:
+            type: string
+            enum: [active, deactivated]
+        - name: dateFrom
+          in: query
+          required: false
+          description: "ISO date filter (from)"
+          schema:
+            type: string
+        - name: dateTo
+          in: query
+          required: false
+          description: "ISO date filter (to)"
+          schema:
+            type: string
+      responses: {}
+    post:
+      summary: "Create trade areas (batch)"
+      tags:
+        - Backoffice
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+            example:
+              {
+                "items": [
+                  {
+                    "name": "Garment Making",
+                    "level": "1-4",
+                    "code": "GM"
+                  }
+                ]
+              }
+      responses: {}
+
+  /api/backoffice/awarding-bodies/{awardingBodyId}/trade-areas/{tradeAreaId}:
+    parameters:
+      - name: awardingBodyId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{awardingBodyId}}'
+      - name: tradeAreaId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{tradeAreaId}}'
+    patch:
+      summary: "Update trade area"
+      tags:
+        - Backoffice
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+            example:
+              {
+                "name": "Garment Making",
+                "level": "1-4"
+              }
+      responses: {}
+    delete:
+      summary: "Delete trade area"
+      tags:
+        - Backoffice
+      security:
+        - BearerAuth: []
+      responses: {}
+
+  /api/backoffice/awarding-bodies/{awardingBodyId}/trade-areas/{tradeAreaId}/deactivate:
+    parameters:
+      - name: awardingBodyId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{awardingBodyId}}'
+      - name: tradeAreaId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{tradeAreaId}}'
+    post:
+      summary: "Deactivate trade area"
+      tags:
+        - Backoffice
+      security:
+        - BearerAuth: []
+      responses: {}
+
+  /api/backoffice/awarding-bodies/{awardingBodyId}/trade-areas/{tradeAreaId}/reactivate:
+    parameters:
+      - name: awardingBodyId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{awardingBodyId}}'
+      - name: tradeAreaId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{tradeAreaId}}'
+    post:
+      summary: "Reactivate trade area"
+      tags:
+        - Backoffice
+      security:
+        - BearerAuth: []
+      responses: {}
+
+  /api/backoffice/awarding-bodies/{awardingBodyId}/users:
+    parameters:
+      - name: awardingBodyId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{awardingBodyId}}'
+    get:
+      summary: "List awarding body users"
+      tags:
+        - Backoffice
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: page
+          in: query
+          required: false
+          description: "Page (1-based)"
+          schema:
+            type: integer
+            default: 1
+        - name: limit
+          in: query
+          required: false
+          description: "Page size (max 100)"
+          schema:
+            type: integer
+            default: 25
+        - name: search
+          in: query
+          required: false
+          description: "Search filter"
+          schema:
+            type: string
+        - name: role
+          in: query
+          required: false
+          description: "Awarding body role"
+          schema:
+            type: string
+            enum: [super_admin, admin, viewer]
+        - name: status
+          in: query
+          required: false
+          description: "User status"
+          schema:
+            type: string
+            enum: [active, deactivated]
+        - name: dateFrom
+          in: query
+          required: false
+          description: "ISO date filter (from)"
+          schema:
+            type: string
+        - name: dateTo
+          in: query
+          required: false
+          description: "ISO date filter (to)"
+          schema:
+            type: string
+      responses: {}
+    post:
+      summary: "Add awarding body user"
+      tags:
+        - Backoffice
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+            example:
+              {
+                "firstName": "Ada",
+                "lastName": "Okafor",
+                "email": "ada@example.com",
+                "role": "admin"
+              }
+      responses: {}
+
+  /api/backoffice/awarding-bodies/{awardingBodyId}/users/{userId}:
+    parameters:
+      - name: awardingBodyId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{awardingBodyId}}'
+      - name: userId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{userId}}'
+    patch:
+      summary: "Change awarding body user role"
+      tags:
+        - Backoffice
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+            example:
+              {
+                "role": "admin"
+              }
+      responses: {}
+
+  /api/backoffice/awarding-bodies/{awardingBodyId}/users/{userId}/deactivate:
+    parameters:
+      - name: awardingBodyId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{awardingBodyId}}'
+      - name: userId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{userId}}'
+    post:
+      summary: "Deactivate AB user"
+      tags:
+        - Backoffice
+      security:
+        - BearerAuth: []
+      responses: {}
+
+  /api/backoffice/awarding-bodies/{awardingBodyId}/users/{userId}/reactivate:
+    parameters:
+      - name: awardingBodyId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{awardingBodyId}}'
+      - name: userId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{userId}}'
+    post:
+      summary: "Reactivate AB user"
+      tags:
+        - Backoffice
+      security:
+        - BearerAuth: []
+      responses: {}
+
+  /api/backoffice/awarding-bodies/{awardingBodyId}/users/{userId}/resend-invite:
+    parameters:
+      - name: awardingBodyId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{awardingBodyId}}'
+      - name: userId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{userId}}'
+    post:
+      summary: "Resend AB user invite"
+      tags:
+        - Backoffice
+      security:
+        - BearerAuth: []
+      responses: {}
+
+  /api/backoffice/dashboard:
+    get:
+      summary: "Dashboard — summary cards, user sign-ups chart, recent training providers"
+      tags:
+        - Backoffice
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: signUpPeriod
+          in: query
+          required: false
+          description: "User sign-ups chart: week (7 days), month (JAN–DEC), year (5 years)"
+          schema:
+            type: string
+            enum: [week, month, year]
+            default: month
+      responses: {}
+
+  /api/backoffice/nos/standards:
+    get:
+      summary: "List NOS standards (global)"
+      tags:
+        - Backoffice
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: page
+          in: query
+          required: false
+          description: "Page (1-based)"
+          schema:
+            type: integer
+            default: 1
+        - name: limit
+          in: query
+          required: false
+          description: "Page size (max 100)"
+          schema:
+            type: integer
+            default: 25
+        - name: search
+          in: query
+          required: false
+          description: "Search filter"
+          schema:
+            type: string
+        - name: status
+          in: query
+          required: false
+          description: "Standard status"
+          schema:
+            type: string
+            enum: [draft, active, deactivated]
+        - name: tradeAreaId
+          in: query
+          required: false
+          description: "Filter by trade area catalog id"
+          schema:
+            type: string
+        - name: awardingBodyId
+          in: query
+          required: false
+          description: "Filter by awarding body id"
+          schema:
+            type: string
+      responses: {}
+    post:
+      summary: "Create NOS standard (full payload)"
+      tags:
+        - Backoffice
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+            example:
+              {
+                "standardCode": "SNL/GM/L1",
+                "tradeAreaId": "01TRADEAREA_ID",
+                "awardingBodyId": "01AWARDING_BODY_ID",
+                "level": 1,
+                "plannedUnitsCount": 1,
+                "year": "2024",
+                "qualificationPurpose": "Qualification purpose text",
+                "qualificationObjective": "Objective line 1",
+                "units": [
+                  {
+                    "unitCode": "U1",
+                    "title": "Unit title",
+                    "unitPurpose": "Unit purpose",
+                    "creditValue": 3,
+                    "guidedLearningHours": 30,
+                    "displayOrder": 1,
+                    "learningObjectives": [
+                      {
+                        "key": "lo_1",
+                        "title": "Learning objective",
+                        "displayOrder": 1,
+                        "performanceCriteria": [
+                          {
+                            "pcCode": "PC 1.1",
+                            "pcText": "PC text",
+                            "displayOrder": 1,
+                            "evidenceRequired": [
+                              "personal_statement",
+                              "oral_qna"
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+      responses: {}
+
+  /api/backoffice/nos/standards/{standardId}:
+    parameters:
+      - name: standardId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{standardId}}'
+    get:
+      summary: "NOS standard detail"
+      tags:
+        - Backoffice
+      security:
+        - BearerAuth: []
+      responses: {}
+    patch:
+      summary: "Update NOS standard metadata"
+      tags:
+        - Backoffice
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+            example:
+              {
+                "standardCode": "SNL/GM/L1",
+                "level": 1,
+                "year": "2024"
+              }
+      responses: {}
+    delete:
+      summary: "Delete NOS standard"
+      tags:
+        - Backoffice
+      security:
+        - BearerAuth: []
+      responses: {}
+
+  /api/backoffice/nos/standards/{standardId}/deactivate:
+    parameters:
+      - name: standardId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{standardId}}'
+    post:
+      summary: "Deactivate NOS standard"
+      tags:
+        - Backoffice
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+            example:
+              {
+                "reason": "Superseded"
+              }
+      responses: {}
+
+  /api/backoffice/nos/standards/{standardId}/reactivate:
+    parameters:
+      - name: standardId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{standardId}}'
+    post:
+      summary: "Reactivate NOS standard"
+      tags:
+        - Backoffice
+      security:
+        - BearerAuth: []
+      responses: {}
+
+  /api/backoffice/nos/standards/{standardId}/units-tree:
+    parameters:
+      - name: standardId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{standardId}}'
+    put:
+      summary: "Replace NOS units tree"
+      tags:
+        - Backoffice
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+            example:
+              {
+                "units": [
+                  {
+                    "unitCode": "U1",
+                    "title": "Unit title",
+                    "displayOrder": 1,
+                    "learningObjectives": []
+                  }
+                ]
+              }
+      responses: {}
+
+  /api/backoffice/nos/standards/{standardId}/units/{unitId}/performance-criteria/{performanceCriterionId}:
+    parameters:
+      - name: standardId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{standardId}}'
+      - name: unitId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{unitId}}'
+      - name: performanceCriterionId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{performanceCriterionId}}'
+    get:
+      summary: "NOS PC evidence detail"
+      tags:
+        - Backoffice
+      security:
+        - BearerAuth: []
+      responses: {}
+
+  /api/backoffice/nos/standards/drafts:
+    post:
+      summary: "Create NOS draft (wizard step 1)"
+      tags:
+        - Backoffice
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+            example:
+              {
+                "standardCode": "SNL/GM/L1",
+                "tradeAreaId": "01TRADEAREA_ID",
+                "awardingBodyId": "01AWARDING_BODY_ID",
+                "level": 1,
+                "plannedUnitsCount": 5,
+                "year": "2024",
+                "qualificationPurpose": "Qualification purpose",
+                "qualificationObjective": "Objective line 1"
+              }
+      responses: {}
+
+  /api/backoffice/nos/standards/drafts/{draftId}:
+    parameters:
+      - name: draftId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{draftId}}'
+    delete:
+      summary: "Discard NOS draft"
+      tags:
+        - Backoffice
+      security:
+        - BearerAuth: []
+      responses: {}
+
+  /api/backoffice/nos/standards/drafts/{draftId}/basics:
+    parameters:
+      - name: draftId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{draftId}}'
+    patch:
+      summary: "Update NOS draft basics"
+      tags:
+        - Backoffice
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+            example:
+              {
+                "standardCode": "SNL/GM/L1",
+                "level": 1,
+                "plannedUnitsCount": 5
+              }
+      responses: {}
+
+  /api/backoffice/nos/standards/drafts/{draftId}/publish:
+    parameters:
+      - name: draftId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{draftId}}'
+    post:
+      summary: "Publish NOS draft"
+      tags:
+        - Backoffice
+      security:
+        - BearerAuth: []
+      responses: {}
+
+  /api/backoffice/nos/standards/drafts/{draftId}/review:
+    parameters:
+      - name: draftId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{draftId}}'
+    get:
+      summary: "NOS draft review (wizard step 3)"
+      tags:
+        - Backoffice
+      security:
+        - BearerAuth: []
+      responses: {}
+
+  /api/backoffice/nos/standards/drafts/{draftId}/units-tree:
+    parameters:
+      - name: draftId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{draftId}}'
+    put:
+      summary: "Update NOS draft units tree (wizard step 2)"
+      tags:
+        - Backoffice
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+            example:
+              {
+                "units": [
+                  {
+                    "unitCode": "U1",
+                    "title": "Unit 1",
+                    "displayOrder": 1,
+                    "learningObjectives": []
+                  }
+                ]
+              }
+      responses: {}
+
+  /api/backoffice/training-providers:
+    get:
+      summary: "List training providers"
+      tags:
+        - Backoffice
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: page
+          in: query
+          required: false
+          description: "Page (1-based)"
+          schema:
+            type: integer
+            default: 1
+        - name: limit
+          in: query
+          required: false
+          description: "Page size (max 100)"
+          schema:
+            type: integer
+            default: 25
+        - name: search
+          in: query
+          required: false
+          description: "Search filter"
+          schema:
+            type: string
+        - name: status
+          in: query
+          required: false
+          description: "Filter by training provider status"
+          schema:
+            type: string
+            enum: [active, deactivated, pending_invitation]
+      responses: {}
+    post:
+      summary: "Create training provider (+ owner CM invite)"
+      tags:
+        - Backoffice
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+            example:
+              {
+                "trainingProviderName": "Example Training Ltd",
+                "trainingProviderAddress": "Lagos, Nigeria",
+                "ownerAdmin": {
+                  "firstName": "Ada",
+                  "lastName": "Okafor",
+                  "email": "ada@example.com"
+                }
+              }
+      responses: {}
+
+  /api/backoffice/training-providers/{trainingProviderId}:
+    parameters:
+      - name: trainingProviderId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{trainingProviderId}}'
+    get:
+      summary: "Training provider detail"
+      tags:
+        - Backoffice
+      security:
+        - BearerAuth: []
+      responses: {}
+    patch:
+      summary: "Update training provider"
+      tags:
+        - Backoffice
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+            example:
+              {
+                "trainingProviderName": "Example Training Ltd",
+                "trainingProviderAddress": "Lagos, Nigeria"
+              }
+      responses: {}
+    delete:
+      summary: "Delete pending training provider"
+      tags:
+        - Backoffice
+      security:
+        - BearerAuth: []
+      responses: {}
+
+  /api/backoffice/training-providers/{trainingProviderId}/deactivate:
+    parameters:
+      - name: trainingProviderId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{trainingProviderId}}'
+    post:
+      summary: "Deactivate training provider"
+      tags:
+        - Backoffice
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+            example:
+              {
+                "reason": "Contract ended"
+              }
+      responses: {}
+
+  /api/backoffice/training-providers/{trainingProviderId}/learners:
+    parameters:
+      - name: trainingProviderId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{trainingProviderId}}'
+    get:
+      summary: "Training provider — learners tab"
+      tags:
+        - Backoffice
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: page
+          in: query
+          required: false
+          description: "Page (1-based)"
+          schema:
+            type: integer
+            default: 1
+        - name: limit
+          in: query
+          required: false
+          description: "Page size (max 100)"
+          schema:
+            type: integer
+            default: 25
+        - name: search
+          in: query
+          required: false
+          description: "Search filter"
+          schema:
+            type: string
+      responses: {}
+
+  /api/backoffice/training-providers/{trainingProviderId}/onboarding-checklist/document-templates:
+    parameters:
+      - name: trainingProviderId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{trainingProviderId}}'
+    get:
+      summary: "List centre document templates"
+      tags:
+        - Backoffice
+      security:
+        - BearerAuth: []
+      responses: {}
+
+  /api/backoffice/training-providers/{trainingProviderId}/onboarding-checklist/document-templates/{itemKey}:
+    parameters:
+      - name: trainingProviderId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{trainingProviderId}}'
+      - name: itemKey
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{itemKey}}'
+    put:
+      summary: "Save centre document template (itemKey: induction_checklist, ground_rules_acknowledgement, …)"
+      tags:
+        - Backoffice
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+            example:
+              {
+                "version": 1,
+                "displayTitle": "Ground rules",
+                "body": "<p>Centre ground rules content…</p>",
+                "acknowledgementPrompt": "I acknowledge that I have read the ground rules."
+              }
+      responses: {}
+
+  /api/backoffice/training-providers/{trainingProviderId}/onboarding-checklist/induction-template:
+    parameters:
+      - name: trainingProviderId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{trainingProviderId}}'
+    get:
+      summary: "Get induction checklist template"
+      tags:
+        - Backoffice
+      security:
+        - BearerAuth: []
+      responses: {}
+    put:
+      summary: "Save induction checklist template"
+      tags:
+        - Backoffice
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+            example:
+              {
+                "items": [
+                  {
+                    "key": "nsq_accreditation_overview",
+                    "label": "Receive explanation on NSQF/NOS",
+                    "sortOrder": 0
+                  },
+                  {
+                    "key": "assessment_procedures_and_methods",
+                    "label": "Assessment procedures",
+                    "sortOrder": 1
+                  }
+                ]
+              }
+      responses: {}
+
+  /api/backoffice/training-providers/{trainingProviderId}/reactivate:
+    parameters:
+      - name: trainingProviderId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{trainingProviderId}}'
+    post:
+      summary: "Reactivate training provider"
+      tags:
+        - Backoffice
+      security:
+        - BearerAuth: []
+      responses: {}
+
+  /api/backoffice/training-providers/{trainingProviderId}/resend-invite:
+    parameters:
+      - name: trainingProviderId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{trainingProviderId}}'
+    post:
+      summary: "Resend owner invite"
+      tags:
+        - Backoffice
+      security:
+        - BearerAuth: []
+      responses: {}
+
+  /api/backoffice/training-providers/{trainingProviderId}/staff:
+    parameters:
+      - name: trainingProviderId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{trainingProviderId}}'
+    get:
+      summary: "Training provider — staff tab"
+      tags:
+        - Backoffice
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: page
+          in: query
+          required: false
+          description: "Page (1-based)"
+          schema:
+            type: integer
+            default: 1
+        - name: limit
+          in: query
+          required: false
+          description: "Page size (max 100)"
+          schema:
+            type: integer
+            default: 25
+        - name: search
+          in: query
+          required: false
+          description: "Search filter"
+          schema:
+            type: string
+      responses: {}
+
+  /api/backoffice/training-providers/{trainingProviderId}/trade-areas-by-awarding-body:
+    parameters:
+      - name: trainingProviderId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{trainingProviderId}}'
+    get:
+      summary: "Training provider — trade areas by awarding body"
+      tags:
+        - Backoffice
       security:
         - BearerAuth: []
       responses: {}
@@ -3112,6 +4302,51 @@ paths:
         - BearerAuth: []
       responses: {}
 
+  /auth/backoffice/login:
+    post:
+      summary: "Back office login (authChannel backoffice; not for client app)"
+      tags:
+        - Auth — Back office
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+            example:
+              {
+                "email": "admin@example.com",
+                "password": "Password#123"
+              }
+      responses: {}
+
+  /auth/backoffice/me:
+    get:
+      summary: "Current back office user and role"
+      tags:
+        - Auth — Back office
+      security:
+        - BearerAuth: []
+      responses: {}
+
+  /auth/backoffice/signin:
+    post:
+      summary: "Back office login (alias of /auth/backoffice/login)"
+      tags:
+        - Auth — Back office
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+            example:
+              {
+                "email": "admin@example.com",
+                "password": "Password#123"
+              }
+      responses: {}
+
   /auth/forgot-password:
     post:
       summary: "forgot-password"
@@ -3130,9 +4365,16 @@ paths:
         - BearerAuth: []
       responses: {}
 
+  /auth/login:
+    post:
+      summary: "Client app login (alias of signin)"
+      tags:
+        - Auth
+      responses: {}
+
   /auth/me:
     get:
-      summary: "me"
+      summary: "Current user (client app)"
       tags:
         - Auth
       security:
@@ -3168,7 +4410,7 @@ paths:
 
   /auth/signin:
     post:
-      summary: "Login"
+      summary: "Client app login (centre / learner / staff)"
       tags:
         - Auth
       responses: {}
