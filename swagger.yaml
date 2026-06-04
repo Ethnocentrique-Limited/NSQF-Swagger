@@ -3979,13 +3979,6 @@ paths:
                 "supportPhone": "08012345678",
                 "supportEmail": "contact@lagvi.ng",
                 "description": "Vocational training institute.",
-                "primaryDirector": {
-                  "firstName": "James",
-                  "lastName": "Hardley",
-                  "workEmail": "james.hardley@lagvi.ng",
-                  "personalEmail": "contact@lagvi.ng",
-                  "phoneNumber": "08033004488"
-                },
                 "ownerAdmin": {
                   "firstName": "Ada",
                   "lastName": "Okafor",
