@@ -2,12 +2,41 @@ openapi: 3.0.0
 info:
   title: NSQF API
   version: 1.0.0
-  description: ''
+  description: Postman import — folders follow OpenAPI operation tags.
 servers:
   - url: '{{BASE_URL}}'
   - url: '{{DGOVAL_BASE_URL}}'
   - url: https://nsqf-staging-nsqfbucketbucket-wrfrkfdv.s3.eu-west-1.amazonaws.com
 
+tags:
+  - name: Auth
+  - name: Staff
+  - name: Learner
+  - name: Manage Learner
+  - name: Learner assignment
+  - name: Centre management
+  - name: Generic
+  - name: Digital folder - Staff view
+  - name: Digital folder - Learner view
+  - name: Assessment - Request assessment and Manage Requests
+  - name: Assessment - Start scheduled assessment
+  - name: Assessment - Assessment report (Unit level)
+  - name: Learner dashboard and Notifications
+  - name: Learner profile
+  - name: Appeal assessment decision
+  - name: Assessment review
+  - name: Learner onboarding checklist
+  - name: Staff /me — signature and schedule
+  - name: Staff /me — shared (QAA, IQAM, MCP, TT)
+  - name: Staff /me — QAA only
+  - name: Staff /me — IQAM only
+  - name: Staff /me — MCP and TT (trainers)
+  - name: QAA Centre document management
+  - name: Backoffice — Auth
+  - name: Backoffice — Training providers
+  - name: Backoffice — Awarding bodies
+  - name: Backoffice — User management
+  - name: Backoffice — NOS library
 
 components:
   securitySchemes:
@@ -3022,7 +3051,7 @@ paths:
     get:
       summary: "List awarding bodies"
       tags:
-        - Backoffice
+        - Backoffice — Awarding bodies
       security:
         - BearerAuth: []
       parameters:
@@ -3057,7 +3086,7 @@ paths:
     post:
       summary: "Create awarding body (+ initial admin)"
       tags:
-        - Backoffice
+        - Backoffice — Awarding bodies
       security:
         - BearerAuth: []
       requestBody:
@@ -3075,6 +3104,7 @@ paths:
                   "firstName": "Ada",
                   "lastName": "Okafor",
                   "email": "ada@example.com",
+                  "phone": "+2348031234567",
                   "role": "admin"
                 }
               }
@@ -3091,14 +3121,14 @@ paths:
     get:
       summary: "Awarding body detail"
       tags:
-        - Backoffice
+        - Backoffice — Awarding bodies
       security:
         - BearerAuth: []
       responses: {}
     patch:
       summary: "Update awarding body"
       tags:
-        - Backoffice
+        - Backoffice — Awarding bodies
       security:
         - BearerAuth: []
       requestBody:
@@ -3125,7 +3155,7 @@ paths:
     post:
       summary: "Deactivate awarding body"
       tags:
-        - Backoffice
+        - Backoffice — Awarding bodies
       security:
         - BearerAuth: []
       responses: {}
@@ -3141,7 +3171,7 @@ paths:
     post:
       summary: "Reactivate awarding body"
       tags:
-        - Backoffice
+        - Backoffice — Awarding bodies
       security:
         - BearerAuth: []
       responses: {}
@@ -3157,7 +3187,7 @@ paths:
     get:
       summary: "List trade areas"
       tags:
-        - Backoffice
+        - Backoffice — Awarding bodies
       security:
         - BearerAuth: []
       parameters:
@@ -3204,7 +3234,7 @@ paths:
     post:
       summary: "Create trade areas (batch)"
       tags:
-        - Backoffice
+        - Backoffice — Awarding bodies
       security:
         - BearerAuth: []
       requestBody:
@@ -3242,7 +3272,7 @@ paths:
     patch:
       summary: "Update trade area"
       tags:
-        - Backoffice
+        - Backoffice — Awarding bodies
       security:
         - BearerAuth: []
       requestBody:
@@ -3260,7 +3290,7 @@ paths:
     delete:
       summary: "Delete trade area"
       tags:
-        - Backoffice
+        - Backoffice — Awarding bodies
       security:
         - BearerAuth: []
       responses: {}
@@ -3282,7 +3312,7 @@ paths:
     post:
       summary: "Deactivate trade area"
       tags:
-        - Backoffice
+        - Backoffice — Awarding bodies
       security:
         - BearerAuth: []
       responses: {}
@@ -3304,7 +3334,7 @@ paths:
     post:
       summary: "Reactivate trade area"
       tags:
-        - Backoffice
+        - Backoffice — Awarding bodies
       security:
         - BearerAuth: []
       responses: {}
@@ -3320,7 +3350,7 @@ paths:
     get:
       summary: "List awarding body users"
       tags:
-        - Backoffice
+        - Backoffice — Awarding bodies
       security:
         - BearerAuth: []
       parameters:
@@ -3374,7 +3404,7 @@ paths:
     post:
       summary: "Add awarding body user"
       tags:
-        - Backoffice
+        - Backoffice — Awarding bodies
       security:
         - BearerAuth: []
       requestBody:
@@ -3388,6 +3418,7 @@ paths:
                 "firstName": "Ada",
                 "lastName": "Okafor",
                 "email": "ada@example.com",
+                "phone": "+2348031234567",
                 "role": "admin"
               }
       responses: {}
@@ -3409,7 +3440,7 @@ paths:
     patch:
       summary: "Change awarding body user role"
       tags:
-        - Backoffice
+        - Backoffice — Awarding bodies
       security:
         - BearerAuth: []
       requestBody:
@@ -3441,7 +3472,7 @@ paths:
     post:
       summary: "Deactivate AB user"
       tags:
-        - Backoffice
+        - Backoffice — Awarding bodies
       security:
         - BearerAuth: []
       responses: {}
@@ -3463,7 +3494,7 @@ paths:
     post:
       summary: "Reactivate AB user"
       tags:
-        - Backoffice
+        - Backoffice — Awarding bodies
       security:
         - BearerAuth: []
       responses: {}
@@ -3485,7 +3516,7 @@ paths:
     post:
       summary: "Resend AB user invite"
       tags:
-        - Backoffice
+        - Backoffice — Awarding bodies
       security:
         - BearerAuth: []
       responses: {}
@@ -3494,7 +3525,7 @@ paths:
     get:
       summary: "Dashboard — summary cards, user sign-ups chart, recent training providers"
       tags:
-        - Backoffice
+        - Backoffice — Training providers
       security:
         - BearerAuth: []
       parameters:
@@ -3512,7 +3543,7 @@ paths:
     get:
       summary: "List NOS standards (global)"
       tags:
-        - Backoffice
+        - Backoffice — NOS library
       security:
         - BearerAuth: []
       parameters:
@@ -3559,7 +3590,7 @@ paths:
     post:
       summary: "Create NOS standard (full payload)"
       tags:
-        - Backoffice
+        - Backoffice — NOS library
       security:
         - BearerAuth: []
       requestBody:
@@ -3620,14 +3651,14 @@ paths:
     get:
       summary: "NOS standard detail"
       tags:
-        - Backoffice
+        - Backoffice — NOS library
       security:
         - BearerAuth: []
       responses: {}
     patch:
       summary: "Update NOS standard metadata"
       tags:
-        - Backoffice
+        - Backoffice — NOS library
       security:
         - BearerAuth: []
       requestBody:
@@ -3646,7 +3677,7 @@ paths:
     delete:
       summary: "Delete NOS standard"
       tags:
-        - Backoffice
+        - Backoffice — NOS library
       security:
         - BearerAuth: []
       responses: {}
@@ -3662,7 +3693,7 @@ paths:
     post:
       summary: "Deactivate NOS standard"
       tags:
-        - Backoffice
+        - Backoffice — NOS library
       security:
         - BearerAuth: []
       requestBody:
@@ -3688,7 +3719,7 @@ paths:
     post:
       summary: "Reactivate NOS standard"
       tags:
-        - Backoffice
+        - Backoffice — NOS library
       security:
         - BearerAuth: []
       responses: {}
@@ -3704,7 +3735,7 @@ paths:
     put:
       summary: "Replace NOS units tree"
       tags:
-        - Backoffice
+        - Backoffice — NOS library
       security:
         - BearerAuth: []
       requestBody:
@@ -3749,7 +3780,7 @@ paths:
     get:
       summary: "NOS PC evidence detail"
       tags:
-        - Backoffice
+        - Backoffice — NOS library
       security:
         - BearerAuth: []
       responses: {}
@@ -3758,7 +3789,7 @@ paths:
     post:
       summary: "Create NOS draft (wizard step 1)"
       tags:
-        - Backoffice
+        - Backoffice — NOS library
       security:
         - BearerAuth: []
       requestBody:
@@ -3791,7 +3822,7 @@ paths:
     delete:
       summary: "Discard NOS draft"
       tags:
-        - Backoffice
+        - Backoffice — NOS library
       security:
         - BearerAuth: []
       responses: {}
@@ -3807,7 +3838,7 @@ paths:
     patch:
       summary: "Update NOS draft basics"
       tags:
-        - Backoffice
+        - Backoffice — NOS library
       security:
         - BearerAuth: []
       requestBody:
@@ -3835,7 +3866,7 @@ paths:
     post:
       summary: "Publish NOS draft"
       tags:
-        - Backoffice
+        - Backoffice — NOS library
       security:
         - BearerAuth: []
       responses: {}
@@ -3851,7 +3882,7 @@ paths:
     get:
       summary: "NOS draft review (wizard step 3)"
       tags:
-        - Backoffice
+        - Backoffice — NOS library
       security:
         - BearerAuth: []
       responses: {}
@@ -3867,7 +3898,7 @@ paths:
     put:
       summary: "Update NOS draft units tree (wizard step 2)"
       tags:
-        - Backoffice
+        - Backoffice — NOS library
       security:
         - BearerAuth: []
       requestBody:
@@ -3893,7 +3924,7 @@ paths:
     get:
       summary: "List training providers"
       tags:
-        - Backoffice
+        - Backoffice — Training providers
       security:
         - BearerAuth: []
       parameters:
@@ -3928,7 +3959,7 @@ paths:
     post:
       summary: "Create training provider (+ owner CM invite)"
       tags:
-        - Backoffice
+        - Backoffice — Training providers
       security:
         - BearerAuth: []
       requestBody:
@@ -3939,12 +3970,27 @@ paths:
               type: object
             example:
               {
-                "trainingProviderName": "Example Training Ltd",
-                "trainingProviderAddress": "Lagos, Nigeria",
+                "trainingProviderName": "Lagos Vocational Institute",
+                "trainingProviderNumber": "SNL-CTR-2025-042",
+                "state": "Lagos",
+                "lga": "Eti-Osa",
+                "trainingProviderAddress": "12 Workshop Road, Sabon Gari",
+                "website": "https://lagosvocationalinstitute.ng",
+                "supportPhone": "08012345678",
+                "supportEmail": "contact@lagvi.ng",
+                "description": "Vocational training institute.",
+                "primaryDirector": {
+                  "firstName": "James",
+                  "lastName": "Hardley",
+                  "workEmail": "james.hardley@lagvi.ng",
+                  "personalEmail": "contact@lagvi.ng",
+                  "phoneNumber": "08033004488"
+                },
                 "ownerAdmin": {
                   "firstName": "Ada",
                   "lastName": "Okafor",
-                  "email": "ada@example.com"
+                  "email": "ada@example.com",
+                  "phone": "+2348031234567"
                 }
               }
       responses: {}
@@ -3960,14 +4006,14 @@ paths:
     get:
       summary: "Training provider detail"
       tags:
-        - Backoffice
+        - Backoffice — Training providers
       security:
         - BearerAuth: []
       responses: {}
     patch:
       summary: "Update training provider"
       tags:
-        - Backoffice
+        - Backoffice — Training providers
       security:
         - BearerAuth: []
       requestBody:
@@ -3978,14 +4024,21 @@ paths:
               type: object
             example:
               {
-                "trainingProviderName": "Example Training Ltd",
-                "trainingProviderAddress": "Lagos, Nigeria"
+                "trainingProviderName": "Lagos Vocational Institute",
+                "trainingProviderNumber": "SNL-CTR-2025-042",
+                "state": "Lagos",
+                "lga": "Eti-Osa",
+                "trainingProviderAddress": "12 Workshop Road, Sabon Gari",
+                "website": "https://lagosvocationalinstitute.ng",
+                "supportPhone": "08012345678",
+                "supportEmail": "contact@lagvi.ng",
+                "description": "Updated description."
               }
       responses: {}
     delete:
       summary: "Delete pending training provider"
       tags:
-        - Backoffice
+        - Backoffice — Training providers
       security:
         - BearerAuth: []
       responses: {}
@@ -4001,7 +4054,7 @@ paths:
     post:
       summary: "Deactivate training provider"
       tags:
-        - Backoffice
+        - Backoffice — Training providers
       security:
         - BearerAuth: []
       requestBody:
@@ -4027,7 +4080,7 @@ paths:
     get:
       summary: "Training provider — learners tab"
       tags:
-        - Backoffice
+        - Backoffice — Training providers
       security:
         - BearerAuth: []
       parameters:
@@ -4064,7 +4117,7 @@ paths:
     get:
       summary: "List centre document templates"
       tags:
-        - Backoffice
+        - Backoffice — Training providers
       security:
         - BearerAuth: []
       responses: {}
@@ -4086,7 +4139,7 @@ paths:
     put:
       summary: "Save centre document template (itemKey: induction_checklist, ground_rules_acknowledgement, …)"
       tags:
-        - Backoffice
+        - Backoffice — Training providers
       security:
         - BearerAuth: []
       requestBody:
@@ -4115,14 +4168,14 @@ paths:
     get:
       summary: "Get induction checklist template"
       tags:
-        - Backoffice
+        - Backoffice — Training providers
       security:
         - BearerAuth: []
       responses: {}
     put:
       summary: "Save induction checklist template"
       tags:
-        - Backoffice
+        - Backoffice — Training providers
       security:
         - BearerAuth: []
       requestBody:
@@ -4159,7 +4212,7 @@ paths:
     post:
       summary: "Reactivate training provider"
       tags:
-        - Backoffice
+        - Backoffice — Training providers
       security:
         - BearerAuth: []
       responses: {}
@@ -4175,7 +4228,7 @@ paths:
     post:
       summary: "Resend owner invite"
       tags:
-        - Backoffice
+        - Backoffice — Training providers
       security:
         - BearerAuth: []
       responses: {}
@@ -4191,7 +4244,7 @@ paths:
     get:
       summary: "Training provider — staff tab"
       tags:
-        - Backoffice
+        - Backoffice — Training providers
       security:
         - BearerAuth: []
       parameters:
@@ -4228,7 +4281,176 @@ paths:
     get:
       summary: "Training provider — trade areas by awarding body"
       tags:
-        - Backoffice
+        - Backoffice — Training providers
+      security:
+        - BearerAuth: []
+      responses: {}
+
+  /api/backoffice/users:
+    get:
+      summary: "List platform back office users (User Management → People)"
+      tags:
+        - Backoffice — User management
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: page
+          in: query
+          required: false
+          description: "Page (1-based)"
+          schema:
+            type: integer
+            default: 1
+        - name: limit
+          in: query
+          required: false
+          description: "Page size (max 100)"
+          schema:
+            type: integer
+            default: 25
+        - name: search
+          in: query
+          required: false
+          description: "Search filter"
+          schema:
+            type: string
+        - name: role
+          in: query
+          required: false
+          description: "Platform back office role"
+          schema:
+            type: string
+            enum: [super_admin, admin, standard_manager, provider_manager, view_only]
+        - name: status
+          in: query
+          required: false
+          description: "User status (pending = invite not completed)"
+          schema:
+            type: string
+            enum: [active, deactivated, pending]
+        - name: dateFrom
+          in: query
+          required: false
+          description: "ISO date filter (from)"
+          schema:
+            type: string
+        - name: dateTo
+          in: query
+          required: false
+          description: "ISO date filter (to)"
+          schema:
+            type: string
+      responses: {}
+    post:
+      summary: "Invite platform back office user"
+      tags:
+        - Backoffice — User management
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+            example:
+              {
+                "firstName": "Olivia",
+                "lastName": "Rhye",
+                "email": "olivia@example.com",
+                "role": "admin"
+              }
+      responses: {}
+
+  /api/backoffice/users/{userId}:
+    parameters:
+      - name: userId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{userId}}'
+    get:
+      summary: "Platform user detail"
+      tags:
+        - Backoffice — User management
+      security:
+        - BearerAuth: []
+      responses: {}
+    patch:
+      summary: "Update platform user (name, role, status)"
+      tags:
+        - Backoffice — User management
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+            example:
+              {
+                "firstName": "Olivia",
+                "lastName": "Rhye",
+                "role": "standard_manager",
+                "status": "active"
+              }
+      responses: {}
+
+  /api/backoffice/users/{userId}/deactivate:
+    parameters:
+      - name: userId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{userId}}'
+    post:
+      summary: "Deactivate platform user"
+      tags:
+        - Backoffice — User management
+      security:
+        - BearerAuth: []
+      responses: {}
+
+  /api/backoffice/users/{userId}/reactivate:
+    parameters:
+      - name: userId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{userId}}'
+    post:
+      summary: "Reactivate platform user"
+      tags:
+        - Backoffice — User management
+      security:
+        - BearerAuth: []
+      responses: {}
+
+  /api/backoffice/users/{userId}/resend-invite:
+    parameters:
+      - name: userId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{userId}}'
+    post:
+      summary: "Resend platform user invite"
+      tags:
+        - Backoffice — User management
+      security:
+        - BearerAuth: []
+      responses: {}
+
+  /api/backoffice/users/roles:
+    get:
+      summary: "List default platform roles with user counts (User Management → Roles, read-only)"
+      tags:
+        - Backoffice — User management
       security:
         - BearerAuth: []
       responses: {}
@@ -4306,7 +4528,7 @@ paths:
     post:
       summary: "Back office login (authChannel backoffice; not for client app)"
       tags:
-        - Auth — Back office
+        - Backoffice — Auth
       requestBody:
         required: true
         content:
@@ -4322,9 +4544,9 @@ paths:
 
   /auth/backoffice/me:
     get:
-      summary: "Current back office user and role"
+      summary: "Back office profile (slim; not GET /auth/me shape)"
       tags:
-        - Auth — Back office
+        - Backoffice — Auth
       security:
         - BearerAuth: []
       responses: {}
@@ -4333,7 +4555,7 @@ paths:
     post:
       summary: "Back office login (alias of /auth/backoffice/login)"
       tags:
-        - Auth — Back office
+        - Backoffice — Auth
       requestBody:
         required: true
         content:
