@@ -37,6 +37,7 @@ tags:
   - name: Backoffice — Awarding bodies
   - name: Backoffice — User management
   - name: Backoffice — NOS library
+  - name: Backoffice — Audit log
 
 components:
   securitySchemes:
@@ -2022,6 +2023,22 @@ paths:
         - BearerAuth: []
       responses: {}
 
+  /api/{trainingProviderId}/learners/staff/appeals/decided:
+    parameters:
+      - name: trainingProviderId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{trainingProviderId}}'
+    get:
+      summary: "Reviewer queue - Decided appeals"
+      tags:
+        - Appeal assessment decision
+      security:
+        - BearerAuth: []
+      responses: {}
+
   /api/{trainingProviderId}/learners/staff/appeals/pending-review:
     parameters:
       - name: trainingProviderId
@@ -2096,6 +2113,46 @@ paths:
         - Assessment review
       security:
         - BearerAuth: []
+      responses: {}
+
+  /api/{trainingProviderId}/learners/staff/assessment-reviews/{assessmentRequestId}/pcs/{assessmentPcId}/review:
+    parameters:
+      - name: trainingProviderId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{trainingProviderId}}'
+      - name: assessmentRequestId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{assessmentRequestId}}'
+      - name: assessmentPcId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{assessmentPcId}}'
+    patch:
+      summary: "Save PC-level QAA review (sufficient / not sufficient)"
+      tags:
+        - Assessment review
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+            example:
+              {
+                "judgment": "not_sufficient",
+                "note": "Work product does not meet the standard.",
+                "directObservationNote": "Learner could not complete the task under observation."
+              }
       responses: {}
 
   /api/{trainingProviderId}/learners/staff/assessment-reviews/{assessmentRequestId}/submit:
@@ -3045,6 +3102,74 @@ paths:
         - Generic
       security:
         - BearerAuth: []
+      responses: {}
+
+  /api/backoffice/audit-log:
+    get:
+      summary: "List audit log events (read-only)"
+      tags:
+        - Backoffice — Audit log
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: page
+          in: query
+          required: false
+          description: "1"
+          schema:
+            type: string
+        - name: limit
+          in: query
+          required: false
+          description: "25"
+          schema:
+            type: string
+        - name: eventId
+          in: query
+          required: false
+          description: ""
+          schema:
+            type: string
+        - name: description
+          in: query
+          required: false
+          description: ""
+          schema:
+            type: string
+        - name: actorUserId
+          in: query
+          required: false
+          description: ""
+          schema:
+            type: string
+        - name: eventDate
+          in: query
+          required: false
+          description: "2026-03-10"
+          schema:
+            type: string
+      responses: {}
+
+  /api/backoffice/audit-log/actors:
+    get:
+      summary: "List actors for audit log filter dropdown"
+      tags:
+        - Backoffice — Audit log
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: search
+          in: query
+          required: false
+          description: ""
+          schema:
+            type: string
+        - name: limit
+          in: query
+          required: false
+          description: "50"
+          schema:
+            type: string
       responses: {}
 
   /api/backoffice/awarding-bodies:
@@ -4351,7 +4476,9 @@ paths:
                 "firstName": "Olivia",
                 "lastName": "Rhye",
                 "email": "olivia@example.com",
-                "role": "admin"
+                "phone": "08033004488",
+                "role": "admin",
+                "loginUrl": "https://backoffice.example.com/auth/login"
               }
       responses: {}
 
@@ -4386,6 +4513,7 @@ paths:
               {
                 "firstName": "Olivia",
                 "lastName": "Rhye",
+                "phone": "08033004488",
                 "role": "standard_manager",
                 "status": "active"
               }
@@ -4437,6 +4565,16 @@ paths:
         - Backoffice — User management
       security:
         - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+            example:
+              {
+                "loginUrl": "https://backoffice.example.com/auth/login"
+              }
       responses: {}
 
   /api/backoffice/users/roles:
@@ -4444,6 +4582,15 @@ paths:
       summary: "List default platform roles with user counts (User Management → Roles, read-only)"
       tags:
         - Backoffice — User management
+      security:
+        - BearerAuth: []
+      responses: {}
+
+  /api/catalog/evidence-types:
+    get:
+      summary: "List platform evidence types"
+      tags:
+        - Generic
       security:
         - BearerAuth: []
       responses: {}
@@ -4492,7 +4639,7 @@ paths:
           type: string
         example: '{{evidenceMethod}}'
     patch:
-      summary: "Submit evidence method judgement"
+      summary: "Deprecated — use PC review PATCH"
       tags:
         - Assessment review
       security:
@@ -4542,6 +4689,27 @@ paths:
         - Backoffice — Auth
       security:
         - BearerAuth: []
+      responses: {}
+
+  /auth/backoffice/me/password:
+    post:
+      summary: "Back office — change password (My profile → Security)"
+      tags:
+        - Backoffice — Auth
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+            example:
+              {
+                "currentPassword": "CurrentPassword#123",
+                "newPassword": "NewPassword#456",
+                "confirmNewPassword": "NewPassword#456"
+              }
       responses: {}
 
   /auth/backoffice/signin:
