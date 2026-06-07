@@ -4806,4 +4806,3 @@ paths:
       security:
         - BearerAuth: []
       responses: {}
-
