@@ -3306,6 +3306,13 @@ paths:
           description: "Search filter"
           schema:
             type: string
+        - name: status
+          in: query
+          required: false
+          description: "Filter by training provider status (default list: active only when omitted)"
+          schema:
+            type: string
+            enum: [active, deactivated, pending_invitation]
         - name: dateAdded
           in: query
           required: false
@@ -3402,9 +3409,10 @@ paths:
         - name: status
           in: query
           required: false
+          description: "Filter by training provider status (default list: active only when omitted)"
           schema:
             type: string
-            enum: [active, pending_invitation, pending_verification, rejected, deactivated]
+            enum: [active, deactivated, pending_invitation]
         - name: dateAdded
           in: query
           required: false
@@ -5427,4 +5435,3 @@ paths:
       security:
         - BearerAuth: []
       responses: {}
-
