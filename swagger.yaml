@@ -3624,7 +3624,9 @@ paths:
                 "firstName": "Chidi",
                 "lastName": "EQAM",
                 "email": "eqam@example.com",
+                "phone": "+2348031234567",
                 "role": "eqam",
+                "loginUrl": "https://backoffice.example.com/auth/login",
                 "trainingProviderIds": [
                   "01TRAINING_PROVIDER_ID"
                 ]
@@ -3713,6 +3715,16 @@ paths:
         - Backoffice — Awarding body portal
       security:
         - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+            example:
+              {
+                "loginUrl": "https://backoffice.example.com/auth/login"
+              }
       responses: {}
 
   /api/backoffice/audit-log:
@@ -3854,6 +3866,7 @@ paths:
                 "name": "Skills Nigeria Limited",
                 "acronym": "SNL",
                 "logoUrl": null,
+                "loginUrl": "https://backoffice.example.com/auth/login",
                 "initialAdmin": {
                   "firstName": "Ada",
                   "lastName": "Okafor",
@@ -4173,7 +4186,8 @@ paths:
                 "lastName": "Okafor",
                 "email": "ada@example.com",
                 "phone": "+2348031234567",
-                "role": "admin"
+                "role": "admin",
+                "loginUrl": "https://backoffice.example.com/auth/login"
               }
       responses: {}
 
@@ -4273,6 +4287,16 @@ paths:
         - Backoffice — Awarding bodies
       security:
         - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+            example:
+              {
+                "loginUrl": "https://backoffice.example.com/auth/login"
+              }
       responses: {}
 
   /api/backoffice/dashboard:
