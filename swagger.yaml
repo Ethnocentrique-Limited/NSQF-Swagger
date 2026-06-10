@@ -82,6 +82,28 @@ paths:
               }
       responses: {}
 
+  /api/{trainingProviderId}/centre/cohorts/{cohortId}:
+    parameters:
+      - name: trainingProviderId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{trainingProviderId}}'
+      - name: cohortId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{cohortId}}'
+    delete:
+      summary: "Delete cohort"
+      tags:
+        - Learner
+      security:
+        - BearerAuth: []
+      responses: {}
+
   /api/{trainingProviderId}/centre/dashboard:
     parameters:
       - name: trainingProviderId
@@ -256,28 +278,6 @@ paths:
         - Centre management
       security:
         - BearerAuth: []
-      responses: {}
-
-  /api/{trainingProviderId}/centre/training-centres/{trainingCentreId}/activate:
-    parameters:
-      - name: trainingProviderId
-        in: path
-        required: true
-        schema:
-          type: string
-        example: '{{trainingProviderId}}'
-      - name: trainingCentreId
-        in: path
-        required: true
-        schema:
-          type: string
-        example: '{{trainingCentreId}}'
-    post:
-      summary: "Training Centres - Activate training centre"
-      tags:
-        - Centre management
-      security:
-        - BearerAuth: []
       requestBody:
         required: true
         content:
@@ -290,7 +290,7 @@ paths:
               }
       responses: {}
 
-  /api/{trainingProviderId}/centre/training-centres/{trainingCentreId}/deactivate:
+  /api/{trainingProviderId}/centre/training-centres/{trainingCentreId}/status:
     parameters:
       - name: trainingProviderId
         in: path
@@ -305,7 +305,7 @@ paths:
           type: string
         example: '{{trainingCentreId}}'
     post:
-      summary: "Training Centres - Deactivate training centre"
+      summary: "Training Centres - Set training centre status (activate or deactivate)"
       tags:
         - Centre management
       security:
@@ -318,6 +318,7 @@ paths:
               type: object
             example:
               {
+                "action": "deactivate",
                 "confirmed": true
               }
       responses: {}
@@ -404,28 +405,6 @@ paths:
         - Manage Learner
       security:
         - BearerAuth: []
-      responses: {}
-
-  /api/{trainingProviderId}/learners/{learnerId}/activate:
-    parameters:
-      - name: trainingProviderId
-        in: path
-        required: true
-        schema:
-          type: string
-        example: '{{trainingProviderId}}'
-      - name: learnerId
-        in: path
-        required: true
-        schema:
-          type: string
-        example: '{{learnerId}}'
-    post:
-      summary: "Manage Learner - Activate learner"
-      tags:
-        - Manage Learner
-      security:
-        - BearerAuth: []
       requestBody:
         required: true
         content:
@@ -469,38 +448,6 @@ paths:
                 "practicalTrainerUserId": "01KPH614CRDZ9GJKNV8N2CGADE",
                 "theoryTrainerUserId": "01KPTPXXRWZF9G5FHYJ048EJ5H",
                 "qaaUserId": "01KPTPHR41Q1ND9K08PWQVR5MX"
-              }
-      responses: {}
-
-  /api/{trainingProviderId}/learners/{learnerId}/deactivate:
-    parameters:
-      - name: trainingProviderId
-        in: path
-        required: true
-        schema:
-          type: string
-        example: '{{trainingProviderId}}'
-      - name: learnerId
-        in: path
-        required: true
-        schema:
-          type: string
-        example: '{{learnerId}}'
-    post:
-      summary: "Manage Learner - Deactivate learner"
-      tags:
-        - Manage Learner
-      security:
-        - BearerAuth: []
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-            example:
-              {
-                "confirmed": true
               }
       responses: {}
 
@@ -829,78 +776,6 @@ paths:
         - BearerAuth: []
       responses: {}
 
-  /api/{trainingProviderId}/learners/{learnerId}/onboarding-checklist/items/{itemKey}/sign-qa:
-    parameters:
-      - name: trainingProviderId
-        in: path
-        required: true
-        schema:
-          type: string
-        example: '{{trainingProviderId}}'
-      - name: learnerId
-        in: path
-        required: true
-        schema:
-          type: string
-        example: '{{learnerId}}'
-      - name: itemKey
-        in: path
-        required: true
-        schema:
-          type: string
-        example: '{{itemKey}}'
-    post:
-      summary: "Learning onboarding checklist - QAA sign learning support analysis"
-      tags:
-        - Learner onboarding checklist
-      security:
-        - BearerAuth: []
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-            example:
-              {
-                "agreedActions": "Weekly tutorial; enlarged handouts; buddy for oral discussions.",
-                "concernsOrAdjustments": "Monitor written evidence submissions."
-              }
-      responses: {}
-
-  /api/{trainingProviderId}/learners/{learnerId}/onboarding-checklist/items/course_learning_plan_initial_assessment/sign-qa:
-    parameters:
-      - name: trainingProviderId
-        in: path
-        required: true
-        schema:
-          type: string
-        example: '{{trainingProviderId}}'
-      - name: learnerId
-        in: path
-        required: true
-        schema:
-          type: string
-        example: '{{learnerId}}'
-    post:
-      summary: "Learning onboarding checklist - QAA sign Course learning plan initial assessment"
-      tags:
-        - Learner onboarding checklist
-      security:
-        - BearerAuth: []
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-            example:
-              {
-                "agreedActions": "Dates accepted; learner to submit portfolio evidence two weeks before each portfolio date.",
-                "concernsOrAdjustments": "Second unit portfolio date moved +2 weeks — reflected in plan."
-              }
-      responses: {}
-
   /api/{trainingProviderId}/learners/{learnerId}/onboarding-checklist/items/cv_education_credentials/download-pdf:
     parameters:
       - name: trainingProviderId
@@ -953,6 +828,39 @@ paths:
               {}
       responses: {}
 
+  /api/{trainingProviderId}/learners/{learnerId}/status:
+    parameters:
+      - name: trainingProviderId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{trainingProviderId}}'
+      - name: learnerId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{learnerId}}'
+    post:
+      summary: "Manage Learner - Set learner status (activate or deactivate)"
+      tags:
+        - Manage Learner
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+            example:
+              {
+                "action": "deactivate",
+                "confirmed": true
+              }
+      responses: {}
+
   /api/{trainingProviderId}/learners/{learnerId}/units:
     parameters:
       - name: trainingProviderId
@@ -971,6 +879,28 @@ paths:
       summary: "QAA list unit for learner"
       tags:
         - Assessment - Request assessment and Manage Requests
+      security:
+        - BearerAuth: []
+      responses: {}
+
+  /api/{trainingProviderId}/learners/{learnerId}/verification:
+    parameters:
+      - name: trainingProviderId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{trainingProviderId}}'
+      - name: learnerId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{learnerId}}'
+    get:
+      summary: "Get learner verification application"
+      tags:
+        - Learner
       security:
         - BearerAuth: []
       responses: {}
@@ -1060,6 +990,16 @@ paths:
         - Manage Learner
       security:
         - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+            example:
+              {
+                "confirmed": true
+              }
       responses: {}
 
   /api/{trainingProviderId}/learners/assessment-sessions/{sessionId}/pcs/{assessmentPcId}/evidence:
@@ -1787,7 +1727,7 @@ paths:
           type: string
         example: '{{assessmentRequestId}}'
     post:
-      summary: "Respond to QAA schedule proposal"
+      summary: "Respond to QAA schedule proposal (decision: accepted or rejected)"
       tags:
         - Assessment - Request assessment and Manage Requests
       security:
@@ -1916,6 +1856,28 @@ paths:
         example: '{{trainingProviderId}}'
     get:
       summary: "Digital folder CDF"
+      tags:
+        - Digital folder - Learner view
+      security:
+        - BearerAuth: []
+      responses: {}
+
+  /api/{trainingProviderId}/learners/me/digital-folder/cdf/items/{itemKey}:
+    parameters:
+      - name: trainingProviderId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{trainingProviderId}}'
+      - name: itemKey
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{itemKey}}'
+    get:
+      summary: "CDF item detail (learning support, course plan, etc.)"
       tags:
         - Digital folder - Learner view
       security:
@@ -2058,6 +2020,40 @@ paths:
         - BearerAuth: []
       responses: {}
 
+  /api/{trainingProviderId}/learners/me/nos/standards/{standardId}/units/{unitId}/performance-criteria/{performanceCriterionId}:
+    parameters:
+      - name: trainingProviderId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{trainingProviderId}}'
+      - name: standardId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{standardId}}'
+      - name: unitId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{unitId}}'
+      - name: performanceCriterionId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{performanceCriterionId}}'
+    get:
+      summary: "NOS qualification context - performance criterion evidence detail"
+      tags:
+        - Assessment - Request assessment and Manage Requests
+      security:
+        - BearerAuth: []
+      responses: {}
+
   /api/{trainingProviderId}/learners/me/nos/standards/my:
     parameters:
       - name: trainingProviderId
@@ -2160,6 +2156,44 @@ paths:
         - BearerAuth: []
       responses: {}
 
+  /api/{trainingProviderId}/learners/me/onboarding-checklist/items/{itemKey}:
+    parameters:
+      - name: trainingProviderId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{trainingProviderId}}'
+      - name: itemKey
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{itemKey}}'
+    patch:
+      summary: "Patch onboarding checklist item (body shape depends on itemKey — see item-specific examples below)"
+      tags:
+        - Learner onboarding checklist
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+            example:
+              {
+                "induction": {
+                  "checklist": {
+                    "receive_explanation_on_nsqf_nos_centre_awarding_body": true,
+                    "receive_explanation_on_assessment_procedures_methods": true,
+                    "learners_received_privacy_grievances_appeal_info": true
+                  }
+                }
+              }
+      responses: {}
+
   /api/{trainingProviderId}/learners/me/onboarding-checklist/items/{itemKey}/acknowledge:
     parameters:
       - name: trainingProviderId
@@ -2242,111 +2276,6 @@ paths:
               {}
       responses: {}
 
-  /api/{trainingProviderId}/learners/me/onboarding-checklist/items/course_learning_plan_initial_assessment:
-    parameters:
-      - name: trainingProviderId
-        in: path
-        required: true
-        schema:
-          type: string
-        example: '{{trainingProviderId}}'
-    patch:
-      summary: "Learning onboarding checklist - Course learning plan initial assessment"
-      tags:
-        - Learner onboarding checklist
-      security:
-        - BearerAuth: []
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-            example:
-              {
-                "coursePlan": {
-                  "courseStartDate": "2026-06-01",
-                  "expectedCompletionDate": "2027-05-31",
-                  "awardingBody": "City & Guilds",
-                  "plannedPortfolioAssessmentSigningOffDate": "2027-04-30",
-                  "unitPlans": [
-                    {
-                      "unitCodeOrTitle": "Unit 101 — Health and safety in the workplace",
-                      "startDate": "2026-06-01",
-                      "reviewDate": "2026-08-01",
-                      "agreedCompletionDate": "2026-11-30"
-                    }
-                  ]
-                }
-              }
-      responses: {}
-
-  /api/{trainingProviderId}/learners/me/onboarding-checklist/items/course_learning_plan_review_completion:
-    parameters:
-      - name: trainingProviderId
-        in: path
-        required: true
-        schema:
-          type: string
-        example: '{{trainingProviderId}}'
-    patch:
-      summary: "Learning onboarding checklist - Course learning plan review and completion"
-      tags:
-        - Learner onboarding checklist
-      security:
-        - BearerAuth: []
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-            example:
-              {
-                "coursePlan": {
-                  "courseStartDate": "2026-06-01",
-                  "expectedCompletionDate": "2027-05-31",
-                  "awardingBody": "City & Guilds",
-                  "actualPortfolioAssessmentAndSignOffDate": "2026-06-01"
-                }
-              }
-      responses: {}
-
-  /api/{trainingProviderId}/learners/me/onboarding-checklist/items/cv_education_credentials:
-    parameters:
-      - name: trainingProviderId
-        in: path
-        required: true
-        schema:
-          type: string
-        example: '{{trainingProviderId}}'
-    patch:
-      summary: "Learning onboarding checklist - Create cv"
-      tags:
-        - Learner onboarding checklist
-      security:
-        - BearerAuth: []
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-            example:
-              {
-                "cv": {
-                  "biodata": {
-                    "firstName": "Eche",
-                    "lastName": "Ndukwe",
-                    "phone": "09038174098",
-                    "email": "learner@example.com",
-                    "passportPhotoUrl": "https://cdn.example.com/learners/profile.jpg"
-                  },
-                  "professionalSummary": "Garment-making professional completing NSQF pathway."
-                }
-              }
-      responses: {}
-
   /api/{trainingProviderId}/learners/me/onboarding-checklist/items/cv_education_credentials/download-pdf:
     parameters:
       - name: trainingProviderId
@@ -2361,71 +2290,6 @@ paths:
         - Learner onboarding checklist
       security:
         - BearerAuth: []
-      responses: {}
-
-  /api/{trainingProviderId}/learners/me/onboarding-checklist/items/induction_checklist:
-    parameters:
-      - name: trainingProviderId
-        in: path
-        required: true
-        schema:
-          type: string
-        example: '{{trainingProviderId}}'
-    patch:
-      summary: "Complete induction checklist"
-      tags:
-        - Digital folder - Learner view
-      security:
-        - BearerAuth: []
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-            example:
-              {
-                "induction": {
-                  "checklist": {
-                    "receive_explanation_on_nsqf_nos_centre_awarding_body": true,
-                    "receive_explanation_on_assessment_procedures_methods": true,
-                    "learners_received_privacy_grievances_appeal_info": true
-                  }
-                }
-              }
-      responses: {}
-
-  /api/{trainingProviderId}/learners/me/onboarding-checklist/items/learning_support_analysis:
-    parameters:
-      - name: trainingProviderId
-        in: path
-        required: true
-        schema:
-          type: string
-        example: '{{trainingProviderId}}'
-    patch:
-      summary: "Learning onboarding checklist - Learning support analysis"
-      tags:
-        - Learner onboarding checklist
-      security:
-        - BearerAuth: []
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-            example:
-              {
-                "learningSupport": {
-                  "qualificationsHeld": "1. Garment Making L2",
-                  "learningNeedKeys": [
-                    "language_barrier"
-                  ],
-                  "strengths": "Visual aids and hands-on activities help me learn.",
-                  "weaknesses": "Written expression in group discussions can be slow."
-                }
-              }
       responses: {}
 
   /api/{trainingProviderId}/learners/me/profile:
@@ -2816,7 +2680,7 @@ paths:
         - BearerAuth: []
       responses: {}
 
-  /api/{trainingProviderId}/learners/staff/assessment-schedule/{assessmentRequestId}/accept:
+  /api/{trainingProviderId}/learners/staff/assessment-schedule/{assessmentRequestId}/decision:
     parameters:
       - name: trainingProviderId
         in: path
@@ -2831,49 +2695,22 @@ paths:
           type: string
         example: '{{assessmentRequestId}}'
     post:
-      summary: "QAA accept assessment request"
+      summary: "QAA schedule decision (accept/reject initial request or learner reschedule)"
       tags:
         - Assessment - Request assessment and Manage Requests
       security:
         - BearerAuth: []
       requestBody:
-        required: false
+        required: true
         content:
           application/json:
             schema:
               type: object
             example:
-              {}
-      responses: {}
-
-  /api/{trainingProviderId}/learners/staff/assessment-schedule/{assessmentRequestId}/accept-learner-reschedule:
-    parameters:
-      - name: trainingProviderId
-        in: path
-        required: true
-        schema:
-          type: string
-        example: '{{trainingProviderId}}'
-      - name: assessmentRequestId
-        in: path
-        required: true
-        schema:
-          type: string
-        example: '{{assessmentRequestId}}'
-    post:
-      summary: "QAA - Accept rescheduled proposal"
-      tags:
-        - Staff /me — signature and schedule
-      security:
-        - BearerAuth: []
-      requestBody:
-        required: false
-        content:
-          application/json:
-            schema:
-              type: object
-            example:
-              {}
+              {
+                "decision": "accept",
+                "context": "initial"
+              }
       responses: {}
 
   /api/{trainingProviderId}/learners/staff/assessment-schedule/{assessmentRequestId}/propose-reschedule:
@@ -2907,70 +2744,6 @@ paths:
                 "proposedStartAt": "2026-05-15T09:00:00.000Z",
                 "trainingCentreName": "Main Training Centre",
                 "notes": "Optional; max 4000 chars when trimmed"
-              }
-      responses: {}
-
-  /api/{trainingProviderId}/learners/staff/assessment-schedule/{assessmentRequestId}/reject:
-    parameters:
-      - name: trainingProviderId
-        in: path
-        required: true
-        schema:
-          type: string
-        example: '{{trainingProviderId}}'
-      - name: assessmentRequestId
-        in: path
-        required: true
-        schema:
-          type: string
-        example: '{{assessmentRequestId}}'
-    post:
-      summary: "QAA reject assessment request"
-      tags:
-        - Assessment - Request assessment and Manage Requests
-      security:
-        - BearerAuth: []
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-            example:
-              {
-                "reason": "Unit not ready for assessment."
-              }
-      responses: {}
-
-  /api/{trainingProviderId}/learners/staff/assessment-schedule/{assessmentRequestId}/reject-learner-reschedule:
-    parameters:
-      - name: trainingProviderId
-        in: path
-        required: true
-        schema:
-          type: string
-        example: '{{trainingProviderId}}'
-      - name: assessmentRequestId
-        in: path
-        required: true
-        schema:
-          type: string
-        example: '{{assessmentRequestId}}'
-    post:
-      summary: "QAA - Reject rescheduled proposal"
-      tags:
-        - Staff /me — signature and schedule
-      security:
-        - BearerAuth: []
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-            example:
-              {
-                "reason": "Proposed date unavailable."
               }
       responses: {}
 
@@ -3503,7 +3276,7 @@ paths:
           type: string
         example: '{{trainingProviderId}}'
     get:
-      summary: "IQAM portfolio verification list (eligible learners only)"
+      summary: "IQAM portfolio verification — list, overview, checklist, or final report (use query params)"
       tags:
         - Staff /me — IQAM only
       security:
@@ -3557,28 +3330,18 @@ paths:
           description: ""
           schema:
             type: string
-      responses: {}
-
-  /api/{trainingProviderId}/learners/staff/me/portfolio-verification/{learnerId}:
-    parameters:
-      - name: trainingProviderId
-        in: path
-        required: true
-        schema:
-          type: string
-        example: '{{trainingProviderId}}'
-      - name: learnerId
-        in: path
-        required: true
-        schema:
-          type: string
-        example: '{{learnerId}}'
-    get:
-      summary: "IQAM portfolio verification overview (open learner portfolio)"
-      tags:
-        - Staff /me — IQAM only
-      security:
-        - BearerAuth: []
+        - name: learnerId
+          in: query
+          required: false
+          description: "Required for detail views; omit for list"
+          schema:
+            type: string
+        - name: view
+          in: query
+          required: false
+          description: {"type":"string","enum":["overview","checklist","final-report"],"description":"Detail view when learnerId is set (default: overview)"}
+          schema:
+            type: string
       responses: {}
 
   /api/{trainingProviderId}/learners/staff/me/portfolio-verification/{learnerId}/checklist:
@@ -3595,13 +3358,6 @@ paths:
         schema:
           type: string
         example: '{{learnerId}}'
-    get:
-      summary: "IQAM Verification Checklist (get draft or completed)"
-      tags:
-        - Staff /me — IQAM only
-      security:
-        - BearerAuth: []
-      responses: {}
     put:
       summary: "IQAM Verification Checklist — save draft"
       tags:
@@ -3689,13 +3445,6 @@ paths:
         schema:
           type: string
         example: '{{learnerId}}'
-    get:
-      summary: "Final Portfolio Verification Report Parts A & B (get draft or submitted)"
-      tags:
-        - Staff /me — IQAM only
-      security:
-        - BearerAuth: []
-      responses: {}
     put:
       summary: "Final Portfolio Verification Report — save draft"
       tags:
@@ -3925,7 +3674,7 @@ paths:
         - BearerAuth: []
       responses: {}
 
-  /api/{trainingProviderId}/learners/staff/onboarding-checklist/induction-template:
+  /api/{trainingProviderId}/learners/verification/pending:
     parameters:
       - name: trainingProviderId
         in: path
@@ -3933,28 +3682,12 @@ paths:
         schema:
           type: string
         example: '{{trainingProviderId}}'
-    put:
-      summary: "Save induction checklist template"
+    get:
+      summary: "List learners pending verification"
       tags:
-        - Digital folder - Learner view
+        - Learner
       security:
         - BearerAuth: []
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-            example:
-              {
-                "items": [
-                  {
-                    "key": "receive_explanation_on_nsqf_nos_centre_awarding_body",
-                    "label": "Receive explanation on the NSQF/NOS, the centre and awarding body.",
-                    "sortOrder": 0
-                  }
-                ]
-              }
       responses: {}
 
   /api/{trainingProviderId}/team/invite-staff:
@@ -4034,70 +3767,6 @@ paths:
         - BearerAuth: []
       responses: {}
 
-  /api/{trainingProviderId}/team/staff/{staffUserId}/activate:
-    parameters:
-      - name: trainingProviderId
-        in: path
-        required: true
-        schema:
-          type: string
-        example: '{{trainingProviderId}}'
-      - name: staffUserId
-        in: path
-        required: true
-        schema:
-          type: string
-        example: '{{staffUserId}}'
-    post:
-      summary: "Activate staff"
-      tags:
-        - Staff
-      security:
-        - BearerAuth: []
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-            example:
-              {
-                "confirmed": true
-              }
-      responses: {}
-
-  /api/{trainingProviderId}/team/staff/{staffUserId}/deactivate:
-    parameters:
-      - name: trainingProviderId
-        in: path
-        required: true
-        schema:
-          type: string
-        example: '{{trainingProviderId}}'
-      - name: staffUserId
-        in: path
-        required: true
-        schema:
-          type: string
-        example: '{{staffUserId}}'
-    post:
-      summary: "Deactivate staff"
-      tags:
-        - Staff
-      security:
-        - BearerAuth: []
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-            example:
-              {
-                "confirmed": true
-              }
-      responses: {}
-
   /api/{trainingProviderId}/team/staff/{staffUserId}/inviter:
     parameters:
       - name: trainingProviderId
@@ -4148,6 +3817,39 @@ paths:
               type: object
             example:
               {}
+      responses: {}
+
+  /api/{trainingProviderId}/team/staff/{staffUserId}/status:
+    parameters:
+      - name: trainingProviderId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{trainingProviderId}}'
+      - name: staffUserId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{staffUserId}}'
+    post:
+      summary: "Set staff status (activate or deactivate)"
+      tags:
+        - Staff
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+            example:
+              {
+                "action": "deactivate",
+                "confirmed": true
+              }
       responses: {}
 
   /api/{trainingProviderId}/uploads/media/presign:
@@ -4690,7 +4392,7 @@ paths:
 
   /api/backoffice/ab/portfolio-verification:
     get:
-      summary: "EQAM portfolio verification queue (assigned TPs)"
+      summary: "EQAM portfolio verification — list queue or learner detail (use query params)"
       tags:
         - Backoffice — Awarding body portal
       security:
@@ -4726,28 +4428,11 @@ paths:
           required: false
           schema:
             type: string
-      responses: {}
-
-  /api/backoffice/ab/portfolio-verification/{trainingProviderId}/{learnerId}:
-    parameters:
-      - name: trainingProviderId
-        in: path
-        required: true
-        schema:
-          type: string
-        example: '{{trainingProviderId}}'
-      - name: learnerId
-        in: path
-        required: true
-        schema:
-          type: string
-        example: '{{learnerId}}'
-    get:
-      summary: "EQAM portfolio verification detail (IQAM Parts A & B read-only)"
-      tags:
-        - Backoffice — Awarding body portal
-      security:
-        - BearerAuth: []
+        - name: learnerId
+          in: query
+          required: false
+          schema:
+            type: string
       responses: {}
 
   /api/backoffice/ab/portfolio-verification/{trainingProviderId}/{learnerId}/eqam-sign:
@@ -5223,54 +4908,6 @@ paths:
               }
       responses: {}
 
-  /api/backoffice/ab/users/{userId}/deactivate:
-    parameters:
-      - name: userId
-        in: path
-        required: true
-        schema:
-          type: string
-        example: '{{userId}}'
-    post:
-      summary: "AB user — deactivate (admin only)"
-      tags:
-        - Backoffice — Awarding body portal
-      security:
-        - BearerAuth: []
-      requestBody:
-        required: false
-        content:
-          application/json:
-            schema:
-              type: object
-            example:
-              {}
-      responses: {}
-
-  /api/backoffice/ab/users/{userId}/reactivate:
-    parameters:
-      - name: userId
-        in: path
-        required: true
-        schema:
-          type: string
-        example: '{{userId}}'
-    post:
-      summary: "AB user — reactivate (admin only)"
-      tags:
-        - Backoffice — Awarding body portal
-      security:
-        - BearerAuth: []
-      requestBody:
-        required: false
-        content:
-          application/json:
-            schema:
-              type: object
-            example:
-              {}
-      responses: {}
-
   /api/backoffice/ab/users/{userId}/resend-invite:
     parameters:
       - name: userId
@@ -5294,6 +4931,32 @@ paths:
             example:
               {
                 "loginUrl": "https://backoffice.example.com/auth/login"
+              }
+      responses: {}
+
+  /api/backoffice/ab/users/{userId}/status:
+    parameters:
+      - name: userId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{userId}}'
+    post:
+      summary: "AB user — set status (deactivate or reactivate, admin only)"
+      tags:
+        - Backoffice — Awarding body portal
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+            example:
+              {
+                "action": "deactivate"
               }
       responses: {}
 
@@ -5357,28 +5020,6 @@ paths:
           in: query
           required: false
           description: "2026-03-31"
-          schema:
-            type: string
-      responses: {}
-
-  /api/backoffice/audit-log/actors:
-    get:
-      summary: "List actors for audit log filter dropdown"
-      tags:
-        - Backoffice — Audit log
-      security:
-        - BearerAuth: []
-      parameters:
-        - name: search
-          in: query
-          required: false
-          description: ""
-          schema:
-            type: string
-        - name: limit
-          in: query
-          required: false
-          description: "50"
           schema:
             type: string
       responses: {}
@@ -5481,7 +5122,7 @@ paths:
               }
       responses: {}
 
-  /api/backoffice/awarding-bodies/{awardingBodyId}/deactivate:
+  /api/backoffice/awarding-bodies/{awardingBodyId}/status:
     parameters:
       - name: awardingBodyId
         in: path
@@ -5490,43 +5131,21 @@ paths:
           type: string
         example: '{{awardingBodyId}}'
     post:
-      summary: "Deactivate awarding body"
+      summary: "Set awarding body status (deactivate or reactivate)"
       tags:
         - Backoffice — Awarding bodies
       security:
         - BearerAuth: []
       requestBody:
-        required: false
-        content:
-          application/json:
-            schema:
-              type: object
-            example:
-              {}
-      responses: {}
-
-  /api/backoffice/awarding-bodies/{awardingBodyId}/reactivate:
-    parameters:
-      - name: awardingBodyId
-        in: path
         required: true
-        schema:
-          type: string
-        example: '{{awardingBodyId}}'
-    post:
-      summary: "Reactivate awarding body"
-      tags:
-        - Backoffice — Awarding bodies
-      security:
-        - BearerAuth: []
-      requestBody:
-        required: false
         content:
           application/json:
             schema:
               type: object
             example:
-              {}
+              {
+                "action": "deactivate"
+              }
       responses: {}
 
   /api/backoffice/awarding-bodies/{awardingBodyId}/trade-areas:
@@ -5648,7 +5267,7 @@ paths:
         - BearerAuth: []
       responses: {}
 
-  /api/backoffice/awarding-bodies/{awardingBodyId}/trade-areas/{tradeAreaId}/deactivate:
+  /api/backoffice/awarding-bodies/{awardingBodyId}/trade-areas/{tradeAreaId}/status:
     parameters:
       - name: awardingBodyId
         in: path
@@ -5663,49 +5282,21 @@ paths:
           type: string
         example: '{{tradeAreaId}}'
     post:
-      summary: "Deactivate trade area"
+      summary: "Set trade area status (deactivate or reactivate)"
       tags:
         - Backoffice — Awarding bodies
       security:
         - BearerAuth: []
       requestBody:
-        required: false
+        required: true
         content:
           application/json:
             schema:
               type: object
             example:
-              {}
-      responses: {}
-
-  /api/backoffice/awarding-bodies/{awardingBodyId}/trade-areas/{tradeAreaId}/reactivate:
-    parameters:
-      - name: awardingBodyId
-        in: path
-        required: true
-        schema:
-          type: string
-        example: '{{awardingBodyId}}'
-      - name: tradeAreaId
-        in: path
-        required: true
-        schema:
-          type: string
-        example: '{{tradeAreaId}}'
-    post:
-      summary: "Reactivate trade area"
-      tags:
-        - Backoffice — Awarding bodies
-      security:
-        - BearerAuth: []
-      requestBody:
-        required: false
-        content:
-          application/json:
-            schema:
-              type: object
-            example:
-              {}
+              {
+                "action": "deactivate"
+              }
       responses: {}
 
   /api/backoffice/awarding-bodies/{awardingBodyId}/users:
@@ -5825,66 +5416,6 @@ paths:
               }
       responses: {}
 
-  /api/backoffice/awarding-bodies/{awardingBodyId}/users/{userId}/deactivate:
-    parameters:
-      - name: awardingBodyId
-        in: path
-        required: true
-        schema:
-          type: string
-        example: '{{awardingBodyId}}'
-      - name: userId
-        in: path
-        required: true
-        schema:
-          type: string
-        example: '{{userId}}'
-    post:
-      summary: "Deactivate AB user"
-      tags:
-        - Backoffice — Awarding bodies
-      security:
-        - BearerAuth: []
-      requestBody:
-        required: false
-        content:
-          application/json:
-            schema:
-              type: object
-            example:
-              {}
-      responses: {}
-
-  /api/backoffice/awarding-bodies/{awardingBodyId}/users/{userId}/reactivate:
-    parameters:
-      - name: awardingBodyId
-        in: path
-        required: true
-        schema:
-          type: string
-        example: '{{awardingBodyId}}'
-      - name: userId
-        in: path
-        required: true
-        schema:
-          type: string
-        example: '{{userId}}'
-    post:
-      summary: "Reactivate AB user"
-      tags:
-        - Backoffice — Awarding bodies
-      security:
-        - BearerAuth: []
-      requestBody:
-        required: false
-        content:
-          application/json:
-            schema:
-              type: object
-            example:
-              {}
-      responses: {}
-
   /api/backoffice/awarding-bodies/{awardingBodyId}/users/{userId}/resend-invite:
     parameters:
       - name: awardingBodyId
@@ -5914,6 +5445,38 @@ paths:
             example:
               {
                 "loginUrl": "https://backoffice.example.com/auth/login"
+              }
+      responses: {}
+
+  /api/backoffice/awarding-bodies/{awardingBodyId}/users/{userId}/status:
+    parameters:
+      - name: awardingBodyId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{awardingBodyId}}'
+      - name: userId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{userId}}'
+    post:
+      summary: "Set awarding body user status (deactivate or reactivate)"
+      tags:
+        - Backoffice — Awarding bodies
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+            example:
+              {
+                "action": "deactivate"
               }
       responses: {}
 
@@ -6078,7 +5641,7 @@ paths:
         - BearerAuth: []
       responses: {}
 
-  /api/backoffice/nos/standards/{standardId}/deactivate:
+  /api/backoffice/nos/standards/{standardId}/status:
     parameters:
       - name: standardId
         in: path
@@ -6087,7 +5650,7 @@ paths:
           type: string
         example: '{{standardId}}'
     post:
-      summary: "Deactivate NOS standard"
+      summary: "Set NOS standard status (deactivate or reactivate)"
       tags:
         - Backoffice — NOS library
       security:
@@ -6100,32 +5663,9 @@ paths:
               type: object
             example:
               {
+                "action": "deactivate",
                 "reason": "Superseded"
               }
-      responses: {}
-
-  /api/backoffice/nos/standards/{standardId}/reactivate:
-    parameters:
-      - name: standardId
-        in: path
-        required: true
-        schema:
-          type: string
-        example: '{{standardId}}'
-    post:
-      summary: "Reactivate NOS standard"
-      tags:
-        - Backoffice — NOS library
-      security:
-        - BearerAuth: []
-      requestBody:
-        required: false
-        content:
-          application/json:
-            schema:
-              type: object
-            example:
-              {}
       responses: {}
 
   /api/backoffice/nos/standards/{standardId}/units-tree:
@@ -6448,32 +5988,6 @@ paths:
         - BearerAuth: []
       responses: {}
 
-  /api/backoffice/training-providers/{trainingProviderId}/deactivate:
-    parameters:
-      - name: trainingProviderId
-        in: path
-        required: true
-        schema:
-          type: string
-        example: '{{trainingProviderId}}'
-    post:
-      summary: "Deactivate training provider"
-      tags:
-        - Backoffice — Training providers
-      security:
-        - BearerAuth: []
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-            example:
-              {
-                "reason": "Contract ended"
-              }
-      responses: {}
-
   /api/backoffice/training-providers/{trainingProviderId}/learners:
     parameters:
       - name: trainingProviderId
@@ -6606,30 +6120,6 @@ paths:
               }
       responses: {}
 
-  /api/backoffice/training-providers/{trainingProviderId}/reactivate:
-    parameters:
-      - name: trainingProviderId
-        in: path
-        required: true
-        schema:
-          type: string
-        example: '{{trainingProviderId}}'
-    post:
-      summary: "Reactivate training provider"
-      tags:
-        - Backoffice — Training providers
-      security:
-        - BearerAuth: []
-      requestBody:
-        required: false
-        content:
-          application/json:
-            schema:
-              type: object
-            example:
-              {}
-      responses: {}
-
   /api/backoffice/training-providers/{trainingProviderId}/resend-invite:
     parameters:
       - name: trainingProviderId
@@ -6689,6 +6179,33 @@ paths:
           description: "Search filter"
           schema:
             type: string
+      responses: {}
+
+  /api/backoffice/training-providers/{trainingProviderId}/status:
+    parameters:
+      - name: trainingProviderId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{trainingProviderId}}'
+    post:
+      summary: "Set training provider status (deactivate or reactivate)"
+      tags:
+        - Backoffice — Training providers
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+            example:
+              {
+                "action": "deactivate",
+                "reason": "Contract ended"
+              }
       responses: {}
 
   /api/backoffice/training-providers/{trainingProviderId}/trade-areas-by-awarding-body:
@@ -6822,54 +6339,6 @@ paths:
               }
       responses: {}
 
-  /api/backoffice/users/{userId}/deactivate:
-    parameters:
-      - name: userId
-        in: path
-        required: true
-        schema:
-          type: string
-        example: '{{userId}}'
-    post:
-      summary: "Deactivate platform user"
-      tags:
-        - Backoffice — User management
-      security:
-        - BearerAuth: []
-      requestBody:
-        required: false
-        content:
-          application/json:
-            schema:
-              type: object
-            example:
-              {}
-      responses: {}
-
-  /api/backoffice/users/{userId}/reactivate:
-    parameters:
-      - name: userId
-        in: path
-        required: true
-        schema:
-          type: string
-        example: '{{userId}}'
-    post:
-      summary: "Reactivate platform user"
-      tags:
-        - Backoffice — User management
-      security:
-        - BearerAuth: []
-      requestBody:
-        required: false
-        content:
-          application/json:
-            schema:
-              type: object
-            example:
-              {}
-      responses: {}
-
   /api/backoffice/users/{userId}/resend-invite:
     parameters:
       - name: userId
@@ -6893,6 +6362,32 @@ paths:
             example:
               {
                 "loginUrl": "https://backoffice.example.com/auth/login"
+              }
+      responses: {}
+
+  /api/backoffice/users/{userId}/status:
+    parameters:
+      - name: userId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{userId}}'
+    post:
+      summary: "Set platform user status (deactivate or reactivate)"
+      tags:
+        - Backoffice — User management
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+            example:
+              {
+                "action": "deactivate"
               }
       responses: {}
 
@@ -6966,40 +6461,13 @@ paths:
               }
       responses: {}
 
-  /api/learners/staff/assessment-reviews/{assessmentRequestId}/pcs/{assessmentPcId}/evidence-methods/{evidenceMethod}:
-    parameters:
-      - name: assessmentRequestId
-        in: path
-        required: true
-        schema:
-          type: string
-        example: '{{assessmentRequestId}}'
-      - name: assessmentPcId
-        in: path
-        required: true
-        schema:
-          type: string
-        example: '{{assessmentPcId}}'
-      - name: evidenceMethod
-        in: path
-        required: true
-        schema:
-          type: string
-        example: '{{evidenceMethod}}'
-    patch:
-      summary: "Deprecated — use PC review PATCH"
+  /api/learners/registration/nsq-awarding-bodies:
+    get:
+      summary: "List NSQ awarding bodies (learner registration)"
       tags:
-        - Assessment review
+        - Learner
       security:
         - BearerAuth: []
-      requestBody:
-        required: false
-        content:
-          application/json:
-            schema:
-              type: object
-            example:
-              {}
       responses: {}
 
   /api/uploads/image:
@@ -7084,24 +6552,6 @@ paths:
               }
       responses: {}
 
-  /auth/backoffice/signin:
-    post:
-      summary: "Back office login (alias of /auth/backoffice/login)"
-      tags:
-        - Backoffice — Auth
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-            example:
-              {
-                "email": "admin@example.com",
-                "password": "Password#123"
-              }
-      responses: {}
-
   /auth/forgot-password:
     post:
       summary: "forgot-password"
@@ -7142,21 +6592,6 @@ paths:
               }
       responses: {}
 
-  /auth/login:
-    post:
-      summary: "Client app login (alias of signin)"
-      tags:
-        - Auth
-      requestBody:
-        required: false
-        content:
-          application/json:
-            schema:
-              type: object
-            example:
-              {}
-      responses: {}
-
   /auth/me:
     get:
       summary: "Current user (client app)"
@@ -7181,6 +6616,25 @@ paths:
               type: object
             example:
               {}
+      responses: {}
+
+  /auth/resend-otp:
+    post:
+      summary: "Resend signup OTP"
+      tags:
+        - Auth
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+            example:
+              {
+                "email": "jane@example.com"
+              }
       responses: {}
 
   /auth/reset-password:
@@ -7231,6 +6685,62 @@ paths:
               }
       responses: {}
 
+  /auth/signout:
+    post:
+      summary: "Sign out (clears refresh token cookie)"
+      tags:
+        - Auth
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+            example:
+              {}
+      responses: {}
+
+  /auth/signup:
+    post:
+      summary: "Register new user (email OTP flow)"
+      tags:
+        - Auth
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+            example:
+              {
+                "firstName": "Jane",
+                "lastName": "Doe",
+                "email": "jane@example.com",
+                "password": "Password#123",
+                "confirmPassword": "Password#123"
+              }
+      responses: {}
+
+  /auth/verify-otp:
+    post:
+      summary: "Verify email OTP after signup"
+      tags:
+        - Auth
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+            example:
+              {
+                "email": "jane@example.com",
+                "otp": "123456"
+              }
+      responses: {}
+
   /auth/verify-reset-password:
     post:
       summary: "verify-reset-password"
@@ -7250,3 +6760,4 @@ paths:
                 "email": "caracolasstore@gmail.com"
               }
       responses: {}
+
