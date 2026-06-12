@@ -1023,7 +1023,7 @@ paths:
           type: string
         example: '{{assessmentPcId}}'
     put:
-      summary: "Submit evidence for PC"
+      summary: "Submit evidence for PC (use complete: false for draft)"
       tags:
         - Assessment - Start scheduled assessment
       security:
@@ -1054,6 +1054,42 @@ paths:
               }
       responses: {}
 
+  /api/{trainingProviderId}/learners/assessment-sessions/{sessionId}/pcs/{assessmentPcId}/save-and-exit:
+    parameters:
+      - name: trainingProviderId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{trainingProviderId}}'
+      - name: sessionId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{sessionId}}'
+      - name: assessmentPcId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{assessmentPcId}}'
+    post:
+      summary: "Save current PC working copy and exit"
+      tags:
+        - Assessment - Start scheduled assessment
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+            example:
+              {}
+      responses: {}
+
   /api/{trainingProviderId}/learners/assessment-sessions/{sessionId}/questions:
     parameters:
       - name: trainingProviderId
@@ -1076,6 +1112,36 @@ paths:
         - BearerAuth: []
       responses: {}
 
+  /api/{trainingProviderId}/learners/assessments/{assessmentRequestId}/resume:
+    parameters:
+      - name: trainingProviderId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{trainingProviderId}}'
+      - name: assessmentRequestId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{assessmentRequestId}}'
+    post:
+      summary: "Resume in-progress assessment with saved state"
+      tags:
+        - Assessment - Start scheduled assessment
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+            example:
+              {}
+      responses: {}
+
   /api/{trainingProviderId}/learners/assessments/{assessmentRequestId}/start:
     parameters:
       - name: trainingProviderId
@@ -1091,7 +1157,7 @@ paths:
           type: string
         example: '{{assessmentRequestId}}'
     post:
-      summary: "Start assessment session"
+      summary: "Start assessment (first time on due date)"
       tags:
         - Assessment - Start scheduled assessment
       security:
@@ -3979,6 +4045,15 @@ paths:
             type: string
       responses: {}
 
+  /api/backoffice/ab/assessment-reports/filter-options:
+    get:
+      summary: "EQAM assessment report list filter options"
+      tags:
+        - Backoffice — Awarding body portal
+      security:
+        - BearerAuth: []
+      responses: {}
+
   /api/backoffice/ab/assessment-reports/learner/{learnerId}/units/{unitId}:
     parameters:
       - name: learnerId
@@ -3994,7 +4069,7 @@ paths:
           type: string
         example: '{{unitId}}'
     get:
-      summary: "EQAM assessment unit report detail (read-only)"
+      summary: "EQAM assessment unit report detail"
       tags:
         - Backoffice — Awarding body portal
       security:
@@ -4007,10 +4082,33 @@ paths:
           schema:
             type: string
       responses: {}
+    post:
+      summary: "Submit EQAM feedback on a unit assessment report"
+      tags:
+        - Backoffice — Awarding body portal
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: trainingProviderId
+          in: query
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [comment]
+              properties:
+                comment:
+                  type: string
+      responses: {}
 
   /api/backoffice/ab/assessment-reports/units:
     get:
-      summary: "EQAM assessment unit reports (assigned TPs, read-only)"
+      summary: "EQAM assessment unit reports (assigned training providers)"
       tags:
         - Backoffice — Awarding body portal
       security:
@@ -4041,6 +4139,27 @@ paths:
           schema:
             type: string
             enum: [all, pending_review, pending_feedback, ready]
+        - name: trainingProviderIds
+          in: query
+          required: false
+          schema:
+            type: string
+          description: "Comma-separated training provider ids"
+        - name: levels
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: batches
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: unitIds
+          in: query
+          required: false
+          schema:
+            type: string
       responses: {}
 
   /api/backoffice/ab/dashboard:
@@ -6760,4 +6879,3 @@ paths:
                 "email": "caracolasstore@gmail.com"
               }
       responses: {}
-
